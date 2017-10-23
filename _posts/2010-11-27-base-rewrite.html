@@ -1,0 +1,58 @@
+---
+layout: default
+title: 基础知识-URL重写
+---
+<div class="h1">URL重写</div>
+
+<div class="catalog">
+	<li><a href="#apache"># Apache Rewrite规则</a></li>
+	<li><a href="#nginx"># Nginx Rewrite规则</a></li>
+	<li><a href="#sae"># SAE Rewrite规则</a></li>
+</div>
+
+<p class="text">　　默认情况下，我们访问的URL中包含index.php入口文件，为了搜索引擎更加友好，我们可以借助于Rewrite规则来隐藏index.php；</p>
+
+
+<div class="h2"><a name="apache">#</a> Apache Rewrite规则</div>
+<p class="text">　　Apache的Rewrite规则，可以修改Apache配置文件httpd.conf，或新建.htaccess文件放到入口文件的同级目录下；</p>
+<pre class="brush: php;">
+
+	RewriteEngine on
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(.*)$ ./index.php/$1 [L]
+
+</pre>
+
+
+<div class="h2"><a name="nginx">#</a> Nginx Rewrite规则</div>
+<p class="text">　　Nginx的Rewrite规则，Nginx配置文件nginx.conf；</p>
+<pre class="brush: php;">
+
+	if (!-e $request_filename) {
+		rewrite ^/(.*) /index.php/$1 last;
+	}
+
+</pre>
+
+
+<div class="h2"><a name="sae">#</a> SAE Rewrite规则</div>
+<p class="text">　　SAE的Rewrite规则，配置文件config.yaml；</p>
+<pre class="brush: php;">
+
+	name: appname
+	version: 1
+	handle:
+
+	- rewrite: if ( !is_dir() && !is_file() ) goto "/index.php/$1"
+
+</pre>
+
+<p class="text">
+　　好了，接下来我们可以访问URL：<br />
+　　http://localhost/demo/welcome/<br />
+　　URL重写之前的：<br />
+　　http://localhost/index.php/demo/welcome/
+</p>
+
+<br /><br /><br /><br /><br /><br /><br />

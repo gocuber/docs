@@ -1,0 +1,64 @@
+---
+layout: default
+title: 基础知识-开发规范
+---
+<div class="h1">开发规范</div>
+
+<div class="catalog">
+	<li><a href="#rule"># 控制器及视图规则</a></li>
+	<li class="sub"><a href="#rule_c"># 控制器规则</a></li>
+	<li class="sub"><a href="#rule_action"># 动作规则</a></li>
+	<li class="sub"><a href="#rule_view"># 视图规则</a></li>
+	<li><a href="#class"># models 及 class 规则</a></li>
+</div>
+
+<div class="h2"><a name="rule">#</a> 目录及命名规则</div>
+
+<div class="h3"><a name="rule_c">控制器规则</a></div>
+
+<p class="text">
+　　控制器文件默认保存在：/apps/模块/controllers/ 目录下；文件名与类名统一；<br />
+　　控制器类命名规则：第一个字母大写，后面跟 Controller ；控制器继承 Controller 类；<br />
+/apps/default/controllers/DemoController.php
+</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{}
+
+</pre>
+
+
+<div class="h3"><a name="rule_action">动作规则</a></div>
+
+<p class="text">
+　　动作命名规则：全部小写，后面跟 Action ；<br />
+/apps/default/controllers/DemoController.php
+</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		function indexAction()
+		{}
+
+	}
+
+</pre>
+
+
+<div class="h3"><a name="rule_view">视图规则</a></div>
+
+<p class="text">
+　　视图模板文件默认保存在：/apps/模块/views/ 目录下；可以创建子级目录；目录及文件名尽量小写（不做强制限制，怎么写的怎么用就行了）；<br />
+/apps/default/views/index.php<br />
+/apps/default/views/demo/index.php
+</p>
+
+
+<div class="h2"><a name="class">#</a> models 及 class 规则</div>
+
+<p class="text">　　models 与 class 目录文件及类名称，对大小写不做强制限制；不过在开发时；还是要尽量定义一种统一的风格；参考类自动加载章节；</p>
+
+<br /><br /><br /><br /><br /><br />

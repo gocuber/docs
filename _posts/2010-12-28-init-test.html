@@ -1,0 +1,56 @@
+---
+layout: default
+title: 开始-创建第一个应用
+---
+<div class="h1">创建第一个应用</div>
+
+<div class="catalog">
+	<li><a href="#controller"># 创建控制器</a></li>
+	<li><a href="#view"># 创建视图</a></li>
+	<li><a href="#url"># 访问url</a></li>
+</div>
+
+<div class="h2"><a name="controller">#</a> 创建控制器</div>
+
+<p class="text">
+　　新建控制器文件：/apps/default/controllers/DemoController.php<br />
+　　代码：
+</p>
+
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		function welcomeAction()
+		{
+			G('View')->assign('title', 'Hello World');   //赋值
+			G('View')->display('index');                 //调用视图模板
+		}
+
+	}
+
+</pre>
+
+
+<div class="h2"><a name="view">#</a> 创建视图</div>
+
+<p class="text">
+　　新建视图模板文件：/apps/default/views/index.php<br />
+　　代码：
+</p>
+
+<pre class="brush: php;">
+
+	echo $title; //Hello World
+
+</pre>
+
+
+<div class="h2"><a name="url">#</a> 访问url</div>
+
+<p class="text">
+　　访问 http://localhost/index.php/demo/welcome/ 会显示 Hello World<br />
+　　可以设置URL重写使你的URL更加友好，例如可以这样访问：<br />
+　　http://localhost/demo/welcome/ 只需设置URL重写就可以了，会在URL重写章节中详细说明。
+</p>

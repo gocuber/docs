@@ -1,0 +1,90 @@
+---
+layout: default
+title: 基础知识-目录结构
+---
+<div class="h1">目录结构</div>
+
+<div class="catalog">
+	<li><a href="#catalog"># 目录结构</a></li>
+	<li><a href="#module"># 功能模块</a></li>
+	<li><a href="#model"># 模型及类库子目录</a></li>
+	<li><a href="#res"># 临时文件、资源目录</a></li>
+</div>
+
+
+<div class="h2"><a name="catalog">#</a> 目录结构</div>
+
+<pre class="brush: php;">
+/*
+
+/index.php                       入口文件
+
+/apps                            应用目录
+
+|-- default                      默认应用
+|-- |-- controllers              控制器目录
+|-- |-- views                    视图目录
+
+|-- admin                        后台模块
+|-- |-- controllers
+|-- |-- views
+
+|-- testapp                      其他应用模块
+|-- |-- controllers
+|-- |-- views
+
+/models                          模型目录
+/class                           项目公用类库
+
+/mf                              mfphp框架文件
+
+*/
+</pre>
+
+
+
+<div class="h2"><a name="module">#</a> 功能模块</div>
+
+<p class="text">　　一般情况下，开发网站时，会有多个功能模块，如 前台，后台，其他testapp 等；</p>
+
+
+
+<div class="h2"><a name="model">#</a> 模型及类库子目录</div>
+
+<p class="text">　　可以为模型 models，类库 class 按功能创建子目录；</p>
+
+<pre class="brush: php;">
+/*
+
+/models                          模型目录
+|-- db
+|-- uc
+
+/class                           项目公用类库
+|-- admin
+|-- ucenter
+
+*/
+</pre>
+
+
+
+<div class="h2"><a name="res">#</a> 临时文件、资源目录</div>
+<p class="text">　　在开发应用项目时，会用到一些缓存文件，临时文件，log日志及静态资源 图片、css、js等；以下目录不是必要目录，可随意修改或删除；</p>
+
+<pre class="brush: php;">
+/*
+
+/common                          公用函数配置等文件
+
+/data                            用于存放一些缓存，临时文件，log日志等
+|-- cache
+|-- logs
+
+/res                             用于存放网站图片、css、js等资源文件
+|-- images
+|-- css
+|-- js
+
+*/
+</pre>
