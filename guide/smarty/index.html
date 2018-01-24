@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	
-<title>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站</title>
-<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
-<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
+<title>CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
 <link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -67,30 +67,27 @@ var _hmt = _hmt || [];
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
 		<div class="cube-title">使用Smarty</div>
-		<p>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 !</p>
-
-<br />
-<p>　　在框架中使用Smarty</p>
+		<div class="h1">在框架中使用Smarty</div>
 <br />
 <br />
 <br />
-　　下载Smarty包，放到mf/lib目录下；使之成为下面这样的目录：
+　　下载Smarty包，放到cube/lib目录下；使之成为下面这样的目录：
 <br />
-　　SYSTEM_DIR.'mf/lib/smarty/libs/Smarty.class.php'
+　　SYSTEM_DIR . 'cube/lib/smarty/libs/Smarty.class.php'
 <br />
 <br />
-　　写一个Smarty操作类，下面的SmartyCls在MF框架中已经写好；
+　　写一个Smarty操作类，下面的SmartyCls在CubePHP框架中已经写好；
 <br />
-<pre>
+<pre class="brush: php;">
 
 	class SmartyCls
 	{
 
-		public function display($tpl='',$hash=null)
+		public function display($tpl='', $hash=null)
 		{
 
 			/* 包含smarty */
-			include_once(SYSTEM_DIR.'mf/lib/smarty/libs/Smarty.class.php');
+			include_once(SYSTEM_DIR . 'cube/lib/smarty/libs/Smarty.class.php');
 			$smarty = new Smarty;
 
 			/* smarty关键配置 */
@@ -132,7 +129,7 @@ var _hmt = _hmt || [];
 			'title' => '使用Smarty',
 			'name'  => 'Smarty',
 		);
-		MF::G('SmartyCls')->display('smarty_test.tpl',$hash);
+		(new SmartyCls())->display('smarty_test.tpl', $hash);
 	}
 
 

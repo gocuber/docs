@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	
-<title>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站</title>
-<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
-<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
+<title>CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
 <link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -69,12 +69,12 @@ var _hmt = _hmt || [];
 		<div class="cube-title">View 视图模板</div>
 		<div class="h1">View 视图模板</div>
 
-<div class="catalog">
+<ul class="cube-catalog">
 	<li><a href="#view"># View 视图类简单实例</a></li>
 	<li><a href="#assign"># assign() 赋值</a></li>
 	<li><a href="#display"># display() 显示视图模板</a></li>
 	<li><a href="#load"># load() 视图中加载其他视图文件</a></li>
-</div>
+</ul>
 
 <div class="h2"><a name="view">#</a> 简单实例</div>
 
@@ -89,9 +89,9 @@ var _hmt = _hmt || [];
 
 		function welcomeAction()
 		{
-			G('View')->assign('title', 'Hello World');   //赋值
-			G('View')->assign('date',  date('Y-m-d'));   //赋值
-			G('View')->display('demo_welcome');          //显示视图模板
+			View::assign('title', 'Hello World');   //赋值
+			View::assign('date',  date('Y-m-d'));   //赋值
+			View::display('demo_welcome');          //显示视图模板
 		}
 
 	}
@@ -128,8 +128,8 @@ var _hmt = _hmt || [];
 				'title' => 'Hello World',
 				'date'  => date('Y-m-d'),
 			);
-			G('View')->assign($array);
-			G('View')->display('demo_welcome');
+			View::assign($array);
+			View::display('demo_welcome');
 		}
 
 	}
@@ -164,7 +164,7 @@ var _hmt = _hmt || [];
 				'title' => 'Hello World',
 				'date'  => date('Y-m-d'),
 			);
-			G('View')->display('demo_welcome', $array); //调用视图同时赋值
+			View::display('demo_welcome', $array); //调用视图同时赋值
 		}
 
 	}
@@ -194,7 +194,7 @@ var _hmt = _hmt || [];
 				'title' => 'Hello World',
 				'date'  => date('Y-m-d'),
 			);
-			G('View')->display('demo_welcome', $array); //调用视图同时赋值
+			View::display('demo_welcome', $array); //调用视图同时赋值
 		}
 
 	}
@@ -205,7 +205,7 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	G('View')->load('header');
+	View::load('header');
 
 	echo $title; //Hello World
 	echo $date;  //输出日期
@@ -233,12 +233,12 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	G('View')->load('header');
+	View::load('header');
 
 	echo $title; //Hello World
 	echo $date;  //输出日期
 
-	G('View')->load('footer', arrray( 'copy'=>'版权所有', 'powered'=>'MFPHP' )); //赋值
+	View::load('footer', arrray( 'copy'=>'版权所有', 'powered'=>'CubePHP' )); //赋值
 
 </pre>
 
@@ -246,10 +246,10 @@ var _hmt = _hmt || [];
 <pre class="brush: php;">
 
 	// php 代码
-	G('View')->display('global/demo_welcome');  // views/global/demo_welcome.php
+	View::display('global/demo_welcome');  // views/global/demo_welcome.php
 
 	// 视图代码
-	G('View')->load('global/header');           // views/global/header.php
+	View::load('global/header');           // views/global/header.php
 
 	// ...
 </pre>

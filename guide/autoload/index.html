@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	
-<title>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站</title>
-<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
-<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
+<title>CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
 <link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -69,15 +69,17 @@ var _hmt = _hmt || [];
 		<div class="cube-title">类自动加载</div>
 		<div class="h1">类自动加载</div>
 
-<div class="catalog">
+<ul class="cube-catalog">
 	<li><a href="#rule"># 类命名规则</a></li>
 	<li><a href="#instance"># 类调用</a></li>
-	<li class="sub"><a href="#models"># models 调用</a></li>
-	<li class="sub"><a href="#class"># class 调用</a></li>
+	<ul>
+		<li><a href="#models"># models 调用</a></li>
+		<li><a href="#class"># class 调用</a></li>
+	</ul>
 	<li><a href="#classmap"># ['class_map'] 类映射</a></li>
 	<li><a href="#namespace"># ['namespace'] 命名空间映射</a></li>
 	<li><a href="#includepath"># ['include_path'] 配置</a></li>
-</div>
+</ul>
 
 
 <div class="h2"><a name="rule">#</a> 类命名规则</div>
@@ -141,7 +143,7 @@ var _hmt = _hmt || [];
 
 <p class="text">
 　　同样的 class 类文件可以直接调用，不用 include() 或 require()<br />
-　　直接 new class(); 或 MF::G('class'); 或 G('class'); MF::G()与G() 一样，返回类的单一实例；<br />
+　　直接 new class(); 或 Cube::G('class'); 或 G('class'); Cube::G()与G() 一样，返回类的单一实例；<br />
 代码：
 </p>
 <pre class="brush: php;">
@@ -150,9 +152,9 @@ var _hmt = _hmt || [];
 
 	$sysuser = new Sys_User();
 
-	$sysuser = MF::G('Sys_User'); //返回单一实例
+	$sysuser = Cube::G('Sys_User'); //返回单一实例
 
-	$sysuser = G('Sys_User'); //返回单一实例 G() 方法 与 MF::G() 一样
+	$sysuser = G('Sys_User'); //返回单一实例 G() 方法 与 Cube::G() 一样
 
 	Sys_User::get(); //调用类中静态方法 get();
 
@@ -163,7 +165,7 @@ var _hmt = _hmt || [];
 <div class="h2"><a name="classmap">#</a> ['class_map'] 类映射</div>
 
 <p class="text">
-　　classmap 类映射，该功能会建立一个从类的名字到类文件路径的映射。当自动加载一个文件时，他首先检查映射里有没有该类。如果有，对应的文件路径就直接加载了，省掉了进一步的检查。这让类的自动加载变得更直接更快速。事实上所有的 MF 核心类都是这样加载的；<br />
+　　classmap 类映射，该功能会建立一个从类的名字到类文件路径的映射。当自动加载一个文件时，他首先检查映射里有没有该类。如果有，对应的文件路径就直接加载了，省掉了进一步的检查。这让类的自动加载变得更直接更快速。事实上所有的 CubePHP 核心类都是这样加载的；<br />
 代码：
 </p>
 

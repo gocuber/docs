@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	
-<title>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站</title>
-<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
-<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
+<title>CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
 <link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -69,12 +69,12 @@ var _hmt = _hmt || [];
 		<div class="cube-title">以命令行方式运行</div>
 		<div class="h1">CLI 命令行</div>
 
-<div class="catalog">
+<ul class="cube-catalog">
 	<li><a href="#cli"># 介绍</a></li>
 	<li><a href="#example"># CLI实例</a></li>
 	<li><a href="#page"># CLI入口文件</a></li>
 	<li><a href="#argv"># 参数处理</a></li>
-</div>
+</ul>
 
 <div class="h2"><a name="cli">#</a> 介绍</div>
 
@@ -90,7 +90,7 @@ var _hmt = _hmt || [];
 	{
 		public function welcomeAction()
 		{
-			echo 'Welcome to MFPHP !';
+			echo 'Welcome to CubePHP !';
 		}
 	}
 
@@ -99,13 +99,13 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="page">#</a> CLI入口文件</div>
 
-<p class="text">　　可以为CLI脚本程序单独写一个入口文件；cli.php；只比index.php入口文件多一行代码；需要定义常量 IS_CLI<br />define('IS_CLI',true);</p>
+<p class="text">　　可以为CLI脚本程序单独写一个入口文件；cli.php；只比index.php入口文件多一行代码；定义常量 IS_CLI<br />define('IS_CLI', true);</p>
 <pre class="brush: php;">
-	define('SYSTEM_DIR','/data0/webapp/');
-	define('IS_CLI',true); //需要定义常量 IS_CLI
+	define('SYSTEM_DIR', '/data0/webapp/');
+	define('IS_CLI', true); // 实际上这行代码可以省略，CubePHP会自动判断是否在CLI下运行
 
-	require(SYSTEM_DIR.'mf/common/mf.php');
-	MF::G()->run();
+	require(SYSTEM_DIR . 'cube/common/cube.php');
+	Cube::run();
 </pre>
 
 <p class="text">　　入口文件 cli.php 可以存放在任意目录中；如果有服务器权限的话，尽量放到非 web 目录；</p>
@@ -115,7 +115,7 @@ var _hmt = _hmt || [];
 	# php cli.php cron/demo/welcome
 </pre>
 
-<p class="text">　　终端显示：Welcome to MFPHP !</p>
+<p class="text">　　终端显示：Welcome to CubePHP !</p>
 
 
 <div class="h2"><a name="argv">#</a> 参数处理</div>

@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	
-<title>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站</title>
-<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
-<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 - CubePHP官方网站">
+<title>CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,CubePHP框架 —— 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
 <link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo2.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -69,13 +69,13 @@ var _hmt = _hmt || [];
 		<div class="cube-title">URL模式</div>
 		<div class="h1">URL模式</div>
 
-<div class="catalog">
+<ul class="cube-catalog">
 	<li><a href="#url"># 介绍</a></li>
 	<li><a href="#default"># 普通模式</a></li>
 	<li><a href="#pathinfo"># PATHINFO模式</a></li>
 	<li><a href="#compatible"># 兼容模式</a></li>
 	<li><a href="#custom"># 自定义模式</a></li>
-</div>
+</ul>
 
 
 <div class="h2"><a name="url">#</a> 介绍</div>
@@ -146,8 +146,8 @@ var _hmt = _hmt || [];
 </p>
 <pre class="brush: php;">
 
-	$_G['url_model']   = 3; // 兼容模式
-	$_G['get_route_param_name'] = 'r'; // GET参数名称 默认 r
+	$_G['url_model'] = 3;   // 兼容模式
+	$_G['route_get'] = 'r'; // GET参数名称 默认 r
 
 </pre>
 
@@ -184,7 +184,7 @@ var _hmt = _hmt || [];
 <pre class="brush: php;">
 
 	$_G['url_model']   = 4; // 自定义模式
-	$_G['get_route_function_name']   = '_getRoute'; // 函数方法名称 默认 _getRoute
+	$_G['route_func']  = '_getRoute'; // 函数方法名称 默认 _getRoute
 
 	// 函数
 	function _getRoute()
