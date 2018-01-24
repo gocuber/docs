@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>guide</title>
+
+<style>
+
+*{font-family: "Helvetica Neue","Helvetica","Lucida Grande","Arial","Hiragino Sans GB","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
+margin: 0;padding: 0;border:none;text-align:left;}
+ul,li{list-style-type: none;}
+body{font-family: "Helvetica Neue","Helvetica","Lucida Grande","Arial","Hiragino Sans GB","Microsoft Yahei","WenQuanYi Micro Hei","sans-serif";
+font-size: 12px;color: #333;text-align:left;margin: 0;padding: 0;border:none;
+background-color: #EEE;background-image: url(./images/bj.jpg);background-repeat: repeat;
+}
+a{color: #333333;text-decoration: none;cursor:pointer;}
+a:hover,a:focus{text-decoration: underline;color: #CC0000;}
+
+/* /global */
+
+.cube-jumbotron{clear: both;margin:0 auto;width:100%;}
+.cube-container{clear: both;margin:0 auto;padding:0 10px;width:80%;min-width:300px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}
+.cube-mb{clear:both;margin-bottom:10px;}
+.cube-h{clear: both;font-size:0;height:10px;}
+.cube-dn{display:none;}
+.cube-clear{clear:both;width:100%;font-size:0;height:0;overflow:hidden;}
+
+/* 布局layout */
+.cube-big-layout{float:left;width:74%;}
+.cube-small-layout{float:right;width:25%;}
+.cube-change-layout .cube-big-layout{float:right;}
+.cube-change-layout .cube-small-layout{float:left;}
+/* /布局layout */
+
+/* cube-header */
+.cube-header {position: relative;}
+.cube-header .site{float:left; padding:10px 0;}
+.cube-header .site .title{height:32px;line-height:32px;padding:10px 0;}
+.cube-header .site .title a{font-size:32px;color: #333;text-decoration: none;}
+.cube-header .site .subtitle{padding:0 40px;height:14px;line-height:14px;color:#888;font-size: 12px;overflow:hidden;}
+.cube-header .logo{position: absolute;right:10px;top:10px;padding:5px;width:50px; height:50px;border: 1px solid #CCCCCC; background-color:#FFF;}
+.cube-header .logo img{width:50px; height:50px;}
+
+/* cube-footer */
+.cube-footer{padding:20px 10px;line-height:22px;text-align:center;}
+.cube-footer span{font-family: Arial, Helvetica, sans-serif;}
+
+/* 面包屑 */
+.cube-breadcrumb{margin:5px auto;padding:0 10px;height:32px;line-height:32px;background-color:#efefef; font-size:14px;}
+
+/* 区块block */
+.cube-block{border: 1px solid #CCC;padding:10px 20px;background-color:#FFF;}
+.cube-block .cube-title{border-bottom:1px solid #CCC;height:40px; line-height:40px;font-size:20px;margin-bottom:10px;}
+
+/* 左侧菜单 较小区块block使用 */
+.cube-menu{}
+.cube-menu > li{padding:4px 5px;font-size:14px;color:#333;}
+.cube-menu > li > ul > li{padding:3px 10px;font-size:12px;}
+.cube-menu > li > ul > li > a{color: #015BAB;}
+
+/* 右侧目录 较大区块block使用 */
+.cube-catalog{padding:10px}
+.cube-catalog > li{padding:1px 10px;font-size:18px;}
+.cube-catalog > li > ul > li{padding:1px 35px;font-size:14px;}
+
+/* h123 */
+.cube-article,.cube-guide{line-height:1.8;}
+.cube-guide .h1{padding:28px 0px; font-size:28px;}
+.cube-guide .h2{font-size:28px; padding:40px 0 20px 0;}
+.cube-guide .h3{font-size:28px; padding:40px 0 20px 20px;}
+.cube-guide .h3 a{text-decoration: none;cursor:auto;color: #333333;}
+.cube-guide .text{font-size:14px; padding:20px 0;}
+.cube-guide pre{font-size:12px;}
+
+/* nav */
+.cube-nav{clear: both;margin:0 auto;width:100%;background-color: #009ACE;}
+.cube-nav .cube-container{height:40px;}
+
+.cube-nav-brand{float:left;padding:0 10px 0 0;}
+.cube-nav-brand a{font-size:18px;line-height:40px;color: #FFF;text-decoration: none;}
+.cube-nav-brand a:hover,
+.cube-nav-brand a:focus{color: #555;}
+
+.cube-nav-left{float:left;}
+.cube-nav-left > li{float:left;}
+.cube-nav-right{float:right;}
+.cube-nav-right > li{float:left;}
+
+.cube-nav-left > li > a,
+.cube-nav-right > li > a{font-size:14px;padding:0 10px; line-height:40px; display:block;color: #FFF;text-decoration: none;}
+
+.cube-nav-left > li > a:hover,
+.cube-nav-right > li > a:hover,
+.cube-nav-left > li > a:focus,
+.cube-nav-right > li > a:focus{background-color: #EEFFFF;color: #009ACE;}
+
+.cube-nav-left > li > .active,
+.cube-nav-right > li > .active{background-color: #FFF;color:#333;}
+
+.cube-nav-dropdown{position: relative;}
+.cube-nav-dropdown-menu{display:none;position: absolute;right:0;top:40px;width:120px;padding:5px;border: 1px solid #CCC;background-color: #FFF;}
+.cube-nav-dropdown-menu > li > a{font-size:12px;padding:0 10px; line-height:22px; display:block;color: #333;text-decoration: none;}
+.cube-nav-dropdown-menu > li > a:hover,
+.cube-nav-dropdown-menu > li > a:focus{background-color: #EEFFFF;color: #009ACE;}
+.cube-nav-dropdown-menu > li > .active{background-color: #FFF;color:#333;}
+.cube-nav-divider{border-top: 1px solid #EEE;}
+.cube-nav-dropdown .caret{display: inline-block;width: 0;height: 0;margin-left: 2px;vertical-align: middle;border-top: 4px dashed;border-top: 4px solid\9;border-right: 4px solid transparent;border-left: 4px solid transparent;}
+
+.cube-navbar{display:block;}
+.cube-nav-toggle{display:none;float:right;width:30px;height:22px;padding:9px 5px;color:#fff;cursor:pointer;}
+.cube-nav-toggle > div {border: 1px solid #FFF;width:28px;height:18px;padding:2px 0 0 0;}
+.cube-nav-toggle > div > span{display:block;margin:0 auto;width:18px;height:3px;font-size:0;border-bottom: 1px solid #FFF;}
+
+/* /nav */
+
+/* media container layout */
+@media (max-width: 768px) {
+	.cube-container{width:100%;}
+	.cube-big-layout,.cube-small-layout{width:100%;}
+	.cube-big-layout{padding:0 0 10px 0;}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+	.cube-container{width:100%;}
+	.cube-big-layout{width:74%;}
+	.cube-small-layout{width:25%;}
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+	.cube-container{width:90%;}
+	.cube-big-layout{width:74%;}
+	.cube-small-layout{width:25%;}
+}
+@media (min-width: 1200px) {
+	.cube-container{width:80%;}
+	.cube-big-layout{width:74%;}
+	.cube-small-layout{width:25%;}
+}
+/* /media container layout */
+
+/* media nav */
+@media (max-width: 767px) {
+	.cube-navbar{display:none;}
+	.cube-nav-toggle{display:block;}
+
+	.cube-navbar{float:left;clear: both;width:100%;padding:10px 0;}
+	.cube-navbar ul li{clear: both;width:100%;}
+	.cube-nav-left,.cube-nav-right{clear:both;width:100%;}
+	
+	.cube-nav-left > li > a,
+	.cube-nav-right > li > a{clear:both;width:100%;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}
+
+	.cube-nav-dropdown{position: static;}
+	.cube-nav-dropdown-menu{position: static;width:100%;padding:5px;border: none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}
+}
+@media (min-width: 768px) {
+	.cube-navbar{display:block;}
+	.cube-nav-toggle{display:none;}
+}
+/* /media nav */
+
+</style>
+
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+<div class="cube-container cube-header">
+	<div class="site">
+		<div class="title"><a href="#" title="CubePHP框架">CubePHP框架</a></div>
+		<div class="subtitle">—— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架</div>
+	</div>
+	<div class="logo"><a href="#" title="CubePHP"><img src="./images/logo1.jpg" alt="CubePHP" /></a></div>
+</div>
+
+<div class="cube-nav">
+	<div class="cube-container">
+		<div class="cube-nav-brand"><a href="#">Cube</a></div>
+		<div class="cube-nav-toggle"><div><span></span><span></span><span></span></div></div>
+		<div class="cube-navbar">
+			<ul class="cube-nav-left">
+				<li><a href="#" class="active">首页</a></li>
+				<li><a href="#">下载</a></li>
+				<li><a href="#">开发文档</a></li>
+				<li><a href="#">扩展</a></li>
+				<li><a href="#">代码</a></li>
+			</ul>
+			<ul class="cube-nav-right">
+				<li><a href="#">注册</a></li>
+				<li><a href="#">登录</a></li>
+				<li class="cube-nav-dropdown">
+					<a href="#" class="_active">我的 <span class="caret"></span></a>
+					<ul class="cube-nav-dropdown-menu ">
+						<li><a href="#">中心</a></li>
+						<li><a href="#" class="active">中心</a></li>
+						<li><a href="#">中心</a></li>
+						<li class="cube-nav-divider"><a href="#">退出</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="cube-clear"></div>
+</div>
+
+<div class="cube-container">
+<div class="cube-breadcrumb">
+	<a href="#">首页</a> &raquo; <a href="#">开发文档</a> &raquo; Controller 控制器
+</div>
+</div>
+
+<div class="cube-container cube-change-layout">
+
+    <div class="cube-big-layout cube-guide">
+    <div class="cube-block">
+		<div class="cube-title">数据库查询与增删改</div>
+		<ul class="cube-catalog">
+			<li><a href="#"># 差多少阿的三份</a></li>
+			<li><a href="#"># 差多少阿的三份</a></li>
+			<li><a href="#"># 差多少阿的三份</a></li>
+			<li>
+				<ul>
+					<li><a href="#"># 差多少阿的三份</a></li>
+					<li><a href="#"># 差多少阿的三份</a></li>
+					<li><a href="#"># 差多少阿的三份</a></li>
+					<li><a href="#"># 差多少阿的三份</a></li>
+				</ul>
+			</li>
+			<li><a href="#"># 差多少阿的三份</a></li>
+			<li><a href="#"># 差多少阿的三份</a></li>
+		</ul>
+	</div>
+	</div><!-- /big -->
+
+    <div class="cube-small-layout">
+    <div class="cube-block">
+		<div class="cube-title">开发文档</div>
+		<ul class="cube-menu">
+			<li>开始</li>
+			<li>
+				<ul>
+					<li><a href="#">简介</a></li>
+					<li><a href="#">下载和安装</a></li>
+					<li><a href="#">创建第一个应用</a></li>
+					<li><a href="#">差多少阿的三份</a></li>
+				</ul>
+			</li>
+			<li>基础知识</li>
+			<li>
+				<ul>
+					<li><a href="#">目录结构</a></li>
+					<li><a href="#">入口文件</a></li>
+					<li><a href="#">URL模式</a></li>
+					<li><a href="#">URL重写</a></li>
+					<li><a href="#">控制器</a></li>
+					<li><a href="#">视图</a></li>
+					<li><a href="#">模型</a></li>
+					<li><a href="#">模块</a></li>
+					<li><a href="#">URL重写</a></li>
+				</ul>
+			</li>
+			<li>基础知识</li>
+			<li>
+				<ul>
+					<li><a href="#">目录结构</a></li>
+					<li><a href="#">入口文件</a></li>
+					<li><a href="#">URL模式</a></li>
+					<li><a href="#">URL重写</a></li>
+					<li><a href="#">控制器</a></li>
+					<li><a href="#">视图</a></li>
+					<li><a href="#">模型</a></li>
+					<li><a href="#">模块</a></li>
+					<li><a href="#">URL重写</a></li>
+				</ul>
+			</li>
+			<li><a href="#">差多少阿的三份</a></li>
+			<li><a href="#">差多少阿的三份</a></li>
+		</ul>
+    </div>
+    </div><!-- /small -->
+
+</div><!-- /cube-container -->
+
+<div class="cube-container cube-footer">
+	<a href="#">意见反馈</a><br />
+	版权所有 <span>&copy;</span> 2012-2018 goCuber.com Powered by <a href="#">CubePHP</a>
+</div>
+
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>
+
+$(document).click(function(){
+	$('.cube-nav-dropdown-menu').slideUp();
+});
+$('.cube-nav-dropdown > a').click(function(e){
+    e.stopPropagation();
+	$('.cube-nav-dropdown-menu').slideToggle();
+});
+
+$('.cube-nav-toggle').click(function(){
+	$('.cube-navbar').slideToggle();
+});
+
+$(window).resize(function() {
+	if($(window).width() >= 768){
+		$('.cube-navbar').removeAttr('style');
+	}
+});
+</script>
+
+
+<script src="/res/global/js/jquery.cookie.js"></script>
+<script>
+	//alert($.cookie('n1')+' - '+$.cookie('n2'));
+</script>
+  </body>
+</html>

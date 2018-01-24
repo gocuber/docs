@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>b2</title>
+
+<style>
+  
+  *{
+  margin: 0;padding: 0;border:none;text-align:left;}
+  ul,li{list-style-type: none;}
+  body{
+  font-size: 12px;color: #333;text-align:left;margin: 0;padding: 0;border:none;
+  background-color: #EEE;background-image: url(./images/bj.jpg);background-repeat: repeat;
+  }
+  a{color: #333333;text-decoration: none;cursor:pointer;}
+  a:hover,a:focus{text-decoration: underline;color: #CC0000;}
+  
+  /* /global */
+  
+  .cube-jumbotron{clear: both;margin:0 auto;width:100%;}
+  .cube-container{clear: both;margin:0 auto;padding:0 10px;min-width:300px;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;}
+  .cube-mb{clear:both;margin-bottom:10px;}
+  .cube-dn{display:none;}
+  .cube-clear{clear:both;width:100%;font-size:0;height:0;}
+  
+  /* nav */
+  .cube-nav{clear: both;margin:0 auto;width:100%;}
+  .cube-nav .cube-container{height:40px;}
+  
+  .cube-nav-brand{float:left;padding:0 10px 0 0;}
+  .cube-nav-brand a{font-size:14px;font-weight:bold;line-height:40px;color: #FFF;text-decoration: none;}
+  .cube-nav-brand a:hover,
+  .cube-nav-brand a:focus{color: #555;}
+  
+  .cube-nav-left{float:left;}
+  .cube-nav-left li{float:left;}
+  .cube-nav-right{float:right;}
+  .cube-nav-right li{float:left;}
+  
+  .cube-nav-left li a,
+  .cube-nav-right li a{font-size:14px;padding:0 10px; line-height:40px; display:block;color: #FFF;text-decoration: none;}
+  
+  .cube-nav-left > li > a:hover,
+  .cube-nav-right > li > a:hover,
+  .cube-nav-left > li > a:focus,
+  .cube-nav-right > li > a:focus{background-color: #EEFFFF;color: #009ACE;}
+  
+  .cube-nav-left > li > .active,
+  .cube-nav-right > li > .active{background-color: #FFF;color:#333;}
+  
+  .cube-nav-dropdown{position: relative;}
+  .cube-nav-dropdown-menu{display:none;position: absolute;right:0;top:40px;width:120px;padding:5px;border: 1px solid #CCC;background-color: #FFF;}
+  .cube-nav-dropdown-menu > li > a{font-size:12px;padding:0 10px; line-height:22px; display:block;color: #333;text-decoration: none;}
+  .cube-nav-dropdown-menu > li > a:hover,
+  .cube-nav-dropdown-menu > li > a:focus{background-color: #EEFFFF;color: #009ACE;}
+  .cube-nav-dropdown-menu > li > .active{background-color: #FFF;color:#333;}
+  .cube-nav-divider{height:1px;font-size:0;background-color: #EEE;}
+  
+  .cube-navbar{display:block;}
+  .cube-nav-toggle{display:none;float:right;width:30px;height:22px;padding:9px 5px;color:#fff;}
+  .cube-nav-toggle > div {border: 1px solid #FFF;width:28px;height:18px;padding:2px 0 0 0;}
+  .cube-nav-toggle > div > span{display:block;margin:0 auto;width:18px;height:3px;font-size:0;border-bottom: 1px solid #FFF;}
+  
+  /* /nav */
+  
+  </style>
+
+  </head>
+  <body>
+
+<div class="cube-nav">
+	<div class="cube-container">
+		<div class="cube-nav-brand"><a href="#">Cube</a></div>
+		<div class="cube-nav-toggle"><div><span></span><span></span><span></span></div></div>
+		<div class="cube-navbar">
+			<ul class="cube-nav-left">
+				<li><a href="#" class="active">首页</a></li>
+				<li><a href="#">下载</a></li>
+				<li><a href="#">开发文档</a></li>
+				<li><a href="#">扩展</a></li>
+				<li><a href="#">代码</a></li>
+			</ul>
+			<ul class="cube-nav-right">
+				<li><a href="#">注册</a></li>
+				<li><a href="#">登录</a></li>
+				<li class="cube-nav-dropdown">
+					<a href="#" class="active">我的 <span class="caret"></span></a>
+					<ul class="cube-nav-dropdown-menu ">
+						<li><a href="#">中心</a></li>
+						<li><a href="#" class="active">中心</a></li>
+						<li><a href="#">中心</a></li>
+						<li class="cube-nav-divider"></li>
+						<li><a href="#">退出</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="cube-clear"></div>
+</div>
+
+<div class="cube-container">footer</div>
+
+  </body>
+</html>
