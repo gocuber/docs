@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="http://res.gocuber.com/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="http://res.gocuber.com/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -59,15 +59,95 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 简介</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 使用Smarty</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">简介</div>
-		<p>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 !</p>	</div>
+		<div class="cube-title">使用Smarty</div>
+		<p>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 !</p>
+
+<br />
+<p>　　在框架中使用Smarty</p>
+<br />
+<br />
+<br />
+　　下载Smarty包，放到mf/lib目录下；使之成为下面这样的目录：
+<br />
+　　SYSTEM_DIR.'mf/lib/smarty/libs/Smarty.class.php'
+<br />
+<br />
+　　写一个Smarty操作类，下面的SmartyCls在MF框架中已经写好；
+<br />
+<pre>
+
+	class SmartyCls
+	{
+
+		public function display($tpl='',$hash=null)
+		{
+
+			/* 包含smarty */
+			include_once(SYSTEM_DIR.'mf/lib/smarty/libs/Smarty.class.php');
+			$smarty = new Smarty;
+
+			/* smarty关键配置 */
+			$smarty->caching           = false;   //开启缓存
+			$smarty->cache_lifetime    = 3600;    //缓存时间
+			$smarty->compile_check     = true;    //每次执行时都会检查当前模板是否被修改过，如果修改过，会重新编译那个模板，上面的缓存时间没过也会重新编译
+			$smarty->force_compile     = false;   //强迫smarty每次都重新编译模板(优先级最高，设置为true时compile_check将无效，如开启了缓存caching，每次将会重新生成缓存文件，建议在线下开发时开启，产品正式上线后设置为false)
+
+			/* 目录相关配置 */
+			$smarty->template_dir      = VIEWS_DIR;                              //模板目录
+			$smarty->compile_dir       = SYSTEM_DIR.'data/smarty/templates_c/';  //编译目录
+			$smarty->config_dir        = SYSTEM_DIR.'data/smarty/config/';       //配置目录
+			$smarty->cache_dir         = SYSTEM_DIR.'data/smarty/cache/';        //缓存目录
+
+			//is_mkdir($smarty->compile_dir); //smarty3以下版本不会自动创建多重目录
+			//is_mkdir($smarty->config_dir);
+			//is_mkdir($smarty->cache_dir);
+
+			/* 其它配置 */
+			$smarty->allow_php_tag     = true;  //smarty3默认禁止了{php}标签，如果要启用需要设置一下 true为启用
+			$smarty->debugging         = false; //是否启动调试控制台 如打开将显示 smarty 变量和运行状态的调试窗口
+			$smarty->left_delimiter    = '{{';  //左右结束符变量
+			$smarty->right_delimiter   = '}}';
+
+			/* 使用smarty */
+			$smarty->assign($hash); //赋值
+			$smarty->display($tpl); //显示调用模板
+
+		}
+
+	}
+
+
+	在控制器中调用；
+
+	function testAction()
+	{
+		$hash = array(
+			'title' => '使用Smarty',
+			'name'  => 'Smarty',
+		);
+		MF::G('SmartyCls')->display('smarty_test.tpl',$hash);
+	}
+
+
+	模板中直接输出；views/smarty_test.tpl
+
+	{{$title}}
+	{{$name}}
+
+</pre>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />	</div>
 	</div><!-- /big -->
 
 	

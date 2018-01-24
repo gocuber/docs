@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="http://res.gocuber.com/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="http://res.gocuber.com/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -59,15 +59,175 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 简介</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; URL路由</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">简介</div>
-		<p>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 !</p>	</div>
+		<div class="cube-title">URL路由</div>
+		<div class="h1">URL路由</div>
+
+<ul class="cube-catalog">
+	<li><a href="#config"># 配置与路由格式</a></li>
+	<li><a href="#static"># 静态路由</a></li>
+	<li><a href="#rule"># 规则路由</a></li>
+	<li><a href="#regular"># 正则路由</a></li>
+	<li><a href="#function"># 闭包路由</a></li>
+	<li><a href="#defaultall"># 默认路由与全拦截路由</a></li>
+	<ul>
+		<li><a href="#default"># ['default'] 默认路由</a></li>
+		<li><a href="#all"># ['all'] 全拦截路由</a></li>
+	</ul>
+</ul>
+
+<div class="h2"><a name="config">#</a> 配置与路由格式</div>
+
+<p class="text">　　路由的配置同样写在配置文件 config.php 中；如下：</p>
+
+<pre class="brush: php;">
+	$_G['route'] = array(
+
+		'login'                => 'admin/login',               //静态路由
+		'user/center'          => 'ucenter/user/center?id=10', //静态路由
+
+		'view/(:0)'            => 'demo/view/?id={:1}',            //规则路由
+		'list/(:a)'            => 'item/?p={:1}',                  //规则路由
+
+		'/^detail/([0-9]+)$/i'              => 'demo/view/?id={:1}',   //正则路由
+		'/^(user|news)\/list\/([0-9]+)$/i'  => '{:1}/list/?p={:2}',    //正则路由
+
+		'helloworld'           => function(){echo 'Hello World';},      //闭包路由
+		'list/(:a)/(:0)'       => function($p1,$p2){echo $p1 . $p2;},   //闭包路由
+
+	);
+</pre>
+
+
+<p class="text">
+　　路由格式： '访问url' => '模块/控制器/动作/?参数=值&参数=值'<br />
+　　如果是默认模块则可以省略；如果是默认动作 index 同样也可以省略；
+</p>
+
+
+
+<div class="h2"><a name="static">#</a> 静态路由</div>
+
+<p class="text">　　静态路由就是基本的简单的路由，不带任何规则及正则表达式的路由，通常只是简单的实现把访问url分配到相应的控制器/动作中；如下：</p>
+
+<pre class="brush: php;">
+
+'login' => 'admin/login',
+
+'user/center' => 'ucenter/user/center',
+
+'about' => 'view/?id=10', // 可传GET参数 $_GET['id'] = 10
+
+// ...
+</pre>
+
+
+
+<div class="h2"><a name="rule">#</a> 规则路由</div>
+
+<p class="text">　　规则路由就是由通配符组成的路由，通常只是简单匹配全数字、全字母、全部字符等；如下：</p>
+
+<pre class="brush: php;">
+
+// (:0) 匹配全部数字
+'view/(:0)' => 'demo/view/?id={:1}',
+
+// (:a) 匹配全部字母
+'list/(:a)' => 'item/{:1}/',
+
+// (:.) 匹配全部字符
+'user/(:.)' => 'test/user/{:1}/',
+
+// ...
+</pre>
+
+<p class="text">　　可以自定义常用的全局约束通配符；代码：</p>
+
+<pre class="brush: php;">
+
+$_G['route_wildcard'] = array(
+
+	'id'   => '[0-9]+',
+	'name' => '[a-z]+',
+	'year' => '[0-9]{4}',
+
+);
+
+'list/(:name)' => 'item/{:1}/',
+
+'view/(:year)/(:id)' => 'view?year={:1}&id={:2}',
+
+// ...
+</pre>
+
+<div class="h2"><a name="regular">#</a> 正则路由</div>
+
+<p class="text">　　正则路由就是由正则表达式组成的路由，必须以 / 开头；如下：</p>
+
+<pre class="brush: php;">
+
+'/^detail\/([0-9]+)$/i' => 'demo/view/?id={:1}',
+
+'/^(user|news)\/list\/([0-9]+)$/i'  => '{:1}/list/?p={:2}',
+
+// ...
+</pre>
+
+<p class="text">　　需要注意的是只有正则路由必须以 / 开头；其他路由开头不能加 /</p>
+
+
+<div class="h2"><a name="function">#</a> 闭包路由</div>
+
+<p class="text">　　可以使用闭包的方式定义一些简单的特殊需求的路由，直接写一个函数；代码：</p>
+
+<pre class="brush: php;">
+
+// 闭包路由
+'about' => function(){
+	echo 'Hello World';
+},
+
+'view/(:0)' => function($p1){
+	echo $id;
+},
+
+'view/(:a)/(:0)' => function($p1,$p2){
+	echo $p1 . $p2;
+},
+
+// ...
+</pre>
+
+
+<div class="h2"><a name="defaultall">#</a> 默认路由与全拦截路由</div>
+
+<div class="h3"><a name="default">['default'] 默认路由</a></div>
+<p class="text">　　当url中没有包含任何路由信息，如首页，就会执行 ['default'] 指定的控制器及动作；</p>
+
+<pre class="brush: php;">
+
+'default' => 'index/index', //可以省略，默认值是 index
+
+</pre>
+
+
+<div class="h3"><a name="all">['all'] 全拦截路由</a></div>
+<p class="text">　　输入任何地址，或不输入都会执行 ['all'] 指定的控制器及动作；相当于其它路由全部无效；</p>
+
+<pre class="brush: php;">
+
+'all' => 'test/index',
+
+</pre>
+
+
+<br /><br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	

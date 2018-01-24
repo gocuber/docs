@@ -59,15 +59,141 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 简介</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; Controller 控制器</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">简介</div>
-		<p>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 !</p>	</div>
+		<div class="cube-title">Controller 控制器</div>
+		<div class="h1">Controller 控制器</div>
+
+<div class="catalog">
+	<li><a href="#example"># 控制器简单实例</a></li>
+	<li><a href="#action"># 创建动作方法</a></li>
+	<li><a href="#namerule"># 命名规则</a></li>
+	<li><a href="#directory"># 控制器目录</a></li>
+	<li><a href="#construct"># 构造方法</a></li>
+	<li><a href="#init"># init() 方法</a></li>
+</div>
+
+<div class="h2"><a name="example">#</a> 控制器简单实例</div>
+
+<p class="text">
+　　控制器是由一个或多个 action() 动作方法组成；<br />
+　　我们先来创建一个简单的控制器，DemoController.php，保存到 apps/default/controllers/ 文件夹下；<br />代码如下：
+</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		function indexAction()
+		{
+			echo 'Welcome to CubePHP框架 !';
+		}
+
+	}
+
+</pre>
+
+<p class="text">
+　　现在通过URL http://localhost/demo/ 来访问这个控制器，会显示：Welcome to CubePHP框架 !<br />
+　　默认的控制器/动作都是：index；<br />
+</p>
+
+
+
+<div class="h2"><a name="action">#</a> 创建动作方法</div>
+
+<p class="text">　　接下来我们在创建一个新的动作方法 welcomeAction()</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		//...
+
+		function welcomeAction()
+		{
+			echo '新创建的动作方法：welcome';
+		}
+
+	}
+
+</pre>
+<p class="text">
+　　访问URL http://localhost/demo/welcome/，会显示：新创建的动作方法：welcome
+</p>
+
+
+
+<div class="h2"><a name="namerule">#</a> 命名规则</div>
+
+<p class="text">
+　　控制器命名规则为：第一个字母大写，后面跟 Controller ；控制器继承 Controller 类；<br />
+　　动作命名规则为：全部小写，后面跟 Action ；<br />
+</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+		function indexAction()
+		{}
+		function welcomeAction()
+		{}
+	}
+
+</pre>
+
+
+<div class="h2"><a name="directory">#</a> 控制器目录</div>
+
+<p class="text">
+　　一般情况下，控制器默认目录是 apps/模块/controllers/ ；<br />
+　　但是，实际上控制器可以存放在任意目录；我们可以通过配置 config.php 来指定控制器的目录；参考模块目录配置章节；
+</p>
+
+
+<div class="h2"><a name="directory">#</a> 构造方法</div>
+
+<p class="text">
+　　可以在控制器中使用 __construct() 构造方法；但是需要注意一定要将下面这行代码写在里面；或者直接使用 init() 方法；代码：
+</p>
+
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+		function __construct()
+		{
+			parent::__construct(); //调用父类构造方法
+		}
+	}
+
+</pre>
+
+
+<div class="h2"><a name="init">#</a> init() 方法</div>
+
+<p class="text">
+　　init() 方法同构造方法一样，会在控制器被调用时自动执行；代码：
+</p>
+
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+		function init()
+		{
+			// ...
+		}
+	}
+
+</pre>
+
+<br /><br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	

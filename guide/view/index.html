@@ -59,15 +59,202 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 简介</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; View 视图模板</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">简介</div>
-		<p>CubePHP框架 —— 一个干净、轻便、快速、稳定、可扩展的PHP MVC框架 !</p>	</div>
+		<div class="cube-title">View 视图模板</div>
+		<div class="h1">View 视图模板</div>
+
+<div class="catalog">
+	<li><a href="#view"># View 视图类简单实例</a></li>
+	<li><a href="#assign"># assign() 赋值</a></li>
+	<li><a href="#display"># display() 显示视图模板</a></li>
+	<li><a href="#load"># load() 视图中加载其他视图文件</a></li>
+</div>
+
+<div class="h2"><a name="view">#</a> 简单实例</div>
+
+
+<p class="text">　　为了实现逻辑和界面分离，大部分逻辑应该被放置于控制器或模型中，而视图仅仅用于显示结果。接下来，我们做一个简单的实例，控制器代码：</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		//...
+
+		function welcomeAction()
+		{
+			G('View')->assign('title', 'Hello World');   //赋值
+			G('View')->assign('date',  date('Y-m-d'));   //赋值
+			G('View')->display('demo_welcome');          //显示视图模板
+		}
+
+	}
+
+</pre>
+
+
+<p class="text">　　创建一个模板文件，demo_welcome.php，保存到 default/views/ 文件夹下，代码：</p>
+<pre class="brush: php;">
+
+	echo $title; //Hello World
+	echo $date;  //当前日期
+
+</pre>
+
+
+<div class="h2"><a name="assign">#</a> assign() 赋值</div>
+
+
+<p class="text">　　上面实例中使用了 assign() 方法给视图模板中赋值，传了两个参数 assign($key, $value)<br />
+也可以传入一个数组；如：
+</p>
+
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		//...
+
+		function welcomeAction()
+		{
+			$array = array(
+				'title' => 'Hello World',
+				'date'  => date('Y-m-d'),
+			);
+			G('View')->assign($array);
+			G('View')->display('demo_welcome');
+		}
+
+	}
+
+</pre>
+
+<p class="text">　　模板代码：</p>
+
+<pre class="brush: php;">
+
+	echo $title; //Hello World
+	echo $date;  //输出日期
+
+</pre>
+
+
+<div class="h2"><a name="display">#</a> display() 显示视图模板</div>
+
+
+<p class="text">　　display() 方法用于调用视图模板显示；也可以调用视图同时赋值；代码：</p>
+
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		//...
+
+		function welcomeAction()
+		{
+			$array = array(
+				'title' => 'Hello World',
+				'date'  => date('Y-m-d'),
+			);
+			G('View')->display('demo_welcome', $array); //调用视图同时赋值
+		}
+
+	}
+
+</pre>
+
+<p class="text">　　这样就可以省去 assign() 赋值方法；</p>
+
+
+
+<div class="h2"><a name="load">#</a> load() 视图中加载其他视图文件</div>
+
+
+<p class="text">　　有时需要在视图中加载其他视图文件；如公用的头尾文件等；代码：</p>
+
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		//...
+
+		function welcomeAction()
+		{
+			$array = array(
+				'menu'  => array('首页','下载','开发文档','代码'),
+				'title' => 'Hello World',
+				'date'  => date('Y-m-d'),
+			);
+			G('View')->display('demo_welcome', $array); //调用视图同时赋值
+		}
+
+	}
+
+</pre>
+
+<p class="text">　　demo_welcome 模板代码：</p>
+
+<pre class="brush: php;">
+
+	G('View')->load('header');
+
+	echo $title; //Hello World
+	echo $date;  //输出日期
+
+	// ...
+
+</pre>
+
+
+<p class="text">　　header 模板代码：</p>
+
+<pre class="brush: php;">
+
+	if(!empty($menu) and is_array($menu)){
+		foreach($menu as $value){
+			echo '<li>' . $value . '</li>';
+		}
+	}
+
+</pre>
+
+
+
+<p class="text">　　load() 方法加载视图模板同时也可赋值；代码：</p>
+
+<pre class="brush: php;">
+
+	G('View')->load('header');
+
+	echo $title; //Hello World
+	echo $date;  //输出日期
+
+	G('View')->load('footer', arrray( 'copy'=>'版权所有', 'powered'=>'MFPHP' )); //赋值
+
+</pre>
+
+<p class="text">　　display() load() 方法所传的视图模板文件都是以 .php 为后缀；views 目录下可以创建子级目录；代码：</p>
+<pre class="brush: php;">
+
+	// php 代码
+	G('View')->display('global/demo_welcome');  // views/global/demo_welcome.php
+
+	// 视图代码
+	G('View')->load('global/header');           // views/global/header.php
+
+	// ...
+</pre>
+
+<br /><br />	</div>
 	</div><!-- /big -->
 
 	
