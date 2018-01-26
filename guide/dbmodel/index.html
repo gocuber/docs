@@ -50,7 +50,6 @@ var _hmt = _hmt || [];
 				<li><a href="http://www.gocuber.com/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="http://www.gocuber.com/demo/" title="CubePHP框架演示">演示</a></li>
 			</ul>
-
 			
 		</div>
 	</div>
@@ -60,15 +59,241 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 数据库表model的使用</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 数据库模型(model)的使用</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">数据库表model的使用</div>
-			</div>
+		<div class="cube-title">数据库模型(model)的使用</div>
+		<div class="h1">数据库模型(model)的使用</div>
+
+<ul class="cube-catalog">
+	<li><a href="#text"># 介绍</a></li>
+	<li><a href="#users"># 创建用户表model</a></li>
+	<li><a href="#group"># 创建用户组表model</a></li>
+	<li><a href="#extends"># 简化写法</a></li>
+	<li><a href="#model"># model的使用 DB::model()</a></li>
+	<li><a href="#field"># getField() 方法</a></li>
+</ul>
+
+<div class="h2"><a name="text">#</a> 介绍</div>
+
+<p class="text">
+　　Model 模型 是应用程序中用于处理应用程序数据逻辑的部分；<br />
+　　通常模型负责在数据库中存取数据；<br />
+　　一般情况下，一个数据库表对应一个 models 类文件；<br />
+<br />
+　　使用 DB::model('user') 来调用models类文件；<br />
+　　DB::model('user') 这里的user并不是表名称；而是对应一个models目录中的类文件；<br />
+　　注：mfphp框架中提供一个函数方法 M(); 等同于DB::model(); 所以也可以使用 M('user'); 来调用models类文件；<br />
+<br />
+<br />
+　　举例说明；<br />
+<br />
+　　库名：ucenter    用户中心库<br />
+　　表名：uc_user    用户表<br />
+　　表名：uc_group   用户组表<br />
+</p>
+
+
+<div class="h2"><a name="users">#</a> 创建用户表model</div>
+<p class="text">
+　　使用前缀 uc ，新建 uc 目录用于存放用户中心库下所有的表 models 类文件；<br />
+　　新建 models 类 user.php 保存到 models/uc/ 目录中；<br />
+<br />
+　　代码如下：
+</p>
+
+
+<pre class="brush: php;">
+
+	class uc_user extends DB               //继承DB类
+	{
+
+		public $_dbname     = 'ucenter';   //数据库名称
+		public $_name       = 'uc_user';   //表名称
+		public $_primarykey = 'id';        //如果有主键；主键字段名称
+
+		public function getConfig()
+		{
+			return $GLOBALS['_G']['db']['default'];      //数据库配置；配置文件 config.php
+		}
+
+	}
+
+</pre>
+<p class="text">　　接下来就可以 DB::model('uc_user') 这样使用了；注：uc_user 对应的是 models 类名；</p>
+
+
+<div class="h2"><a name="group">#</a> 创建用户组表model</div>
+<p class="text">　　新建 group.php 保存到 models/uc/ 目录中；如下：</p>
+<pre class="brush: php;">
+
+	class uc_group extends DB
+	{
+
+		public $_dbname     = 'ucenter';
+		public $_name       = 'uc_group';
+		public $_primarykey = 'id';
+
+		public function getConfig()
+		{
+			return $GLOBALS['_G']['db']['default'];
+		}
+
+	}
+
+</pre>
+
+
+<div class="h2"><a name="extends">#</a> 简化写法</div>
+<p class="text">
+　　为了简化写法；可以给每个数据库建立一个类；统一放到 db 目录中；库中所有表继承这个类；如：<br /><br />
+　　新建 ucenter.php 保存到 models/db/ 目录中；
+</p>
+<pre class="brush: php;">
+
+	class db_ucenter extends DB
+	{
+
+		public $_dbname     = 'ucenter';
+		public function getConfig()
+		{
+			return array();
+		}
+
+	}
+
+</pre>
+
+<p class="text">　　前面的表 models 类 uc_user uc_group 可以改写成：</p>
+<pre class="brush: php;">
+
+	class uc_user extends db_ucenter
+	{
+		public $_name       = 'uc_user';
+		public $_primarykey = 'id';
+		// ..
+	}
+
+	class uc_group extends db_ucenter
+	{
+		public $_name       = 'uc_group';
+		public $_primarykey = 'id';
+		// ..
+	}
+
+</pre>
+
+
+
+<div class="h2"><a name="model">#</a> model的使用 DB::model()</div>
+<p class="text">　　使用 DB::model('uc_user') 直接操作用户表；不用再使用 connect() 方法连库；也不用使用 name() 方法指定表名；如下：</p>
+<pre class="brush: php;">
+
+	DB::model('uc_user')->get();
+
+	DB::model('uc_user')->where()->line();
+
+	DB::model('uc_user')->val('name');
+
+	DB::model('uc_user')->delete();
+
+	DB::model('uc_user')->update();
+
+	// ...
+</pre>
+
+<p class="text">
+　　DB::model('uc_user') 相当于前面的 DB::connect()->name('uc_user')<br />
+　　get() line() delete() update() 等方法用法同前面讲的一样；<br />
+　　还可以直接使用 M() 函数来调用 model ；如下：
+</p>
+
+<pre class="brush: php;">
+
+	M('uc_user')->get();
+
+	M('uc_user')->where()->line();
+
+	M('uc_user')->val('name');
+
+	M('uc_user')->delete();
+
+	M('uc_user')->update();
+
+	// ...
+</pre>
+
+
+
+<div class="h2"><a name="field">#</a> getField() 方法</div>
+<p class="text">　　在 model 类中可以写 getField() 方法；来指定表字段类型；如下：</p>
+<pre class="brush: php;">
+
+	class Uc_User extends DB_Default
+	{
+		protected $_name       = 'uc_user';
+		protected $_primarykey = 'id';
+
+		public function getFields()
+		{
+			$fields = array(
+				'id',            // 用户id
+				'username',      // 账号
+				'password',      // 密码
+				'status',        // 状态
+				'is_sys',        // 是否系统用户
+				'is_super',      // 是否超级管理员
+				'mobile',        // 手机
+				'email',         // email
+				'name',          // 姓名
+				'nickname',      // 昵称
+				'lastlogintime', // 最后登录时间
+				'lastloginip',   // 最后登录IP
+				'createtime',    // 创建时间
+				'updatetime',    // 更新时间
+			);
+			return $fields;
+		}
+	}
+
+</pre>
+
+
+<p class="text">　　getField() 方法主要用于 insert() update() 方法中传数组时候会自动处理字段类型；</p>
+<pre class="brush: php;">
+
+	$dbdata = array( 'username'=>'user1', 'password'=>'1234567', 'status'=>1, );
+
+	DB::model('uc_user')->insert($dbdata);
+
+	DB::model('uc_user')->where(array( 'id',1 ))->update($dbdata);
+
+</pre>
+
+<p class="text">　　需要注意的是不要传入 getField() 方法中不存在的字段；</p>
+<pre class="brush: php;">
+
+	$dbdata = array(
+		'username'  => 'user1',
+		'password'  => '1234567',
+		'status'    => 1,
+		'groupname' => 'sys',        //这个字段会丢掉，因为 getField() 方法中没有此字段
+	);
+
+	DB::model('uc_user')->insert($dbdata);
+
+	DB::model('uc_user')->where(array( 'id',1 ))->update($dbdata);
+
+</pre>
+
+<p class="text">　　如果此方法 getField() 返回一个空值 空数组 或无返回值的时候则不受此限制；没有定义 getField() 方法的时候同样也不受此限制；</p>
+
+
+<br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	
@@ -77,7 +302,7 @@ var _hmt = _hmt || [];
 
     		<div class="cube-title">开发文档</div>
 		<ul class="cube-menu">
-		<li>开始</li><ul><li><a href="http://www.gocuber.com/guide/about/">简介</a></li><li><a href="http://www.gocuber.com/guide/down/">下载和安装</a></li><li><a href="http://www.gocuber.com/guide/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="http://www.gocuber.com/guide/directory/">目录结构</a></li><li><a href="http://www.gocuber.com/guide/entrance/">入口文件</a></li><li><a href="http://www.gocuber.com/guide/urlmodel/">URL模式</a></li><li><a href="http://www.gocuber.com/guide/rewrite/">URL重写</a></li><li><a href="http://www.gocuber.com/guide/controller/">Controller 控制器</a></li><li><a href="http://www.gocuber.com/guide/view/">View 视图模板</a></li><li><a href="http://www.gocuber.com/guide/model/">Model 模型</a></li><li><a href="http://www.gocuber.com/guide/module/">Module 模块</a></li><li><a href="http://www.gocuber.com/guide/route/">URL路由</a></li><li><a href="http://www.gocuber.com/guide/autoload/">类自动加载</a></li><li><a href="http://www.gocuber.com/guide/rule/">开发规范</a></li></ul><li>数据库</li><ul><li><a href="http://www.gocuber.com/guide/dbbase/">配置与使用基础</a></li><li><a href="http://www.gocuber.com/guide/dbquery/">查询结构器</a></li><li><a href="http://www.gocuber.com/guide/dbmodel/">数据库表model的使用</a></li><li><a href="http://www.gocuber.com/guide/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="http://www.gocuber.com/guide/memcache/">Memcache</a></li><li><a href="http://www.gocuber.com/guide/redis/">Redis</a></li><li><a href="http://www.gocuber.com/guide/cachesession/">SESSION</a></li></ul><li>搜搜引擎</li><ul><li><a href="http://www.gocuber.com/guide/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="http://www.gocuber.com/guide/func/">系统函数说明</a></li><li><a href="http://www.gocuber.com/guide/class/">系统类库说明</a></li><li><a href="http://www.gocuber.com/guide/session/">SESSION使用</a></li><li><a href="http://www.gocuber.com/guide/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="http://www.gocuber.com/guide/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="http://www.gocuber.com/guide/smarty/">使用Smarty</a></li><li><a href="http://www.gocuber.com/guide/lib/">使用第三方库</a></li><li><a href="http://www.gocuber.com/guide/sae/">SAE环境下开发</a></li></ul>		</ul>
+		<li>开始</li><ul><li><a href="http://www.gocuber.com/guide/about/">简介</a></li><li><a href="http://www.gocuber.com/guide/down/">下载和安装</a></li><li><a href="http://www.gocuber.com/guide/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="http://www.gocuber.com/guide/directory/">目录结构</a></li><li><a href="http://www.gocuber.com/guide/entrance/">入口文件</a></li><li><a href="http://www.gocuber.com/guide/urlmodel/">URL模式</a></li><li><a href="http://www.gocuber.com/guide/rewrite/">URL重写</a></li><li><a href="http://www.gocuber.com/guide/controller/">Controller 控制器</a></li><li><a href="http://www.gocuber.com/guide/view/">View 视图模板</a></li><li><a href="http://www.gocuber.com/guide/model/">Model 模型</a></li><li><a href="http://www.gocuber.com/guide/module/">Module 模块</a></li><li><a href="http://www.gocuber.com/guide/route/">URL路由</a></li><li><a href="http://www.gocuber.com/guide/autoload/">类自动加载</a></li><li><a href="http://www.gocuber.com/guide/rule/">开发规范</a></li></ul><li>数据库</li><ul><li><a href="http://www.gocuber.com/guide/dbbase/">数据库配置与使用基础</a></li><li><a href="http://www.gocuber.com/guide/dbquery/">数据库查询结构器</a></li><li><a href="http://www.gocuber.com/guide/dbmodel/">数据库模型(model)的使用</a></li><li><a href="http://www.gocuber.com/guide/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="http://www.gocuber.com/guide/memcache/">Memcache</a></li><li><a href="http://www.gocuber.com/guide/redis/">Redis</a></li><li><a href="http://www.gocuber.com/guide/cachesession/">SESSION</a></li></ul><li>搜索引擎</li><ul><li><a href="http://www.gocuber.com/guide/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="http://www.gocuber.com/guide/func/">系统函数说明</a></li><li><a href="http://www.gocuber.com/guide/class/">系统类库说明</a></li><li><a href="http://www.gocuber.com/guide/session/">SESSION使用</a></li><li><a href="http://www.gocuber.com/guide/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="http://www.gocuber.com/guide/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="http://www.gocuber.com/guide/smarty/">使用Smarty</a></li><li><a href="http://www.gocuber.com/guide/lib/">使用第三方库</a></li><li><a href="http://www.gocuber.com/guide/sae/">SAE环境下开发</a></li></ul>		</ul>
 	
     </div>
     </div><!-- /small -->
@@ -98,9 +323,7 @@ var G = {
 	'cubeUrl' : 'http://www.gocuber.com/',
 	'resUrl' : '/res/',
 	'apiUrl' : 'http://api.gocuber.com/',
-	'cookieKey' : '',
-	'publicKey' : 'C5FB1E04C706C8264624079F51B36EE19136E9D62984BE4CD955493D32A672C6E7EF4453B4094CA78E3D86E1FD57E8FE38E2F9CAA39C7A6F3C665E6CE30AB1F019CE7795224F10893945B5F2F3C16E4806BD2D2A54AB73D3B5C338147878495225EF1585B4A67E2A303363B7A47F86FBC875A5F28A3032C7705D4138A0C122DD',
-	'cookieDomain' : 'gocuber.com'
+	'publicKey' : 0
 };
 </script>
 

@@ -50,7 +50,6 @@ var _hmt = _hmt || [];
 				<li><a href="http://www.gocuber.com/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="http://www.gocuber.com/demo/" title="CubePHP框架演示">演示</a></li>
 			</ul>
-
 			
 		</div>
 	</div>
@@ -60,15 +59,261 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 配置与使用基础</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 数据库配置与使用基础</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">配置与使用基础</div>
-			</div>
+		<div class="cube-title">数据库配置与使用基础</div>
+		<div class="h1">数据库配置与使用基础</div>
+
+<ul class="cube-catalog">
+	<li><a href="#config"># 配置</a></li>
+	<li><a href="#connect"># 数据库连接 DB::connect()</a></li>
+	<li><a href="#curd"># 增删查改使用基础</a></li>
+	<ul>
+		<li><a href="#select"># select() 查询</a></li>
+		<li><a href="#insert"># insert() 增加</a></li>
+		<li><a href="#delete"># delete() 删除</a></li>
+		<li><a href="#update"># update() 修改</a></li>
+		<li><a href="#query"># query() 执行SQL语句</a></li>
+		<li><a href="#exec"># exec() 执行一条SQL返回影响行数</a></li>
+		<li><a href="#transaction"># transaction() 执行一组事务</a></li>
+	</ul>
+</ul>
+
+<div class="h2"><a name="config">#</a> 配置</div>
+
+<p class="text">　　配置文件 config.php</p>
+
+<pre class="brush: php;">
+
+	// 默认数据库配置
+	$_G['db']['default'] = array(
+		'master_server' => '192.168.0.1',      // 主库
+		'slave_server'  => '192.168.0.2',      // 从库
+		'port'     => 3306,                    // 端口
+		'username' => 'root',                  // 用户名
+		'password' => '***',                   // 密码
+		'database' => 'db_cube',               // 数据库名
+		'charset'  => 'utf8',                  // 编码
+		'driver'   => 'mysql',                 // 数据库类型
+	);
+
+</pre>
+
+<p class="text">　　可以配置主从库来实现读写分离，其中 master_server 是主库地址，slave_server 是从库地址，slave_server 从库可以配置多个，如下：</p>
+
+<pre class="brush: php;">
+
+	// 默认数据库配置
+	$_G['db']['default'] = array(
+		'master_server' => '127.0.0.1',
+		'slave_server' => array(
+			'slave1',
+			'slave2',
+		),
+		'port'     => 3306,
+		'username' => 'root',
+		'password' => '***',
+		'database' => 'db_cube',
+		'charset'  => 'utf8',
+		'driver'   => 'mysql',
+	);
+
+</pre>
+
+<p class="text">　　一般情况下，在你的应用中会有多个数据库；</p>
+
+<pre class="brush: php;">
+
+	// user用户库
+	$_G['db']['user'] = array(
+		'master_server' => '127.0.0.1:3306',
+		'slave_server'  => array(),
+		'username' => 'root',
+		'password' => '123456',
+		'database' => 'db_user',                 // 数据库名
+		'charset'  => 'utf8',
+		'driver'   => 'mysql',
+	);
+
+	// stat统计库
+	$_G['db']['stat'] = array(
+		'master_server' => '127.0.0.1:3306',
+		'slave_server'  => array(),
+		'username' => 'root',
+		'password' => '123456',
+		'database' => 'db_stat',                 // 数据库名
+		'charset'  => 'utf8',
+		'driver'   => 'mysql',
+	);
+</pre>
+
+
+<div class="h2"><a name="connect">#</a> 数据库连接 DB::connect()</div>
+
+<p class="text">　　使用 DB 类来操作数据库；使用 DB::connect() 连接默认数据库；使用 DB::connect('user') 连接指定数据库；</p>
+
+<pre class="brush: php;">
+
+	$dbdef  = DB::connect();        // 连接默认数据库
+	$dbuser = DB::connect('user');  // 连接用户库
+	$dbstat = DB::connect('stat');  // 连接统计库
+
+	$dbdef->select();
+	$dbdef->insert();
+
+	// 可以直接使用
+	DB::connect()->select();
+	DB::connect('user')->select();
+
+	// ...
+</pre>
+
+
+
+<div class="h2"><a name="curd">#</a> 增删查改使用基础</div>
+<div class="h3"><a name="select">select() 查询</a></div>
+
+<pre class="brush: php;">
+
+	// where id=10
+	$array = DB::connect()->select("select id,name from user where id = ? ", [ 10 ]);
+
+</pre>
+
+<p class="text">　　select()方法返回一个数组</p>
+
+
+<pre class="brush: php;">
+
+	// where id=10
+	DB::connect()->select("select id,name from user where id = :id ", [ 'id'=>10 ]);
+
+
+	$db = DB::connect();
+
+	// where status=1 and role='reg'
+	$db->select("... status = ? and role = ? ", [ 1,'reg' ]);
+
+	// where status=1 and role='reg'
+	$db->select("... status = :status and role = :role ", [ 'status'=>1, 'role'=>'reg' ]);
+
+</pre>
+
+<p class="text">　　sql中两种写法；使用问号 ? 或冒号 : 两种写法不能同时使用；</p>
+
+
+<div class="h3"><a name="insert">insert() 增加</a></div>
+
+<pre class="brush: php;">
+
+	DB::connect()->insert("insert into user (name,status) values ( ? , ? )", [ 'abc', 1 ]);
+
+</pre>
+
+<p class="text">　　insert()方法返回最后插入的自增主键id，如果当前表有主键的话；</p>
+
+
+
+<div class="h3"><a name="delete">delete() 删除</a></div>
+
+<pre class="brush: php;">
+
+	DB::connect()->delete("delete from user where id=?", array( 10 ));
+
+</pre>
+
+<div class="h3"><a name="update">update() 修改</a></div>
+
+<pre class="brush: php;">
+
+	DB::connect()->update("update user set status = :status where name = :name ", [ 'status'=>1, 'name'=>'abc' ]);
+
+</pre>
+
+<p class="text">　　delete() 和 update() 方法返回影响行数；</p>
+
+
+<div class="h3"><a name="query">query() 执行sql语句</a></div>
+
+<pre class="brush: php;">
+
+	$db = DB::connect();
+	
+	$db->query("insert into user (name,status) values ( ? , ? )", [ 'abc', 1 ]);
+
+	$db->query("delete from user where id = :id ", [ 'id'=>10 ]);
+
+	$db->query('select ...');
+
+	$db->query('update user set ...');
+
+	$db->query("drop table user");
+
+	$db->query("truncate table user");
+
+	// ...
+
+</pre>
+
+<p class="text">　　需要注意的是 query() 只会执行sql语句；如果你执行了一条select语句，他不会像 select() 方法那样返回一个数组；如果想要使用 query() 得到查询结果，还需使用 fetch() 方法；如下：</p>
+
+<pre class="brush: php;">
+
+	$array = array();
+	$query = $db->query("select id,name from user limit 10");
+	for(;$value = $db->fetch($query);){
+		$array[] = $value;
+	}
+
+	print_r($array);
+
+	// 上面写法等同于 $db->select("select id,name from user limit 10");
+
+</pre>
+
+<p class="text">　　以上代码跟下面返回的结果 $array 是一样的；</p>
+
+<pre class="brush: php;">
+	$array = $db->select("select id,name from user limit 10");
+	print_r($array);
+</pre>
+
+
+<div class="h3"><a name="exec">exec() 执行一条SQL返回影响行数</a></div>
+
+<p class="text">　　如果你能确保sql是安全的可以直接调用 exec() 方法</p>
+
+<pre class="brush: php;">
+	$db->exec("delete from user where id=1001");
+	$db->exec("update user set status=1 where id=1001");
+	$db->exec("create table ...");
+</pre>
+
+<p class="text">　　exec() 只会返回影响行数，实际上就是调用了 PDO 底层的 exec() 方法；如果你想执行查询，并需要后续 fetch() 操作的话，请使用 query() 方法；或直接使用 select() 方法；</p>
+
+
+
+<div class="h3"><a name="transaction">#</a> transaction() 执行一组事务</div>
+
+<pre class="brush: php;">
+
+	DB::connect()->transaction(function(){
+		DB::connect()->insert("...");
+		DB::connect()->insert("...");
+		DB::connect()->update("...");
+	});
+
+</pre>
+<p class="text" style="height:400px;">　　其中一条执行失败，则自动回滚整个事务；</p>
+
+
+
+<br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	
@@ -77,7 +322,7 @@ var _hmt = _hmt || [];
 
     		<div class="cube-title">开发文档</div>
 		<ul class="cube-menu">
-		<li>开始</li><ul><li><a href="http://www.gocuber.com/guide/about/">简介</a></li><li><a href="http://www.gocuber.com/guide/down/">下载和安装</a></li><li><a href="http://www.gocuber.com/guide/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="http://www.gocuber.com/guide/directory/">目录结构</a></li><li><a href="http://www.gocuber.com/guide/entrance/">入口文件</a></li><li><a href="http://www.gocuber.com/guide/urlmodel/">URL模式</a></li><li><a href="http://www.gocuber.com/guide/rewrite/">URL重写</a></li><li><a href="http://www.gocuber.com/guide/controller/">Controller 控制器</a></li><li><a href="http://www.gocuber.com/guide/view/">View 视图模板</a></li><li><a href="http://www.gocuber.com/guide/model/">Model 模型</a></li><li><a href="http://www.gocuber.com/guide/module/">Module 模块</a></li><li><a href="http://www.gocuber.com/guide/route/">URL路由</a></li><li><a href="http://www.gocuber.com/guide/autoload/">类自动加载</a></li><li><a href="http://www.gocuber.com/guide/rule/">开发规范</a></li></ul><li>数据库</li><ul><li><a href="http://www.gocuber.com/guide/dbbase/">配置与使用基础</a></li><li><a href="http://www.gocuber.com/guide/dbquery/">查询结构器</a></li><li><a href="http://www.gocuber.com/guide/dbmodel/">数据库表model的使用</a></li><li><a href="http://www.gocuber.com/guide/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="http://www.gocuber.com/guide/memcache/">Memcache</a></li><li><a href="http://www.gocuber.com/guide/redis/">Redis</a></li><li><a href="http://www.gocuber.com/guide/cachesession/">SESSION</a></li></ul><li>搜搜引擎</li><ul><li><a href="http://www.gocuber.com/guide/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="http://www.gocuber.com/guide/func/">系统函数说明</a></li><li><a href="http://www.gocuber.com/guide/class/">系统类库说明</a></li><li><a href="http://www.gocuber.com/guide/session/">SESSION使用</a></li><li><a href="http://www.gocuber.com/guide/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="http://www.gocuber.com/guide/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="http://www.gocuber.com/guide/smarty/">使用Smarty</a></li><li><a href="http://www.gocuber.com/guide/lib/">使用第三方库</a></li><li><a href="http://www.gocuber.com/guide/sae/">SAE环境下开发</a></li></ul>		</ul>
+		<li>开始</li><ul><li><a href="http://www.gocuber.com/guide/about/">简介</a></li><li><a href="http://www.gocuber.com/guide/down/">下载和安装</a></li><li><a href="http://www.gocuber.com/guide/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="http://www.gocuber.com/guide/directory/">目录结构</a></li><li><a href="http://www.gocuber.com/guide/entrance/">入口文件</a></li><li><a href="http://www.gocuber.com/guide/urlmodel/">URL模式</a></li><li><a href="http://www.gocuber.com/guide/rewrite/">URL重写</a></li><li><a href="http://www.gocuber.com/guide/controller/">Controller 控制器</a></li><li><a href="http://www.gocuber.com/guide/view/">View 视图模板</a></li><li><a href="http://www.gocuber.com/guide/model/">Model 模型</a></li><li><a href="http://www.gocuber.com/guide/module/">Module 模块</a></li><li><a href="http://www.gocuber.com/guide/route/">URL路由</a></li><li><a href="http://www.gocuber.com/guide/autoload/">类自动加载</a></li><li><a href="http://www.gocuber.com/guide/rule/">开发规范</a></li></ul><li>数据库</li><ul><li><a href="http://www.gocuber.com/guide/dbbase/">数据库配置与使用基础</a></li><li><a href="http://www.gocuber.com/guide/dbquery/">数据库查询结构器</a></li><li><a href="http://www.gocuber.com/guide/dbmodel/">数据库模型(model)的使用</a></li><li><a href="http://www.gocuber.com/guide/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="http://www.gocuber.com/guide/memcache/">Memcache</a></li><li><a href="http://www.gocuber.com/guide/redis/">Redis</a></li><li><a href="http://www.gocuber.com/guide/cachesession/">SESSION</a></li></ul><li>搜索引擎</li><ul><li><a href="http://www.gocuber.com/guide/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="http://www.gocuber.com/guide/func/">系统函数说明</a></li><li><a href="http://www.gocuber.com/guide/class/">系统类库说明</a></li><li><a href="http://www.gocuber.com/guide/session/">SESSION使用</a></li><li><a href="http://www.gocuber.com/guide/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="http://www.gocuber.com/guide/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="http://www.gocuber.com/guide/smarty/">使用Smarty</a></li><li><a href="http://www.gocuber.com/guide/lib/">使用第三方库</a></li><li><a href="http://www.gocuber.com/guide/sae/">SAE环境下开发</a></li></ul>		</ul>
 	
     </div>
     </div><!-- /small -->
@@ -98,9 +343,7 @@ var G = {
 	'cubeUrl' : 'http://www.gocuber.com/',
 	'resUrl' : '/res/',
 	'apiUrl' : 'http://api.gocuber.com/',
-	'cookieKey' : '',
-	'publicKey' : 'C5FB1E04C706C8264624079F51B36EE19136E9D62984BE4CD955493D32A672C6E7EF4453B4094CA78E3D86E1FD57E8FE38E2F9CAA39C7A6F3C665E6CE30AB1F019CE7795224F10893945B5F2F3C16E4806BD2D2A54AB73D3B5C338147878495225EF1585B4A67E2A303363B7A47F86FBC875A5F28A3032C7705D4138A0C122DD',
-	'cookieDomain' : 'gocuber.com'
+	'publicKey' : 0
 };
 </script>
 

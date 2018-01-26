@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -50,7 +50,6 @@ var _hmt = _hmt || [];
 				<li><a href="http://www.gocuber.com/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="http://www.gocuber.com/demo/" title="CubePHP框架演示">演示</a></li>
 			</ul>
-
 			
 		</div>
 	</div>
@@ -60,15 +59,478 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 查询结构器</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 数据库查询结构器</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">查询结构器</div>
-			</div>
+		<div class="cube-title">数据库查询结构器</div>
+		<div class="h1">数据库查询结构器</div>
+
+<ul class="cube-catalog">
+	<li><a href="#select"># 查询</a></li>
+	<ul>
+		<li><a href="#name"># name() 指定表名</a></li>
+		<li><a href="#get"># get() 查询多条记录</a></li>
+		<li><a href="#hash"># hash() 查询多条记录</a></li>
+		<li><a href="#line"># line() 查询单条记录</a></li>
+		<li><a href="#val"># val() 查询一个字段</a></li>
+		<li><a href="#count"># count() 总数 max() 最大 min() 最小 avg() 平均 sum() 求和</a></li>
+		<li><a href="#where"># where() 查询条件</a></li>
+		<li><a href="#andwhere"># andWhere() 追加条件 andWhere</a></li>
+		<li><a href="#orwhere"># orWhere() 追加条件 orWhere</a></li>
+		<li><a href="#groupby"># groupBy() 分组</a></li>
+		<li><a href="#having"># having() 子句</a></li>
+		<li><a href="#orderby"># orderBy() 排序</a></li>
+		<li><a href="#limit"># offset() 与 limit() limit语句</a></li>
+		<li><a href="#innerjoin"># innerJoin() 联表查询</a></li>
+		<li><a href="#leftjoin"># leftJoin() 联表查询</a></li>
+		<li><a href="#rightjoin"># rightJoin() 联表查询</a></li>
+		<li><a href="#field"># field() 查询字段</a></li>
+		<li><a href="#query"># query() 执行查询</a></li>
+	</ul>
+	<li><a href="#insert"># 增加</a></li>
+	<li><a href="#delete"># 删除</a></li>
+	<li><a href="#update"># 修改</a></li>
+</ul>
+
+<div class="h2"><a name="select">#</a> 查询</div>
+
+<div class="h3"><a name="name">name() 指定表名</a></div>
+<p class="text">　　使用 name() 方法指定数据库表名称；</p>
+
+<pre class="brush: php;">
+DB::connect()->name('users');
+DB::connect()->name('users')->get();
+DB::connect()->name('users')->line();
+// ...
+</pre>
+
+
+<div class="h3"><a name="get">get() 查询多条记录</a></div>
+<pre class="brush: php;">
+$list = DB::connect()->name('users')->get('id,name');
+print_r($list);
+
+array(
+	array('id'=>1,'name'=>'name1'),
+	array('id'=>2,'name'=>'name2'),
+	// ..
+);
+</pre>
+
+<p class="text">　　get() 方法与 select() 方法返回的结果一样；如下，返回的结果 $list 是一样的；</p>
+
+<pre class="brush: php;">
+$list = DB::connect()->select("select id,name from users");
+print_r($list);
+
+array(
+	array('id'=>1,'name'=>'name1'),
+	array('id'=>2,'name'=>'name2'),
+	// ..
+);
+</pre>
+
+
+<div class="h3"><a name="hash">hash() 查询多条记录</a></div>
+
+<p class="text">　　有时候你需要以某字段做为key返回；</p>
+
+<pre class="brush: php;">
+$list = DB::connect()->name('users')->hash('id','name,date');
+print_r($list);
+
+array(
+	'1' => array('name'=>'name1','date'=>'2010-10-10'),
+	'2' => array('name'=>'name2','date'=>'2010-10-11'),
+	// ..
+);
+
+//或者直接返回一个 key value 格式的hash数组
+$list = DB::connect()->name('users')->hash('id','name');
+print_r($list);
+
+array(
+	'1' => 'name1',
+	'2' => 'name2',
+	// ..
+);
+</pre>
+
+<div class="h3"><a name="line">line() 查询单条记录</a></div>
+<pre class="brush: php;">
+$line = DB::connect()->name('users')->line('id,name');
+print_r($line);
+
+array('id'=>1,'name'=>'name1');
+</pre>
+
+
+<div class="h3"><a name="val">val() 查询一个字段</a></div>
+<pre class="brush: php;">
+$val = DB::connect()->name('users')->val('name');
+
+echo $val; //name2
+</pre>
+
+
+<div class="h3"><a name="count">count() 总数 max() 最大 min() 最小 avg() 平均 sum() 求和</a></div>
+<pre class="brush: php;">
+
+//count() 总数
+$val = DB::connect()->name('users')->count();
+//或
+$val = DB::connect()->name('users')->val('count(*)');
+
+//max() 最大
+$val = DB::connect()->name('users')->max('id');
+//或
+$val = DB::connect()->name('users')->val('max(id)');
+
+//min() 最小
+$val = DB::connect()->name('users')->min('id');
+//或
+$val = DB::connect()->name('users')->val('min(id)');
+
+//avg() 平均
+$val = DB::connect()->name('users')->avg('id');
+//或
+$val = DB::connect()->name('users')->val('avg(id)');
+
+//sum() 求和
+$val = DB::connect()->name('users')->sum('price');
+//或
+$val = DB::connect()->name('users')->val('sum(price)');
+
+</pre>
+
+
+<div class="h3"><a name="where">where() where条件</a></div>
+
+<p class="text">　　where() 方法三种调用格式；如下：</p>
+
+<p class="text">　　一、字符串格式：</p>
+<pre class="brush: php;">
+
+	// where id = 1 and status = 1
+	$db->where("id = 1 and status = 1");
+
+</pre>
+
+<p class="text">　　二、hash格式与数组格式：</p>
+<pre class="brush: php;">
+
+	// hash格式 [ key=>value, key=>value, ...]
+
+	// where id = 1
+	$db->where([ 'id'=>1 ]);
+
+	// where id in (1,2)
+	$db->where([ 'id'=>[1,2] ]);
+
+	// where id in (1,2) and status = 1
+	$db->where([ 'id'=>[1,2], 'status'=>1 ]);
+
+
+	// 数组格式 [ [], [], ...]
+
+	// where id = 1
+	$db->where([ ['id','=',1] ]);
+
+	// where id > 1
+	$db->where([ ['id','>',1] ]);
+
+	// where id = 1
+	$db->where([ ['id',1] ]); // " = " 可以省略
+
+	// where id in (1,2)
+	$db->where([ ['id','in',[1,2]] ]);
+
+	// where id > 1 and status = 1
+	$db->where([ ['id','>',1], ['status',1] ]);
+
+	// where id > 1 and status = 1
+	$db->where([ ['id','>',1], ['status'=>1] ]); // 可以写成 key=>value 格式
+
+	// where id > 1 and status = 1
+	$db->where([ ['id','>',1], 'status'=>1 ]);   // 又一个 key=>value 格式 KV格式可省略[]
+
+</pre>
+
+<p class="text">
+　　三、组合嵌套格式：['and|or', [], [] ...]<br>
+　　'and|or' 可省略，省略默认为 and，如果省略'and|or'实际上就是上面第二种格式；<br>
+　　同样的上面第二种格式 加上 'and|or' 就是组合嵌套格式；<br>
+</p>
+<pre class="brush: php;">
+
+	// 格式 ['and|or', [], [] ...]
+
+	$db->where([ 'and', 'id'=>1, 'status'=>1 ]); // id=1 and status=1
+	$db->where([ 'and', ['id','=',1], ['status','=',1] ]); // id=1 and status=1
+
+	$db->where([ 'and', ['id','=',1], ['status','=',1] ]); // id=1 and status=1
+	$db->where([ 'and', 'id'=>[1,2,3], 'status'=>1 ]); // id in (1,2,3) and status=1
+
+	// 嵌套
+
+	// where (id = 1 or status = 1) and (a = 1 or b = 1)
+	$db->where([ 'and', ['or',['id'=>1],['status'=>1]], ['or',['a'=>1],['b'=>1]] ]);
+
+	// where id>1 and (status=1 or name='name1')
+	$db->where(['and', ['id','>',1], ['or',['status'=>1],['name'=>'name1']]]);
+
+</pre>
+
+<!-- pre class="brush: php;">
+//查询id=1的记录；line()返回单条记录；
+$line = DB::connect()->name('users')->where(array('id','1'))->line('id,name');
+print_r($line);
+
+array('id'=>1,'name'=>'name1')
+
+
+//查询status=1的记录；get()返回多条记录；
+$list = DB::connect()->name('users')->where(array('status','1'))->get('id,name,status');
+print_r($list);
+
+array(
+	array('id'=>1,'name'=>'name1','status'=>'1'),
+	array('id'=>2,'name'=>'name2','status'=>'1'),
+	// ..
+);
+
+
+//查询id>1的记录
+DB::connect()->name('users')->where(array('id','>','1'))->get('id,name');
+
+
+//查询id不等于1的记录
+DB::connect()->name('users')->where(array('id','<>','1'))->get('id,name');
+//或
+DB::connect()->name('users')->where(array('id','!=','1'))->get('id,name');
+
+
+//where name is null
+where(array('name','is null'));
+
+//where name is not null
+where(array('name','is not null'));
+
+//where id=1
+where(array('id','=','1'));
+//或
+where(array('id','1'));
+
+//where id in (1,2,3,4)
+where(array('id','in',array(1,2,3,4)));
+
+//where id=1 or id=2 or id=3 or id=4
+where(array('id','or',array(1,2,3,4)));
+
+//where price > 100 and price < 800
+where(array('price','-',array('100','800')));
+
+// ...
+</pre>
+
+<p class="text">　　可以直接写where条件，传一个字符串；需要注意的是直接传字符串的时候不会对字符进行转义；如下：</p>
+<pre class="brush: php;">
+
+DB::connect()->name('users')->where("id=1 and status=1 and name='abc'")->get();
+
+</pre -->
+
+
+<div class="h3"><a name="andwhere">andWhere() 追加条件 andWhere</a></div>
+<pre class="brush: php;">
+
+//where id=1 and status=1
+DB::connect()->name('users')->where(array('id','1'))->addWhere(array('status','1'))->get();
+
+//where id=1 and status=1 and name='abc'
+DB::connect()->name('users')->where(array('id','1'))
+				->addWhere(array('status','1'))
+				->addWhere(array('name','abc'))->get();
+
+// ...
+</pre>
+
+
+<div class="h3"><a name="orwhere">orWhere() 追加条件 orWhere</a></div>
+<pre class="brush: php;">
+
+//where id=1 or status=1
+DB::connect()->name('users')->where(array('id','1'))->orWhere(array('status','1'))->get();
+
+//where check=1 or status=1
+DB::connect()->name('users')->where(array('check','1'))->orWhere(array('status','1'))->get();
+
+// ...
+</pre>
+
+
+<div class="h3"><a name="groupby">groupBy() 分组</a></div>
+<pre class="brush: php;">
+//group by cid
+DB::connect()->name('users')->groupBy('cid')->get();
+
+//group by cid,pid
+DB::connect()->name('users')->groupBy('cid,pid')->get();
+</pre>
+
+
+<div class="h3"><a name="having">having() 子句</a></div>
+<pre class="brush: php;">
+//group by cid having sum(price) > 1000
+DB::connect()->name('users')->groupBy('cid')->having('sum(price) > 1000')->get();
+</pre>
+
+
+<div class="h3"><a name="orderby">orderBy() 排序</a></div>
+<pre class="brush: php;">
+//order by id desc
+DB::connect()->name('users')->orderBy('id desc')->get();
+
+//order by status desc,id desc
+DB::connect()->name('users')->orderBy('status desc,id desc')->get();
+</pre>
+
+<div class="h3"><a name="limit">offset() 与 limit() limit语句</a></div>
+<pre class="brush: php;">
+DB::connect()->name('users')->limit(10)->get();                //limit 10
+DB::connect()->name('users')->offset(20)->limit(10)->get();    //limit 20,10
+</pre>
+
+
+<p class="text">　　where() andWhere() orWhere() orderBy() groupBy() offset() 与 limit() 几个方法都是链式使用，不能放在最后；如下：</p>
+
+<pre class="brush: php;">
+DB::connect()->name('users')->limit(10)->get();
+
+DB::connect()->name('users')->where()->limit(10)->get();
+
+DB::connect()->name('users')->where()->orderBy()->limit(10)->get();
+
+DB::connect()->name('users')->where()->get()->limit(10);             //错误的写法
+
+// ...
+</pre>
+
+
+<div class="h3"><a name="innerjoin">innerJoin() 联表查询</a></div>
+<pre class="brush: php;">
+//select a.id,a.name,b.groupname from user as a inner join user_group as b on a.gid=b.gid
+DB::connect()->name('users as a')->innerJoin('user_group as b on a.gid=b.gid')->get();
+</pre>
+
+
+<div class="h3"><a name="leftjoin">leftJoin() 联表查询</a></div>
+<pre class="brush: php;">
+//select a.id,a.name,b.groupname from user as a left join user_group as b on a.gid=b.gid
+DB::connect()->name('users as a')->leftJoin('user_group as b on a.gid=b.gid')->get();
+</pre>
+
+
+<div class="h3"><a name="rightjoin">rightJoin() 联表查询</a></div>
+<pre class="brush: php;">
+//select a.id,a.name,b.groupname from user as a right join user_group as b on a.gid=b.gid
+DB::connect()->name('users as a')->rightJoin('user_group as b on a.gid=b.gid')->get();
+</pre>
+
+
+<div class="h3"><a name="field">field() 查询字段</a></div>
+<pre class="brush: php;">
+//查询 id name
+DB::connect()->name('users')->field('id,name')->get();
+
+//可以直接写到get() line()方法
+DB::connect()->name('users')->get('id,name');
+</pre>
+
+
+<div class="h3"><a name="query">query() 执行sql查询</a></div>
+
+<p class="text">　　当需要处理大数据的时候，像 get() select() 这样的方法就不太合适了，因为它们会把所有数据都读取到内存上。为了保持较低的内存消耗，使用 query() fetch()<br />　　用法如下：</p>
+
+<pre class="brush: php;">
+$db = DB::connect();
+$query = $db->name('users')->field('id,name')->where(['status'=>1])->query();
+for (; $value = $db->fetch($query); ) {
+    // ...
+}
+</pre>
+
+<p class="text">　　query() 只会执行查询sql语句；并不会返回查询结果；如果想要得到查询结果，还需使用 fetch() 方法；</p>
+
+<pre class="brush: php;">
+$array = array();
+$query = DB::connect()->query("select a.id,a.name,b.groupname from
+							users as a inner join user_group as b
+							on a.gid=b.gid");
+for(;$value = DB::connect()->fetch($query);)
+{
+	$array[] = $value;
+}
+
+print_r($array);
+
+array(
+	array('id'=>1,'name'=>'name1','groupname'=>'系统用户'),
+	array('id'=>2,'name'=>'name2','groupname'=>'注册用户'),
+	// ..
+);
+</pre>
+
+
+<div class="h2"><a name="insert">#</a> 增加</div>
+<p class="text">　　使用 insert() 方法增加一条记录；与之前使用基础里介绍的使用方法略有不同；其实就是两种不同的使用方法；可以直接传sql语句；也可以传一个 key=>value 字段对值 的数组；如下：</p>
+<pre class="brush: php;">
+//直接写sql
+DB::connect()->insert("insert into users (name,status) values ('?','?')", array( 'abc',1 ));
+
+//或者传一个数组
+DB::connect()->name('users')->insert(array( 'name'=>'abc', 'status'=>1 ));
+
+</pre>
+<p class="text">　　insert() 方法返回最后插入的自增主键id，如果当前表有主键的话；如果想要插入一条空记录，返回最后 lastid 可以直接使用 insertEmpty() 方法；如下：</p>
+
+<pre class="brush: php;">
+$lastid = DB::connect()->name('users')->insertEmpty();
+</pre>
+
+
+<div class="h2"><a name="delete">#</a> 删除</div>
+<p class="text">　　同样的也是两种用法</p>
+<pre class="brush: php;">
+//直接写sql
+DB::connect()->delete("delete from users where id=?", array( 10 ));
+
+//使用链式方法 where() limit() ...
+DB::connect()->name('users')->where(array('id',10))->delete();
+DB::connect()->name('users')->orderBy('id desc')->limit(1)->delete();
+
+</pre>
+
+
+<div class="h2"><a name="update">#</a> 修改</div>
+<pre class="brush: php;">
+//直接写sql
+DB::connect()->update("update user set status=? where name='?'", array( 1,'abc' ));
+
+//或者传一个数组
+DB::connect()->name('users')->where(array('name','abc'))->update(array( 'status'=>1 ));
+
+</pre>
+
+<p class="text">　　delete() 和 update() 方法返回影响行数；</p>
+
+
+
+<br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	
@@ -77,7 +539,7 @@ var _hmt = _hmt || [];
 
     		<div class="cube-title">开发文档</div>
 		<ul class="cube-menu">
-		<li>开始</li><ul><li><a href="http://www.gocuber.com/guide/about/">简介</a></li><li><a href="http://www.gocuber.com/guide/down/">下载和安装</a></li><li><a href="http://www.gocuber.com/guide/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="http://www.gocuber.com/guide/directory/">目录结构</a></li><li><a href="http://www.gocuber.com/guide/entrance/">入口文件</a></li><li><a href="http://www.gocuber.com/guide/urlmodel/">URL模式</a></li><li><a href="http://www.gocuber.com/guide/rewrite/">URL重写</a></li><li><a href="http://www.gocuber.com/guide/controller/">Controller 控制器</a></li><li><a href="http://www.gocuber.com/guide/view/">View 视图模板</a></li><li><a href="http://www.gocuber.com/guide/model/">Model 模型</a></li><li><a href="http://www.gocuber.com/guide/module/">Module 模块</a></li><li><a href="http://www.gocuber.com/guide/route/">URL路由</a></li><li><a href="http://www.gocuber.com/guide/autoload/">类自动加载</a></li><li><a href="http://www.gocuber.com/guide/rule/">开发规范</a></li></ul><li>数据库</li><ul><li><a href="http://www.gocuber.com/guide/dbbase/">配置与使用基础</a></li><li><a href="http://www.gocuber.com/guide/dbquery/">查询结构器</a></li><li><a href="http://www.gocuber.com/guide/dbmodel/">数据库表model的使用</a></li><li><a href="http://www.gocuber.com/guide/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="http://www.gocuber.com/guide/memcache/">Memcache</a></li><li><a href="http://www.gocuber.com/guide/redis/">Redis</a></li><li><a href="http://www.gocuber.com/guide/cachesession/">SESSION</a></li></ul><li>搜搜引擎</li><ul><li><a href="http://www.gocuber.com/guide/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="http://www.gocuber.com/guide/func/">系统函数说明</a></li><li><a href="http://www.gocuber.com/guide/class/">系统类库说明</a></li><li><a href="http://www.gocuber.com/guide/session/">SESSION使用</a></li><li><a href="http://www.gocuber.com/guide/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="http://www.gocuber.com/guide/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="http://www.gocuber.com/guide/smarty/">使用Smarty</a></li><li><a href="http://www.gocuber.com/guide/lib/">使用第三方库</a></li><li><a href="http://www.gocuber.com/guide/sae/">SAE环境下开发</a></li></ul>		</ul>
+		<li>开始</li><ul><li><a href="http://www.gocuber.com/guide/about/">简介</a></li><li><a href="http://www.gocuber.com/guide/down/">下载和安装</a></li><li><a href="http://www.gocuber.com/guide/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="http://www.gocuber.com/guide/directory/">目录结构</a></li><li><a href="http://www.gocuber.com/guide/entrance/">入口文件</a></li><li><a href="http://www.gocuber.com/guide/urlmodel/">URL模式</a></li><li><a href="http://www.gocuber.com/guide/rewrite/">URL重写</a></li><li><a href="http://www.gocuber.com/guide/controller/">Controller 控制器</a></li><li><a href="http://www.gocuber.com/guide/view/">View 视图模板</a></li><li><a href="http://www.gocuber.com/guide/model/">Model 模型</a></li><li><a href="http://www.gocuber.com/guide/module/">Module 模块</a></li><li><a href="http://www.gocuber.com/guide/route/">URL路由</a></li><li><a href="http://www.gocuber.com/guide/autoload/">类自动加载</a></li><li><a href="http://www.gocuber.com/guide/rule/">开发规范</a></li></ul><li>数据库</li><ul><li><a href="http://www.gocuber.com/guide/dbbase/">数据库配置与使用基础</a></li><li><a href="http://www.gocuber.com/guide/dbquery/">数据库查询结构器</a></li><li><a href="http://www.gocuber.com/guide/dbmodel/">数据库模型(model)的使用</a></li><li><a href="http://www.gocuber.com/guide/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="http://www.gocuber.com/guide/memcache/">Memcache</a></li><li><a href="http://www.gocuber.com/guide/redis/">Redis</a></li><li><a href="http://www.gocuber.com/guide/cachesession/">SESSION</a></li></ul><li>搜索引擎</li><ul><li><a href="http://www.gocuber.com/guide/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="http://www.gocuber.com/guide/func/">系统函数说明</a></li><li><a href="http://www.gocuber.com/guide/class/">系统类库说明</a></li><li><a href="http://www.gocuber.com/guide/session/">SESSION使用</a></li><li><a href="http://www.gocuber.com/guide/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="http://www.gocuber.com/guide/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="http://www.gocuber.com/guide/smarty/">使用Smarty</a></li><li><a href="http://www.gocuber.com/guide/lib/">使用第三方库</a></li><li><a href="http://www.gocuber.com/guide/sae/">SAE环境下开发</a></li></ul>		</ul>
 	
     </div>
     </div><!-- /small -->
@@ -98,9 +560,7 @@ var G = {
 	'cubeUrl' : 'http://www.gocuber.com/',
 	'resUrl' : '/res/',
 	'apiUrl' : 'http://api.gocuber.com/',
-	'cookieKey' : '',
-	'publicKey' : 'C5FB1E04C706C8264624079F51B36EE19136E9D62984BE4CD955493D32A672C6E7EF4453B4094CA78E3D86E1FD57E8FE38E2F9CAA39C7A6F3C665E6CE30AB1F019CE7795224F10893945B5F2F3C16E4806BD2D2A54AB73D3B5C338147878495225EF1585B4A67E2A303363B7A47F86FBC875A5F28A3032C7705D4138A0C122DD',
-	'cookieDomain' : 'gocuber.com'
+	'publicKey' : 0
 };
 </script>
 
