@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -79,8 +79,8 @@ var _hmt = _hmt || [];
 		<li><a href="#val"># val() 查询一个字段</a></li>
 		<li><a href="#count"># count() 总数 max() 最大 min() 最小 avg() 平均 sum() 求和</a></li>
 		<li><a href="#where"># where() 查询条件</a></li>
-		<li><a href="#andwhere"># andWhere() 追加条件 andWhere</a></li>
-		<li><a href="#orwhere"># orWhere() 追加条件 orWhere</a></li>
+		<li><a href="#andwhere"># andWhere() 追加条件</a></li>
+		<li><a href="#orwhere"># orWhere() 追加条件</a></li>
 		<li><a href="#groupby"># groupBy() 分组</a></li>
 		<li><a href="#having"># having() 子句</a></li>
 		<li><a href="#orderby"># orderBy() 排序</a></li>
@@ -316,7 +316,7 @@ $val = DB::connect()->name('users')->val('sum(price)');
 <p class="text">　　需要注意的是直接传字符串的时候不会对字符进行转义；除非你能确保你的sql是安全的；</p>
 
 
-<div class="h3"><a name="andwhere">andWhere() 追加and条件</a></div>
+<div class="h3"><a name="andwhere">andWhere() 追加条件</a></div>
 <pre class="brush: php;">
 
 	// where id=1 and status=1
@@ -330,7 +330,7 @@ $val = DB::connect()->name('users')->val('sum(price)');
 </pre>
 
 
-<div class="h3"><a name="orwhere">orWhere() 追加条件 orWhere</a></div>
+<div class="h3"><a name="orwhere">orWhere() 追加条件</a></div>
 <pre class="brush: php;">
 
 	//where id=1 or status=1
