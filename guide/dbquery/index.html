@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -272,8 +272,10 @@ $val = DB::connect()->name('users')->val('sum(price)');
 	$db->where([ 'and', 'id'=>1, 'status'=>1 ]); // id=1 and status=1
 	$db->where([ 'and', ['id','=',1], ['status','=',1] ]); // id=1 and status=1
 
-	$db->where([ 'and', ['id','=',1], ['status','=',1] ]); // id=1 and status=1
+	$db->where([ 'and', ['id',1], ['status',1] ]); // id=1 and status=1
 	$db->where([ 'and', 'id'=>[1,2,3], 'status'=>1 ]); // id in (1,2,3) and status=1
+	
+	$db->where([ 'or', 'id'=>1, ['status','>',1] ]); // id=1 or status>1
 
 	// 嵌套
 
@@ -285,93 +287,61 @@ $val = DB::connect()->name('users')->val('sum(price)');
 
 </pre>
 
-<!-- pre class="brush: php;">
-//查询id=1的记录；line()返回单条记录；
-$line = DB::connect()->name('users')->where(array('id','1'))->line('id,name');
-print_r($line);
+<p class="text">
+	　　相信你已经发现以上三种格式可以总结为一种：['and|or', 表达式1, 表达式2 ...]<br>
+	　　'and|or' 可省略，省略默认为 and；<br>
+	　　表达式可以是 字符串 或 key=>value 或 数组 []；<br>
+</p>
+<pre class="brush: php;">
 
-array('id'=>1,'name'=>'name1')
+	// where a in (1,2) or b = 1
+	$db->where([ 'or', ['a'=>[1,2]], ['b'=>1] ]); // key=>value
 
+	// where a in (1,2) or b = 1
+	$db->where([ 'or', 'a'=>[1,2], 'b'=>1 ]); // key=>value 可以省略 []
+	
+	// where a = 1 or b = 1
+	$db->where([ 'or', ['a','=',1], ['b','=',1] ]); // 数组 []
 
-//查询status=1的记录；get()返回多条记录；
-$list = DB::connect()->name('users')->where(array('status','1'))->get('id,name,status');
-print_r($list);
-
-array(
-	array('id'=>1,'name'=>'name1','status'=>'1'),
-	array('id'=>2,'name'=>'name2','status'=>'1'),
-	// ..
-);
-
-
-//查询id>1的记录
-DB::connect()->name('users')->where(array('id','>','1'))->get('id,name');
+	// where a = 1 or b = 1
+	$db->where([ 'or', ['a',1], ['b',1] ]); // " = " 可以省略
 
 
-//查询id不等于1的记录
-DB::connect()->name('users')->where(array('id','<>','1'))->get('id,name');
-//或
-DB::connect()->name('users')->where(array('id','!=','1'))->get('id,name');
+	// 最后使用 get() line() val() 返回结果
+	$line = $db->name('user')->where(['id'=>1, 'status'=>1]])->line();
+	print_r($line);
 
-
-//where name is null
-where(array('name','is null'));
-
-//where name is not null
-where(array('name','is not null'));
-
-//where id=1
-where(array('id','=','1'));
-//或
-where(array('id','1'));
-
-//where id in (1,2,3,4)
-where(array('id','in',array(1,2,3,4)));
-
-//where id=1 or id=2 or id=3 or id=4
-where(array('id','or',array(1,2,3,4)));
-
-//where price > 100 and price < 800
-where(array('price','-',array('100','800')));
-
-// ...
 </pre>
 
-<p class="text">　　可以直接写where条件，传一个字符串；需要注意的是直接传字符串的时候不会对字符进行转义；如下：</p>
+<p class="text">　　需要注意的是直接传字符串的时候不会对字符进行转义；除非你能确保你的sql是安全的；</p>
+
+
+<div class="h3"><a name="andwhere">andWhere() 追加and条件</a></div>
 <pre class="brush: php;">
 
-DB::connect()->name('users')->where("id=1 and status=1 and name='abc'")->get();
+	// where id=1 and status=1
+	$db->where(['id'=>1])->andWhere('status'=>1);
 
-</pre -->
+	// where id=1 and status=1 and name='abc' and username='user1'
+	$db->where([ 'id'=>1, 'status'=>1 ])
+		->andWhere(['name'=>'abc'])
+		->andWhere(['username'=>'user1']);
 
-
-<div class="h3"><a name="andwhere">andWhere() 追加条件 andWhere</a></div>
-<pre class="brush: php;">
-
-//where id=1 and status=1
-DB::connect()->name('users')->where(array('id','1'))->addWhere(array('status','1'))->get();
-
-//where id=1 and status=1 and name='abc'
-DB::connect()->name('users')->where(array('id','1'))
-				->addWhere(array('status','1'))
-				->addWhere(array('name','abc'))->get();
-
-// ...
 </pre>
 
 
 <div class="h3"><a name="orwhere">orWhere() 追加条件 orWhere</a></div>
 <pre class="brush: php;">
 
-//where id=1 or status=1
-DB::connect()->name('users')->where(array('id','1'))->orWhere(array('status','1'))->get();
+	//where id=1 or status=1
+	$db->where(['id'=>1])->orWhere(['status'=>1]);
 
-//where check=1 or status=1
-DB::connect()->name('users')->where(array('check','1'))->orWhere(array('status','1'))->get();
+	//where check=1 or status=1
+	$db->where(['check'=>1])->orWhere(['status'=>1]);
 
-// ...
 </pre>
 
+<p class="text">　　where() andWhere() orWhere() 三个方法的参数是一样的；</p>
 
 <div class="h3"><a name="groupby">groupBy() 分组</a></div>
 <pre class="brush: php;">

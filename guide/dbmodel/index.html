@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
 	<li><a href="#group"># 创建用户组表model</a></li>
 	<li><a href="#extends"># 简化写法</a></li>
 	<li><a href="#model"># model的使用 DB::model()</a></li>
-	<li><a href="#field"># getField() 方法</a></li>
+	<li><a href="#field"># getFields() 方法</a></li>
 </ul>
 
 <div class="h2"><a name="text">#</a> 介绍</div>
@@ -87,7 +87,7 @@ var _hmt = _hmt || [];
 <br />
 　　使用 DB::model('user') 来调用models类文件；<br />
 　　DB::model('user') 这里的user并不是表名称；而是对应一个models目录中的类文件；<br />
-　　注：mfphp框架中提供一个函数方法 M(); 等同于DB::model(); 所以也可以使用 M('user'); 来调用models类文件；<br />
+　　注：CubePHP框架中提供一个函数方法 M(); 等同于DB::model(); 所以也可以使用 M('user'); 来调用models类文件；<br />
 <br />
 <br />
 　　举例说明；<br />
@@ -229,8 +229,8 @@ var _hmt = _hmt || [];
 
 
 
-<div class="h2"><a name="field">#</a> getField() 方法</div>
-<p class="text">　　在 model 类中可以写 getField() 方法；来指定表字段类型；如下：</p>
+<div class="h2"><a name="field">#</a> getFields() 方法</div>
+<p class="text">　　在 model 类中可以写 getFields() 方法；来指定表字段类型；如下：</p>
 <pre class="brush: php;">
 
 	class Uc_User extends DB_Default
@@ -263,7 +263,7 @@ var _hmt = _hmt || [];
 </pre>
 
 
-<p class="text">　　getField() 方法主要用于 insert() update() 方法中传数组时候会自动处理字段类型；</p>
+<p class="text">　　getFields() 方法主要用于 insert() update() 方法中传数组时候会自动处理字段类型；</p>
 <pre class="brush: php;">
 
 	$dbdata = array( 'username'=>'user1', 'password'=>'1234567', 'status'=>1, );
@@ -274,14 +274,14 @@ var _hmt = _hmt || [];
 
 </pre>
 
-<p class="text">　　需要注意的是不要传入 getField() 方法中不存在的字段；</p>
+<p class="text">　　需要注意的是不要传入 getFields() 方法中不存在的字段；</p>
 <pre class="brush: php;">
 
 	$dbdata = array(
 		'username'  => 'user1',
 		'password'  => '1234567',
 		'status'    => 1,
-		'groupname' => 'sys',        //这个字段会丢掉，因为 getField() 方法中没有此字段
+		'groupname' => 'sys',        //这个字段会丢掉，因为 getFields() 方法中没有此字段
 	);
 
 	DB::model('uc_user')->insert($dbdata);
@@ -290,7 +290,7 @@ var _hmt = _hmt || [];
 
 </pre>
 
-<p class="text">　　如果此方法 getField() 返回一个空值 空数组 或无返回值的时候则不受此限制；没有定义 getField() 方法的时候同样也不受此限制；</p>
+<p class="text">　　如果此方法 getFields() 返回一个空值 空数组 或无返回值的时候则不受此限制；没有定义 getFields() 方法的时候同样也不受此限制；</p>
 
 
 <br /><br /><br /><br />	</div>
