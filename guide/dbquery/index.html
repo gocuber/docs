@@ -232,7 +232,7 @@ $val = DB::connect()->name('user')->val('sum(price)');
 <p class="text">　　二、hash格式与数组格式：</p>
 <pre class="brush: php;">
 
-	// hash格式 [ key=>value, key=>value, ...]
+	// hash格式 [ key=>value, key=>value, ... ]
 
 	// where id = 1
 	$db->where([ 'id'=>1 ]);
@@ -244,7 +244,7 @@ $val = DB::connect()->name('user')->val('sum(price)');
 	$db->where([ 'id'=>[1,2], 'status'=>1 ]);
 
 
-	// 数组格式 [ [], [], ...]
+	// 数组格式 [ [], [], ... ]
 
 	// where id = 1
 	$db->where([ ['id','=',1] ]);
@@ -270,13 +270,13 @@ $val = DB::connect()->name('user')->val('sum(price)');
 </pre>
 
 <p class="text">
-　　三、组合嵌套格式：['and|or', [], [] ...]<br>
+　　三、组合嵌套格式：[ 'and|or', [], [] ... ]<br>
 　　'and|or' 可省略，省略默认为 and，如果省略'and|or'实际上就是上面第二种格式；<br>
 　　同样的上面第二种格式 加上 'and|or' 就是组合嵌套格式；<br>
 </p>
 <pre class="brush: php;">
 
-	// 格式 ['and|or', [], [] ...]
+	// 格式 [ 'and|or', [], [] ... ]
 
 	$db->where([ 'and', 'id'=>1, 'status'=>1 ]); // id=1 and status=1
 	$db->where([ 'and', ['id','=',1], ['status','=',1] ]); // id=1 and status=1
@@ -297,7 +297,7 @@ $val = DB::connect()->name('user')->val('sum(price)');
 </pre>
 
 <p class="text">
-	　　相信你已经发现以上三种格式可以总结为一种：['and|or', 表达式1, 表达式2 ...]<br>
+	　　相信你已经发现以上三种格式可以总结为一种：[ 'and|or', 表达式1, 表达式2 ... ]<br>
 	　　'and|or' 可省略，省略默认为 and；<br>
 	　　表达式可以是 字符串 或 key=>value 或 数组 []；<br>
 </p>
