@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -85,6 +85,7 @@ var _hmt = _hmt || [];
 		<li><a href="#having"># having() 子句</a></li>
 		<li><a href="#orderby"># orderBy() 排序</a></li>
 		<li><a href="#limit"># offset() 与 limit() limit语句</a></li>
+		<li><a href="#page"># page() 分页</a></li>
 		<li><a href="#innerjoin"># innerJoin() 联表查询</a></li>
 		<li><a href="#leftjoin"># leftJoin() 联表查询</a></li>
 		<li><a href="#rightjoin"># rightJoin() 联表查询</a></li>
@@ -102,16 +103,18 @@ var _hmt = _hmt || [];
 <p class="text">　　使用 name() 方法指定数据库表名称；</p>
 
 <pre class="brush: php;">
-DB::connect()->name('users');
-DB::connect()->name('users')->get();
-DB::connect()->name('users')->line();
-// ...
+DB::connect()->name('user');
+
+DB::connect()->name('article');
 </pre>
 
 
 <div class="h3"><a name="get">get() 查询多条记录</a></div>
 <pre class="brush: php;">
-$list = DB::connect()->name('users')->get('id,name');
+
+// select id,name from user
+
+$list = DB::connect()->name('user')->get('id,name');
 print_r($list);
 
 array(
@@ -124,7 +127,7 @@ array(
 <p class="text">　　get() 方法与 select() 方法返回的结果一样；如下，返回的结果 $list 是一样的；</p>
 
 <pre class="brush: php;">
-$list = DB::connect()->select("select id,name from users");
+$list = DB::connect()->select("select id,name from user");
 print_r($list);
 
 array(
@@ -140,7 +143,7 @@ array(
 <p class="text">　　有时候你需要以某字段做为key返回；</p>
 
 <pre class="brush: php;">
-$list = DB::connect()->name('users')->hash('id','name,date');
+$list = DB::connect()->name('user')->hash('id','name,date');
 print_r($list);
 
 array(
@@ -150,7 +153,7 @@ array(
 );
 
 //或者直接返回一个 key value 格式的hash数组
-$list = DB::connect()->name('users')->hash('id','name');
+$list = DB::connect()->name('user')->hash('id','name');
 print_r($list);
 
 array(
@@ -162,7 +165,10 @@ array(
 
 <div class="h3"><a name="line">line() 查询单条记录</a></div>
 <pre class="brush: php;">
-$line = DB::connect()->name('users')->line('id,name');
+
+// select id,name from user limit 1
+
+$line = DB::connect()->name('user')->line('id,name');
 print_r($line);
 
 array('id'=>1,'name'=>'name1');
@@ -171,39 +177,42 @@ array('id'=>1,'name'=>'name1');
 
 <div class="h3"><a name="val">val() 查询一个字段</a></div>
 <pre class="brush: php;">
-$val = DB::connect()->name('users')->val('name');
 
-echo $val; //name2
+// select name from user limit 1
+
+$val = DB::connect()->name('user')->val('name');
+
+echo $val; //name1
 </pre>
 
 
 <div class="h3"><a name="count">count() 总数 max() 最大 min() 最小 avg() 平均 sum() 求和</a></div>
 <pre class="brush: php;">
 
-//count() 总数
-$val = DB::connect()->name('users')->count();
-//或
-$val = DB::connect()->name('users')->val('count(*)');
+// count() 总数
+$val = DB::connect()->name('user')->count();
+// 或
+$val = DB::connect()->name('user')->val('count(*)');
 
-//max() 最大
-$val = DB::connect()->name('users')->max('id');
-//或
-$val = DB::connect()->name('users')->val('max(id)');
+// max() 最大
+$val = DB::connect()->name('user')->max('id');
+// 或
+$val = DB::connect()->name('user')->val('max(id)');
 
-//min() 最小
-$val = DB::connect()->name('users')->min('id');
-//或
-$val = DB::connect()->name('users')->val('min(id)');
+// min() 最小
+$val = DB::connect()->name('user')->min('id');
+// 或
+$val = DB::connect()->name('user')->val('min(id)');
 
-//avg() 平均
-$val = DB::connect()->name('users')->avg('id');
-//或
-$val = DB::connect()->name('users')->val('avg(id)');
+// avg() 平均
+$val = DB::connect()->name('user')->avg('id');
+// 或
+$val = DB::connect()->name('user')->val('avg(id)');
 
-//sum() 求和
-$val = DB::connect()->name('users')->sum('price');
-//或
-$val = DB::connect()->name('users')->val('sum(price)');
+// sum() 求和
+$val = DB::connect()->name('user')->sum('price');
+// 或
+$val = DB::connect()->name('user')->val('sum(price)');
 
 </pre>
 
@@ -280,10 +289,10 @@ $val = DB::connect()->name('users')->val('sum(price)');
 	// 嵌套
 
 	// where (id = 1 or status = 1) and (a = 1 or b = 1)
-	$db->where([ 'and', ['or',['id'=>1],['status'=>1]], ['or',['a'=>1],['b'=>1]] ]);
+	$db->where([ 'and', ['or','id'=>1,'status'=>1], ['or','a'=>1,'b'=>1] ]);
 
 	// where id>1 and (status=1 or name='name1')
-	$db->where(['and', ['id','>',1], ['or',['status'=>1],['name'=>'name1']]]);
+	$db->where(['and', ['id','>',1], ['or','status'=>1,'name'=>'name1']]);
 
 </pre>
 
@@ -308,7 +317,7 @@ $val = DB::connect()->name('users')->val('sum(price)');
 
 
 	// 最后使用 get() line() val() 返回结果
-	$line = $db->name('user')->where(['id'=>1, 'status'=>1]])->line();
+	$line = $db->name('user')->where([ 'id'=>1, 'status'=>1 ])->line();
 	print_r($line);
 
 </pre>
@@ -319,13 +328,13 @@ $val = DB::connect()->name('users')->val('sum(price)');
 <div class="h3"><a name="andwhere">andWhere() 追加条件</a></div>
 <pre class="brush: php;">
 
-	// where id=1 and status=1
-	$db->where(['id'=>1])->andWhere('status'=>1);
+	// where id = 1 and status = 1
+	$db->where([ 'id'=>1 ])->andWhere([ 'status'=>1 ]);
 
-	// where id=1 and status=1 and name='abc' and username='user1'
+	// where id = 1 and status = 1 and name = 'abc' and username = 'user1'
 	$db->where([ 'id'=>1, 'status'=>1 ])
-		->andWhere(['name'=>'abc'])
-		->andWhere(['username'=>'user1']);
+		->andWhere([ 'name'=>'abc' ])
+		->andWhere([ 'username'=>'user1' ]);
 
 </pre>
 
@@ -333,11 +342,11 @@ $val = DB::connect()->name('users')->val('sum(price)');
 <div class="h3"><a name="orwhere">orWhere() 追加条件</a></div>
 <pre class="brush: php;">
 
-	//where id=1 or status=1
-	$db->where(['id'=>1])->orWhere(['status'=>1]);
+	// where id = 1 or status = 1
+	$db->where([ 'id'=>1 ])->orWhere([ 'status'=>1 ]);
 
-	//where check=1 or status=1
-	$db->where(['check'=>1])->orWhere(['status'=>1]);
+	// where check = 1 or status = 1
+	$db->where([ 'check'=>1 ])->orWhere([ 'status'=>1 ]);
 
 </pre>
 
@@ -345,80 +354,77 @@ $val = DB::connect()->name('users')->val('sum(price)');
 
 <div class="h3"><a name="groupby">groupBy() 分组</a></div>
 <pre class="brush: php;">
-//group by cid
-DB::connect()->name('users')->groupBy('cid')->get();
+// group by cid
+DB::connect()->name('user')->groupBy('cid')->get();
 
-//group by cid,pid
-DB::connect()->name('users')->groupBy('cid,pid')->get();
+// group by cid,pid
+DB::connect()->name('user')->groupBy('cid,pid')->get();
 </pre>
 
 
 <div class="h3"><a name="having">having() 子句</a></div>
 <pre class="brush: php;">
-//group by cid having sum(price) > 1000
-DB::connect()->name('users')->groupBy('cid')->having('sum(price) > 1000')->get();
+// group by cid having sum(price) > 1000
+DB::connect()->name('user')->groupBy('cid')->having('sum(price) > 1000')->get();
 </pre>
 
 
 <div class="h3"><a name="orderby">orderBy() 排序</a></div>
 <pre class="brush: php;">
-//order by id desc
-DB::connect()->name('users')->orderBy('id desc')->get();
+// order by id desc
+DB::connect()->name('user')->orderBy('id desc')->get();
 
-//order by status desc,id desc
-DB::connect()->name('users')->orderBy('status desc,id desc')->get();
+// order by status desc,id desc
+DB::connect()->name('user')->orderBy('status desc,id desc')->get();
 </pre>
 
 <div class="h3"><a name="limit">offset() 与 limit() limit语句</a></div>
 <pre class="brush: php;">
-DB::connect()->name('users')->limit(10)->get();                //limit 10
-DB::connect()->name('users')->offset(20)->limit(10)->get();    //limit 20,10
+DB::connect()->name('user')->limit(10)->get();                // limit 10
+DB::connect()->name('user')->offset(20)->limit(10)->get();    // limit 20,10
 </pre>
 
-
-<p class="text">　　where() andWhere() orWhere() orderBy() groupBy() offset() 与 limit() 几个方法都是链式使用，不能放在最后；如下：</p>
-
+<div class="h3"><a name="page">page() 分页</a></div>
 <pre class="brush: php;">
-DB::connect()->name('users')->limit(10)->get();
+// 查询第一页数据 每页20条
+DB::connect()->name('user')->page(1, 20)->get();    // limit 0,20
 
-DB::connect()->name('users')->where()->limit(10)->get();
-
-DB::connect()->name('users')->where()->orderBy()->limit(10)->get();
-
-DB::connect()->name('users')->where()->get()->limit(10);             //错误的写法
-
-// ...
+// 查询第二页数据 每页20条
+DB::connect()->name('user')->page(2, 20)->get();    // limit 20,20
 </pre>
 
 
 <div class="h3"><a name="innerjoin">innerJoin() 联表查询</a></div>
 <pre class="brush: php;">
-//select a.id,a.name,b.groupname from user as a inner join user_group as b on a.gid=b.gid
-DB::connect()->name('users as a')->innerJoin('user_group as b on a.gid=b.gid')->get();
+// ... from user inner join group on user.gid = group.gid
+DB::connect()->name('user')->innerJoin('group', 'user.gid = group.gid')->get();
+
+// 多表 join
+DB::connect()->name('user')
+	->innerJoin('article', 'user.uid = article.uid')
+	->innerJoin('class', 'user.uid = class.uid')->get();
+
 </pre>
 
 
 <div class="h3"><a name="leftjoin">leftJoin() 联表查询</a></div>
 <pre class="brush: php;">
-//select a.id,a.name,b.groupname from user as a left join user_group as b on a.gid=b.gid
-DB::connect()->name('users as a')->leftJoin('user_group as b on a.gid=b.gid')->get();
+// ... from user left join group on user.gid = group.gid
+DB::connect()->name('user')->leftJoin('group', 'user.gid = group.gid')->get();
 </pre>
 
 
 <div class="h3"><a name="rightjoin">rightJoin() 联表查询</a></div>
 <pre class="brush: php;">
-//select a.id,a.name,b.groupname from user as a right join user_group as b on a.gid=b.gid
-DB::connect()->name('users as a')->rightJoin('user_group as b on a.gid=b.gid')->get();
+// ... from user right join group on user.gid = group.gid
+DB::connect()->name('user')->rightJoin('group', 'user.gid = group.gid')->get();
 </pre>
 
 
 <div class="h3"><a name="field">field() 查询字段</a></div>
 <pre class="brush: php;">
-//查询 id name
-DB::connect()->name('users')->field('id,name')->get();
-
-//可以直接写到get() line()方法
-DB::connect()->name('users')->get('id,name');
+// select id,name from user
+DB::connect()->name('user')->field('id,name')->get();
 </pre>
 
 
@@ -428,7 +434,7 @@ DB::connect()->name('users')->get('id,name');
 
 <pre class="brush: php;">
 $db = DB::connect();
-$query = $db->name('users')->field('id,name')->where(['status'=>1])->query();
+$query = $db->name('user')->field('id,name')->where([ 'status'=>1 ])->query();
 for (; $value = $db->fetch($query); ) {
     // ...
 }
@@ -436,63 +442,42 @@ for (; $value = $db->fetch($query); ) {
 
 <p class="text">　　query() 只会执行查询sql语句；并不会返回查询结果；如果想要得到查询结果，还需使用 fetch() 方法；</p>
 
-<pre class="brush: php;">
-$array = array();
-$query = DB::connect()->query("select a.id,a.name,b.groupname from
-							users as a inner join user_group as b
-							on a.gid=b.gid");
-for(;$value = DB::connect()->fetch($query);)
-{
-	$array[] = $value;
-}
-
-print_r($array);
-
-array(
-	array('id'=>1,'name'=>'name1','groupname'=>'系统用户'),
-	array('id'=>2,'name'=>'name2','groupname'=>'注册用户'),
-	// ..
-);
-</pre>
-
 
 <div class="h2"><a name="insert">#</a> 增加</div>
 <p class="text">　　使用 insert() 方法增加一条记录；与之前使用基础里介绍的使用方法略有不同；其实就是两种不同的使用方法；可以直接传sql语句；也可以传一个 key=>value 字段对值 的数组；如下：</p>
 <pre class="brush: php;">
-//直接写sql
-DB::connect()->insert("insert into users (name,status) values ('?','?')", array( 'abc',1 ));
+// 直接写sql
+$db->insert("insert into user (name,status) values ( ? , ? )", [ 'abc',1 ]);
 
-//或者传一个数组
-DB::connect()->name('users')->insert(array( 'name'=>'abc', 'status'=>1 ));
+// 或者传一个数组
+$db->name('user')->insert([ 'name'=>'abc', 'status'=>1 ]);
 
 </pre>
-<p class="text">　　insert() 方法返回最后插入的自增主键id，如果当前表有主键的话；如果想要插入一条空记录，返回最后 lastid 可以直接使用 insertEmpty() 方法；如下：</p>
+<p class="text">　　insert() 方法返回最后插入的自增主键id，如果当前表有主键的话；如果想要插入一条空记录，返回最后 lastid 可以直接传一个空数组 insert([]) 如下：</p>
 
 <pre class="brush: php;">
-$lastid = DB::connect()->name('users')->insertEmpty();
+$lastid = $db->name('user')->insert([]);
 </pre>
 
 
 <div class="h2"><a name="delete">#</a> 删除</div>
 <p class="text">　　同样的也是两种用法</p>
 <pre class="brush: php;">
-//直接写sql
-DB::connect()->delete("delete from users where id=?", array( 10 ));
 
-//使用链式方法 where() limit() ...
-DB::connect()->name('users')->where(array('id',10))->delete();
-DB::connect()->name('users')->orderBy('id desc')->limit(1)->delete();
+$db->delete("delete from user where id= :id ", [ 'id'=>10 ]);
+
+$db->name('user')->where([ 'id'=>10 ])->delete();
+$db->name('user')->where([ 'id'=>10 ])->limit(1)->delete();
 
 </pre>
 
 
 <div class="h2"><a name="update">#</a> 修改</div>
 <pre class="brush: php;">
-//直接写sql
-DB::connect()->update("update user set status=? where name='?'", array( 1,'abc' ));
 
-//或者传一个数组
-DB::connect()->name('users')->where(array('name','abc'))->update(array( 'status'=>1 ));
+$db->update("update user set status= ? where name= ? ", [ 1,'abc' ]);
+
+$db->name('user')->where([ 'name'=>'abc' ])->update([ 'status'=>1 ]);
 
 </pre>
 

@@ -34,7 +34,7 @@ var _hmt = _hmt || [];
 		<div class="title"><a href="http://www.gocuber.com/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
 		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
 	</div>
-	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo3.jpg" alt="CubePHP" /></a></div>
+	<div class="logo"><a href="http://www.gocuber.com/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
 </div>
 
 <div class="cube-nav">
@@ -82,6 +82,7 @@ var _hmt = _hmt || [];
 		<li><a href="#exec"># exec() 执行一条SQL返回影响行数</a></li>
 		<li><a href="#transaction"># transaction() 执行一组事务</a></li>
 	</ul>
+	<li><a href="#pdo"># 使用原始底层PDO</a></li>
 </ul>
 
 <div class="h2"><a name="config">#</a> 配置</div>
@@ -92,30 +93,28 @@ var _hmt = _hmt || [];
 
 	// 默认数据库配置
 	$_G['db']['default'] = array(
-		'master_server' => '192.168.0.1',      // 主库
-		'slave_server'  => '192.168.0.2',      // 从库
-		'port'     => 3306,                    // 端口
-		'username' => 'root',                  // 用户名
-		'password' => '***',                   // 密码
-		'database' => 'db_cube',               // 数据库名
-		'charset'  => 'utf8',                  // 编码
-		'driver'   => 'mysql',                 // 数据库类型
+		'master'   => '192.168.0.1:3306',    // 主库
+		'slave'    => '192.168.0.2:3306',    // 从库
+		'username' => 'root',                // 用户名
+		'password' => '***',                 // 密码
+		'database' => 'db_cube',             // 数据库名
+		'charset'  => 'utf8',                // 编码
+		'driver'   => 'mysql',               // 数据库类型
 	);
 
 </pre>
 
-<p class="text">　　可以配置主从库来实现读写分离，其中 master_server 是主库地址，slave_server 是从库地址，slave_server 从库可以配置多个，如下：</p>
+<p class="text">　　可以配置主从库来实现读写分离，其中 master 是主库地址，slave 是从库地址，slave 从库可以配置多个，如下：</p>
 
 <pre class="brush: php;">
 
 	// 默认数据库配置
 	$_G['db']['default'] = array(
-		'master_server' => '127.0.0.1',
-		'slave_server' => array(
+		'master' => '127.0.0.1:3306',
+		'slave'  => array(
 			'slave1',
-			'slave2',
+			'slave2',  // slave3 slave4 ...
 		),
-		'port'     => 3306,
 		'username' => 'root',
 		'password' => '***',
 		'database' => 'db_cube',
@@ -131,48 +130,28 @@ var _hmt = _hmt || [];
 
 	// user用户库
 	$_G['db']['user'] = array(
-		'master_server' => '127.0.0.1:3306',
-		'slave_server'  => array(),
-		'username' => 'root',
-		'password' => '123456',
-		'database' => 'db_user',                 // 数据库名
-		'charset'  => 'utf8',
-		'driver'   => 'mysql',
+		// ...
 	);
 
 	// stat统计库
 	$_G['db']['stat'] = array(
-		'master_server' => '127.0.0.1:3306',
-		'slave_server'  => array(),
-		'username' => 'root',
-		'password' => '123456',
-		'database' => 'db_stat',                 // 数据库名
-		'charset'  => 'utf8',
-		'driver'   => 'mysql',
+		// ...
 	);
+
 </pre>
 
 
 <div class="h2"><a name="connect">#</a> 数据库连接 DB::connect()</div>
 
-<p class="text">　　使用 DB 类来操作数据库；使用 DB::connect() 连接默认数据库；使用 DB::connect('user') 连接指定数据库；</p>
+<p class="text">　　使用 DB 类来操作数据库；使用 DB::connect() 连接数据库；</p>
 
 <pre class="brush: php;">
 
-	$dbdef  = DB::connect();        // 连接默认数据库
-	$dbuser = DB::connect('user');  // 连接用户库
-	$dbstat = DB::connect('stat');  // 连接统计库
+	DB::connect();        // 连接默认数据库
+	DB::connect('user');  // 连接用户库
+	DB::connect('stat');  // 连接统计库
 
-	$dbdef->select();
-	$dbdef->insert();
-
-	// 可以直接使用
-	DB::connect()->select();
-	DB::connect('user')->select();
-
-	// ...
 </pre>
-
 
 
 <div class="h2"><a name="curd">#</a> 增删查改使用基础</div>
@@ -180,8 +159,16 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	// where id=10
-	$array = DB::connect()->select("select id,name from user where id = ? ", [ 10 ]);
+	// where status = 1
+	$list = DB::connect()->select("select id,name from user where status = ? ", [ 1 ]);
+
+	print_r($list);
+
+	array(
+		array('id'=>1, 'name'=>'name1'),
+		array('id'=>2, 'name'=>'name2'),
+		// ...
+	);
 
 </pre>
 
@@ -190,16 +177,16 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	// where id=10
+	// where id = 10
 	DB::connect()->select("select id,name from user where id = :id ", [ 'id'=>10 ]);
 
 
 	$db = DB::connect();
 
-	// where status=1 and role='reg'
+	// where status = 1 and role = 'reg'
 	$db->select("... status = ? and role = ? ", [ 1,'reg' ]);
 
-	// where status=1 and role='reg'
+	// where status = 1 and role = 'reg'
 	$db->select("... status = :status and role = :role ", [ 'status'=>1, 'role'=>'reg' ]);
 
 </pre>
@@ -223,7 +210,7 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	DB::connect()->delete("delete from user where id=?", array( 10 ));
+	DB::connect()->delete("delete from user where id = ?", [ 10 ]);
 
 </pre>
 
@@ -264,23 +251,23 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	$array = array();
+	$list = array();
 	$query = $db->query("select id,name from user limit 10");
 	for(;$value = $db->fetch($query);){
-		$array[] = $value;
+		$list[] = $value;
 	}
 
-	print_r($array);
+	print_r($list);
 
 	// 上面写法等同于 $db->select("select id,name from user limit 10");
 
 </pre>
 
-<p class="text">　　以上代码跟下面返回的结果 $array 是一样的；</p>
+<p class="text">　　以上代码跟下面返回的结果 $list 是一样的；</p>
 
 <pre class="brush: php;">
-	$array = $db->select("select id,name from user limit 10");
-	print_r($array);
+	$list = $db->select("select id,name from user limit 10");
+	print_r($list);
 </pre>
 
 
@@ -290,7 +277,7 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 	$db->exec("delete from user where id=1001");
-	$db->exec("update user set status=1 where id=1001");
+	$db->exec("truncate table user");
 	$db->exec("create table ...");
 </pre>
 
@@ -312,6 +299,15 @@ var _hmt = _hmt || [];
 <p class="text">　　其中一条执行失败，则自动回滚整个事务；有时你需要更加灵活的控制事务 beginTransaction() 开始一个事务 commit() 提交事务 rollBack() 回滚事务，参考后面的数据库事务处理章节；</p>
 
 
+<div class="h2"><a name="pdo">#</a> 使用原始底层PDO</div>
+<p class="text">　　可以使用原始底层PDO来操作数据库；</p>
+
+<pre class="brush: php;">
+
+	DB::connect()->getMaster(); // 返回原始底层PDO主库实例
+	DB::connect()->getSlave();  // 返回原始底层PDO从库实例
+
+</pre>
 
 <br /><br /><br /><br />	</div>
 	</div><!-- /big -->

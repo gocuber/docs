@@ -71,11 +71,12 @@ var _hmt = _hmt || [];
 
 <ul class="cube-catalog">
 	<li><a href="#text"># 介绍</a></li>
-	<li><a href="#users"># 创建用户表model</a></li>
-	<li><a href="#group"># 创建用户组表model</a></li>
+	<li><a href="#users"># 创建model</a></li>
 	<li><a href="#extends"># 简化写法</a></li>
 	<li><a href="#model"># model的使用 DB::model()</a></li>
 	<li><a href="#field"># getFields() 方法</a></li>
+	<li><a href="#preparedata"># prepareData() 准备数据</a></li>
+	<li><a href="#settablename"># setTableName() 设置分表</a></li>
 </ul>
 
 <div class="h2"><a name="text">#</a> 介绍</div>
@@ -83,11 +84,11 @@ var _hmt = _hmt || [];
 <p class="text">
 　　Model 模型 是应用程序中用于处理应用程序数据逻辑的部分；<br />
 　　通常模型负责在数据库中存取数据；<br />
-　　一般情况下，一个数据库表对应一个 models 类文件；<br />
+　　一般情况下，一个数据库表对应一个 model 类文件；<br />
 <br />
-　　使用 DB::model('user') 来调用models类文件；<br />
-　　DB::model('user') 这里的user并不是表名称；而是对应一个models目录中的类文件；<br />
-　　注：CubePHP框架中提供一个函数方法 M(); 等同于DB::model(); 所以也可以使用 M('user'); 来调用models类文件；<br />
+　　使用 DB::model('user') 来调用model类文件；<br />
+　　DB::model('User') 这里的User并不是表名称；而是对应一个model目录中的类文件；<br />
+　　注：CubePHP框架中提供一个函数方法 M(); 等同于DB::model(); 所以也可以使用 M('User'); 来调用model类文件；<br />
 <br />
 <br />
 　　举例说明；<br />
@@ -98,10 +99,10 @@ var _hmt = _hmt || [];
 </p>
 
 
-<div class="h2"><a name="users">#</a> 创建用户表model</div>
+<div class="h2"><a name="users">#</a> 创建model</div>
 <p class="text">
-　　使用前缀 uc ，新建 uc 目录用于存放用户中心库下所有的表 models 类文件；<br />
-　　新建 models 类 user.php 保存到 models/uc/ 目录中；<br />
+　　新建 Uc 目录用于存放用户中心库下所有的表 model 类文件；<br />
+　　新建用户表 model 类 User.php 保存到 models/Uc/ 目录中；<br />
 <br />
 　　代码如下：
 </p>
@@ -109,29 +110,28 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	class uc_user extends DB               //继承DB类
+	class Uc_User extends DB               // 继承DB类
 	{
 
-		public $_dbname     = 'ucenter';   //数据库名称
-		public $_name       = 'uc_user';   //表名称
-		public $_primarykey = 'id';        //如果有主键；主键字段名称
+		public $_dbname     = 'ucenter';   // 数据库名称
+		public $_name       = 'uc_user';   // 表名称
+		public $_primarykey = 'id';        // 如果有主键；主键字段名称
 
 		public function getConfig()
 		{
-			return $GLOBALS['_G']['db']['default'];      //数据库配置；配置文件 config.php
+			return $GLOBALS['_G']['db']['user'];      //数据库配置
 		}
 
 	}
 
 </pre>
-<p class="text">　　接下来就可以 DB::model('uc_user') 这样使用了；注：uc_user 对应的是 models 类名；</p>
+<p class="text">　　接下来就可以 DB::model('Uc_User') 这样使用了；注：Uc_User 对应的是 model 类名；</p>
 
 
-<div class="h2"><a name="group">#</a> 创建用户组表model</div>
-<p class="text">　　新建 group.php 保存到 models/uc/ 目录中；如下：</p>
+<p class="text">　　新建用户组表 model 类 Group.php 保存到 models/Uc/ 目录中；如下：</p>
 <pre class="brush: php;">
 
-	class uc_group extends DB
+	class Uc_Group extends DB
 	{
 
 		public $_dbname     = 'ucenter';
@@ -140,7 +140,7 @@ var _hmt = _hmt || [];
 
 		public function getConfig()
 		{
-			return $GLOBALS['_G']['db']['default'];
+			return $GLOBALS['_G']['db']['user'];
 		}
 
 	}
@@ -150,35 +150,35 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="extends">#</a> 简化写法</div>
 <p class="text">
-　　为了简化写法；可以给每个数据库建立一个类；统一放到 db 目录中；库中所有表继承这个类；如：<br /><br />
-　　新建 ucenter.php 保存到 models/db/ 目录中；
+　　为了简化写法；可以给每个数据库建立一个类；统一放到 models/DB/ 目录中；库中所有表继承这个类；如：<br /><br />
+　　新建 Ucenter.php 保存到 models/DB/ 目录中；
 </p>
 <pre class="brush: php;">
 
-	class db_ucenter extends DB
+	class DB_Ucenter extends DB
 	{
 
 		public $_dbname     = 'ucenter';
 		public function getConfig()
 		{
-			return array();
+			return $GLOBALS['_G']['db']['user'];
 		}
 
 	}
 
 </pre>
 
-<p class="text">　　前面的表 models 类 uc_user uc_group 可以改写成：</p>
+<p class="text">　　前面的表 model 类 Uc_User Uc_Group 可以改写成：</p>
 <pre class="brush: php;">
 
-	class uc_user extends db_ucenter
+	class Uc_User extends DB_Ucenter
 	{
 		public $_name       = 'uc_user';
 		public $_primarykey = 'id';
 		// ..
 	}
 
-	class uc_group extends db_ucenter
+	class Uc_Group extends DB_Ucenter
 	{
 		public $_name       = 'uc_group';
 		public $_primarykey = 'id';
@@ -190,39 +190,39 @@ var _hmt = _hmt || [];
 
 
 <div class="h2"><a name="model">#</a> model的使用 DB::model()</div>
-<p class="text">　　使用 DB::model('uc_user') 直接操作用户表；不用再使用 connect() 方法连库；也不用使用 name() 方法指定表名；如下：</p>
+<p class="text">　　使用 DB::model('Uc_User') 直接操作用户表；不用再使用 connect() 方法连库；也不用使用 name() 方法指定表名；如下：</p>
 <pre class="brush: php;">
 
-	DB::model('uc_user')->get();
+	DB::model('Uc_User')->get();
 
-	DB::model('uc_user')->where()->line();
+	DB::model('Uc_User')->where()->line();
 
-	DB::model('uc_user')->val('name');
+	DB::model('Uc_User')->val('name');
 
-	DB::model('uc_user')->delete();
+	DB::model('Uc_User')->delete();
 
-	DB::model('uc_user')->update();
+	DB::model('Uc_User')->update();
 
 	// ...
 </pre>
 
 <p class="text">
-　　DB::model('uc_user') 相当于前面的 DB::connect()->name('uc_user')<br />
+　　DB::model('Uc_User') 相当于前面的 DB::connect()->name('user')<br />
 　　get() line() delete() update() 等方法用法同前面讲的一样；<br />
 　　还可以直接使用 M() 函数来调用 model ；如下：
 </p>
 
 <pre class="brush: php;">
 
-	M('uc_user')->get();
+	M('Uc_User')->get();
 
-	M('uc_user')->where()->line();
+	M('Uc_User')->where()->line();
 
-	M('uc_user')->val('name');
+	M('Uc_User')->val('name');
 
-	M('uc_user')->delete();
+	M('Uc_User')->delete();
 
-	M('uc_user')->update();
+	M('Uc_User')->update();
 
 	// ...
 </pre>
@@ -230,10 +230,10 @@ var _hmt = _hmt || [];
 
 
 <div class="h2"><a name="field">#</a> getFields() 方法</div>
-<p class="text">　　在 model 类中可以写 getFields() 方法；来指定表字段类型；如下：</p>
+<p class="text">　　在 model 类中可以写 getFields() 方法；来指定表字段；如下：</p>
 <pre class="brush: php;">
 
-	class Uc_User extends DB_Default
+	class Uc_User extends DB_Ucenter
 	{
 		protected $_name       = 'uc_user';
 		protected $_primarykey = 'id';
@@ -263,34 +263,61 @@ var _hmt = _hmt || [];
 </pre>
 
 
-<p class="text">　　getFields() 方法主要用于 insert() update() 方法中传数组时候会自动处理字段类型；</p>
+<div class="h2"><a name="preparedata">#</a> prepareData() 准备数据</div>
+<p class="text">　　在 model 类中可以定义 prepareData() 方法；来为 insert() update() 等操作准备数据；如下：</p>
 <pre class="brush: php;">
 
-	$dbdata = array( 'username'=>'user1', 'password'=>'1234567', 'status'=>1, );
+	class Uc_User extends DB_Ucenter
+	{
+		// ...
 
-	DB::model('uc_user')->insert($dbdata);
+		/**
+		 * 准备数据
+		 *
+		 * @param array $array
+		 * @return array
+		 */
+		protected function prepareData(array $array)
+		{
+			$array = array_change_key_case($array, CASE_LOWER); // 转小写
 
-	DB::model('uc_user')->where(array( 'id',1 ))->update($dbdata);
+			$fields = $this->getFields();
+			if(empty($fields) or !is_array($fields)){
+				return $array;
+			}
+
+			$data = array();
+			// ...
+
+			return $data;
+		}
+	}
 
 </pre>
 
-<p class="text">　　需要注意的是不要传入 getFields() 方法中不存在的字段；</p>
+
+<div class="h2"><a name="settablename">#</a> setTableName() 设置分表</div>
+<p class="text">　　可以定义 setTableName() 方法；来实现数据库分表；如下：</p>
 <pre class="brush: php;">
 
-	$dbdata = array(
-		'username'  => 'user1',
-		'password'  => '1234567',
-		'status'    => 1,
-		'groupname' => 'sys',        //这个字段会丢掉，因为 getFields() 方法中没有此字段
-	);
+	class Uc_User extends DB_Ucenter
+	{
+		// ...
 
-	DB::model('uc_user')->insert($dbdata);
+		public function setTableName()
+		{
+			// 根据具体的业务需求来定义分表
 
-	DB::model('uc_user')->where(array( 'id',1 ))->update($dbdata);
+			// $tablename = 'log_' . date('Ymd');
+			// $tablename = 'stat_' . date('Ymd');
+			// $tablename = 'md5_' . substr(md5('abc'), -2);
+
+			$this->_name = $tablename;
+			return $this;
+		}
+	}
 
 </pre>
-
-<p class="text">　　如果此方法 getFields() 返回一个空值 空数组 或无返回值的时候则不受此限制；没有定义 getFields() 方法的时候同样也不受此限制；</p>
 
 
 <br /><br /><br /><br />	</div>
