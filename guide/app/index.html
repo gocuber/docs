@@ -89,8 +89,9 @@ var _hmt = _hmt || [];
 
 		function welcomeAction()
 		{
-			View::assign('title', 'Hello World');   // 赋值
-			View::display('demo/welcome');          // 调用视图模板
+			$hash = array('title', 'Hello World');
+
+			$this->display('demo/welcome', $hash); // 赋值并调用视图模板
 		}
 
 	}
