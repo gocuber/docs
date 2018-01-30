@@ -69,24 +69,37 @@ var _hmt = _hmt || [];
 		<div class="cube-title">COOKIE使用</div>
 		<div class="h1">COOKIE使用</div>
 
-<p class="text">　　CubePHP框架中使用 Cookie 类来操作Cookie；</p>
+<ul class="cube-catalog">
+    <li><a href="#set"># set() 写COOKIE</a></li>
+    <li><a href="#get"># get() 读取COOKIE</a></li>
+    <li><a href="#del"># del() 删除COOKIE</a></li>
+    <li><a href="#setraw"># setraw() 写COOKIE</a></li>
+</ul>
 
+<p class="text">　　CubePHP框架中使用 Cookie 类来操作COOKIE；</p>
+
+<div class="h3"><a name="set">set() 写COOKIE</a></div>
 <pre class="brush: php;">
-
-G('Cookie')->set($name='',$value='',$time=3600,$path='/',$domain=null); //设置
-
-G('Cookie')->get('name'); //读取
-
-G('Cookie')->del('name'); //删除
-
-G('Cookie')->setraw($name='',$value='',$time=3600,$path='/',$domain=null); //设置
-
-G('Cookie')->set();     //等同于php中setcookie()函数
-G('Cookie')->setraw();  //等同于php中setrawcookie()函数
-
+Cookie::set('key', 'value', 3600, '/', 'gocuber.com');
 </pre>
 
-<p class="text" style="height:400px;">　　注：setrawcookie() 与 setcookie() 几乎完全相同，不同的是 setrawcookie() 不会对 cookie 值进行 urlencode() URL 编码；</p>	</div>
+<div class="h3"><a name="get">get() 读取COOKIE</a></div>
+<pre class="brush: php;">
+Cookie::get('key');
+</pre>
+
+<div class="h3"><a name="del">del() 删除COOKIE</a></div>
+<pre class="brush: php;">
+Cookie::del('key');
+</pre>
+
+<div class="h3"><a name="setraw">setraw() 写COOKIE</a></div>
+<p class="text">　　与 set() 几乎完全相同，不同的是 setraw() 不会对 COOKIE 值进行 urlencode() URL 编码；</p>
+<pre class="brush: php;">
+Cookie::setraw('key', 'value', 3600, '/', 'gocuber.com');
+</pre>
+
+<br /><br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	

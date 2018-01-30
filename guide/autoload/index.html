@@ -71,194 +71,63 @@ var _hmt = _hmt || [];
 
 <ul class="cube-catalog">
 	<li><a href="#rule"># 类命名规则</a></li>
-	<li><a href="#instance"># 类调用</a></li>
-	<ul>
-		<li><a href="#models"># models 调用</a></li>
-		<li><a href="#class"># class 调用</a></li>
-	</ul>
 	<li><a href="#classmap"># ['class_map'] 类映射</a></li>
-	<li><a href="#namespace"># ['namespace'] 命名空间映射</a></li>
 	<li><a href="#includepath"># ['include_path'] 配置</a></li>
+	<li><a href="#composer"># 使用其他自动加载器</a></li>
 </ul>
-
 
 <div class="h2"><a name="rule">#</a> 类命名规则</div>
 
-<p class="text">
-　　一般情况下，在创建和命名类的时候要遵循如下规则；
-<br />
-<br />
+<p class="text">　　一般情况下，在创建和命名类的时候要遵循如下规则；类文件完整路径能通过以下代码取得；</p>
 
-规则1：<br />
-　　类名 models\Sys\User 对应类文件全路径是 /models/Sys/User.php 大小写要对应<br />
-　　类名 class\sys\User 对应类文件全路径是 /class/sys/User.php<br />
-　　类名 class\sys\User_Group 对应类文件全路径是 /class/sys/User/Group.php<br />
-<br />
-
-规则2：<br />
-　　类名 models_Sys_User 对应类文件全路径是 /models/Sys/User.php 大小写要对应<br />
-　　类名 core_User 对应类文件全路径是 /core/User.php<br />
-　　类名 class_sys_user 对应类文件全路径是 /class/sys/user.php
-<br />
-<br />
-　　PHP 5.3 以下版本不支持命名空间的使用，所以5.3以下版本只能使用第二种命名规则；5.3及以上版本随意使用哪种都可以；
-<br />
-<br />
-　　models 及 class 对大小写不做强制限制；不过在开发时；还是要尽量定义一种统一的风格；
-</p>
-
-
-<div class="h2"><a name="instance">#</a> class 类调用</div>
-
-<div class="h3"><a name="models">models 调用</a></div>
-
-<p class="text">
-　　models文件可以直接调用，不用 include() 或 require()<br />
-　　使用 DB::model() 或 M()<br />
-代码：
-</p>
 <pre class="brush: php;">
-
-	$dbuser = DB::model('models\Sys\User');
-
-	$dbstat = DB::model('models_Stat');
-
-	$dbuser = M('models\Sys\User');        // M() 方法 与 DB::model() 一样
-
-	$dbstat = M('models_Stat');
-
-	$dbuser->select();
-
-	M('models_Stat')->get();
-
+strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
 </pre>
-
-<p class="text">
-　　不推荐直接 new models_Stat() 或 new models\Sys\User() 这样使用，虽然这是支持的；
-</p>
-
-
-
-<div class="h3"><a name="class">class 调用</a></div>
-
-<p class="text">
-　　同样的 class 类文件可以直接调用，不用 include() 或 require()<br />
-　　直接 new class(); 或 Cube::G('class'); 或 G('class'); Cube::G()与G() 一样，返回类的单一实例；<br />
-代码：
-</p>
-<pre class="brush: php;">
-
-	$user = new class\User();
-
-	$sysuser = new Sys_User();
-
-	$sysuser = Cube::G('Sys_User'); //返回单一实例
-
-	$sysuser = G('Sys_User'); //返回单一实例 G() 方法 与 Cube::G() 一样
-
-	Sys_User::get(); //调用类中静态方法 get();
-
-</pre>
-
-
 
 <div class="h2"><a name="classmap">#</a> ['class_map'] 类映射</div>
 
 <p class="text">
-　　classmap 类映射，该功能会建立一个从类的名字到类文件路径的映射。当自动加载一个文件时，他首先检查映射里有没有该类。如果有，对应的文件路径就直接加载了，省掉了进一步的检查。这让类的自动加载变得更直接更快速。事实上所有的 CubePHP 核心类都是这样加载的；<br />
+　　class_map 类映射，该功能会建立一个从类的名字到类文件路径的映射。当自动加载一个文件时，首先检查映射里有没有该类。如果有，对应的文件路径就直接加载了，省掉了进一步的检查。这让类的自动加载变得更直接更快速。事实上所有的 CubePHP 核心类都是这样加载的；<br />
 代码：
 </p>
 
 <pre class="brush: php;">
-
-	$_G['class_map'] = array(
-		'Sys_User' => '/class/sys/user.php',
-		'model\\stat' => '/models/sys/stat.php',
-	);
-
+$_G['class_map'] = array(
+	'Sys_Article' => '/class/Sys/Article.php',
+	'Models\\Uc_User' => '/models/Uc/User.php',
+);
 </pre>
-
-
-<div class="h2"><a name="namespace">#</a> ['namespace'] 命名空间映射</div>
-
-<p class="text">
-　　namespace 命名空间映射，同类映射功能相似；他会建立一个从命名空间到类文件夹路径的映射；注意，这里是映射到类所在的文件夹，不包括类文件本身；<br />
-<br />
-　　先来看一段使用 namespace 命名空间映射的代码；<br />
-配置文件代码：
-</p>
-
-<pre class="brush: php;">
-
-	$_G['namespace'] = array(
-		'sys\\group' => 'class/sys/group',
-	);
-
-</pre>
-
-<p class="text">
-　　类文件路径 /class/sys/group/user.php<br />
-代码：
-</p>
-
-<pre class="brush: php;">
-namespace sys\group;
-
-class user{}
-</pre>
-
-<p class="text">
-　　调用此类<br />
-代码：
-</p>
-
-<pre class="brush: php;">
-use sys\group;
-
-$user = new sys\group\user();
-</pre>
-
-<p class="text">　　注：PHP 5.3 以下版本不支持命名空间的使用；</p>
-
-
 
 <div class="h2"><a name="includepath">#</a> ['include_path'] 配置</div>
 
 <p class="text">
-　　include_path 配置，默认情况下加载类文件时，都是到 SYSTEM_DIR 目录下去找；你也可以添加所需要的目录到 include_path 里；<br />
+　　include_path 配置，默认情况下 include_path 只包含 SYSTEM_DIR 目录；你也可以添加所需要的目录到 include_path 里；<br />
 代码：
 </p>
 
 <pre class="brush: php;">
-
-	$_G['include_path'] = array(
-		SYSTEM_DIR . 'models/',
-		SYSTEM_DIR . 'class/',
-	);
-
+$_G['include_path'] = array(
+	SYSTEM_DIR . 'models/',
+	SYSTEM_DIR . 'class/',
+);
 </pre>
 
 <p class="text">
-　　这样在加载类时 先去 SYSTEM_DIR . 'models/' 目录下查找，没有找到然后再去 SYSTEM_DIR . 'class/' 目录下查找，最后去 SYSTEM_DIR 目录查找；<br />
+　　这样在 models/ 或 class/ 目录下的类名可以省去 class_ 或 models_，可以使用 namespace 命名空间来解决类重名问题；<br />
 代码：
 </p>
 
 <pre class="brush: php;">
+namespace Models;
 
-	$user = new sys_user();
-/*
-	sys_user类文件 可以放在
-	/models/sys/user.php
-
-	或
-	/class/sys/user.php
-
-	或
-	/sys/user.php
-*/
-
+class Uc_User{}
 </pre>
 
+<div class="h2"><a name="composer">#</a> 使用其他自动加载器</div>
+
+<p class="text">
+　　可以使用自定义的类自动加载器，或者使用 Composer 来管理依赖包，有关 Composer 的自动加载规则，请参考 <a href="https://getcomposer.org/doc/04-schema.md#autoload" target="_blank">Composer 文档（英文）</a> 或 <a href="https://github.com/5-say/composer-doc-cn/blob/master/cn-introduction/04-schema.md#autoload" target="_blank">Composer 文档（中文）</a>；
+</p>
 
 <br /><br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->

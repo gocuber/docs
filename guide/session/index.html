@@ -69,55 +69,45 @@ var _hmt = _hmt || [];
 		<div class="cube-title">SESSION使用</div>
 		<div class="h1">SESSION使用</div>
 
-<p class="text">　　CubePHP框架中使用 Session 类来操作session；直奔主题；</p>
+<ul class="cube-catalog">
+    <li><a href="#set"># set() 写SESSION</a></li>
+    <li><a href="#get"># get() 读取SESSION</a></li>
+    <li><a href="#del"># del() 删除SESSION</a></li>
+    <li><a href="#destroy"># destroy() 销毁全部</a></li>
+    <li><a href="#start"># start() 与 id()</a></li>
+</ul>
 
+<p class="text">　　CubePHP框架中使用 Session 类来操作SESSION；</p>
+
+<div class="h3"><a name="set">set() 写SESSION</a></div>
 <pre class="brush: php;">
-
-G('Session')->start();                //等同于php中session_start()函数
-
-G('Session')->set('name','youname');  //设置
-
-G('Session')->get('name');            //读取
-
-G('Session')->del('name');            //删除
-
-G('Session')->un_set();               //销毁全部；等同于php中session_unset()函数
-
-G('Session')->destroy();              //销毁全部；等同于php中session_destroy()函数
-
+Session::set('key', 'value');
 </pre>
 
-<p class="text">　　也可以直接使用php原始代码；如：</p>
+<div class="h3"><a name="get">get() 读取COOKIE</a></div>
 <pre class="brush: php;">
-
-session_start();
-
-$_SESSION['name'] = 'youname';
-
-unset($_SESSION['name']);
-
-unset($_SESSION);
-
-session_unset();
-
-session_destroy();
-
+Session::get('key');
 </pre>
 
-<p class="text">
-　　php的session默认是存在磁盘文件中；php.ini配置：session.save_handler = files<br />
+<div class="h3"><a name="del">del() 删除COOKIE</a></div>
+<pre class="brush: php;">
+Session::del('key');
+</pre>
 
-　　用户自定义session处理机制。修改php.ini配置：session.save_handler = user<br />
+<div class="h3"><a name="destroy">destroy() 销毁全部</a></div>
+<pre class="brush: php;">
+Session::destroy();
+</pre>
 
-　　这样就可以把session保存到数据库或memcache缓存中；<br />
+<div class="h3"><a name="start">start() 与 id()</a></div>
+<p class="text">　　一般情况下，不用手动调用start()，在使用Session类时会自动调用；</p>
+<pre class="brush: php;">
+Session::start(); // session_start()
+Session::id();    // 获取 session_id
+Session::id($id); // 设置 session_id
+</pre>
 
-　　session_set_save_handler('open','close','read','write','destroy','gc');<br />
-
-　　重写这几个方法 'open','close','read','write','destroy','gc'；可以把session保存到数据库或缓存中；<br />
-
-</p>
-
-<br /><br /><br /><br />	</div>
+<br /><br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	

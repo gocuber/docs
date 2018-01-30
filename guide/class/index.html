@@ -67,7 +67,61 @@ var _hmt = _hmt || [];
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
 		<div class="cube-title">系统类库说明</div>
-		<div class="h1">CubePHP框架 —— 更好、更快、更强的PHP开发框架</div>	</div>
+		<div class="h1">CubePHP框架 —— 更好、更快、更强的PHP开发框架</div>
+
+<!--
+<div class="h2"><a name="instance">#</a> class 类调用</div>
+
+<div class="h3"><a name="models">models 调用</a></div>
+
+<p class="text">
+　　models文件可以直接调用，不用 include() 或 require()<br />
+　　使用 DB::model() 或 M()<br />
+代码：
+</p>
+<pre class="brush: php;">
+
+	$dbuser = DB::model('models\Sys\User');
+
+	$dbstat = DB::model('models_Stat');
+
+	$dbuser = M('models\Sys\User');        // M() 方法 与 DB::model() 一样
+
+	$dbstat = M('models_Stat');
+
+	$dbuser->select();
+
+	M('models_Stat')->get();
+
+</pre>
+
+<p class="text">
+　　不推荐直接 new models_Stat() 或 new models\Sys\User() 这样使用，虽然这是支持的；
+</p>
+
+
+
+<div class="h3"><a name="class">class 调用</a></div>
+
+<p class="text">
+　　同样的 class 类文件可以直接调用，不用 include() 或 require()<br />
+　　直接 new class(); 或 Cube::G('class'); 或 G('class'); Cube::G()与G() 一样，返回类的单一实例；<br />
+代码：
+</p>
+<pre class="brush: php;">
+
+	$user = new class\User();
+
+	$sysuser = new Sys_User();
+
+	$sysuser = Cube::G('Sys_User'); //返回单一实例
+
+	$sysuser = G('Sys_User'); //返回单一实例 G() 方法 与 Cube::G() 一样
+
+	Sys_User::get(); //调用类中静态方法 get();
+
+</pre>
+-->	</div>
 	</div><!-- /big -->
 
 	

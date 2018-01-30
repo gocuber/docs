@@ -68,16 +68,12 @@ var _hmt = _hmt || [];
     <div class="cube-block">
 		<div class="cube-title">使用Smarty</div>
 		<div class="h1">在框架中使用Smarty</div>
-<br />
-<br />
-<br />
-　　下载Smarty包，放到cube/lib目录下；使之成为下面这样的目录：
-<br />
-　　SYSTEM_DIR . 'cube/lib/smarty/libs/Smarty.class.php'
-<br />
-<br />
+
+<p class="text">
+　　下载Smarty包，放到cube/lib目录下；使之成为下面这样的目录：<br />
+　　SYSTEM_DIR . 'cube/lib/smarty/libs/Smarty.class.php'<br />
 　　写一个Smarty操作类，下面的SmartyCls在CubePHP框架中已经写好；
-<br />
+</p>
 <pre class="brush: php;">
 
 	class SmartyCls
@@ -120,27 +116,27 @@ var _hmt = _hmt || [];
 
 	}
 
+</pre>
 
-	在控制器中调用；
+<p class="text">在控制器中调用；</p>
 
-	function testAction()
-	{
-		$hash = array(
-			'title' => '使用Smarty',
-			'name'  => 'Smarty',
-		);
-		(new SmartyCls())->display('smarty_test.tpl', $hash);
-	}
+<pre class="brush: php;">
+function testAction()
+{
+	$hash = array(
+		'title' => '使用Smarty',
+		'name'  => 'Smarty',
+	);
+	(new SmartyCls())->display('smarty_test.tpl', $hash);
+}
 
+// 模板中直接输出；views/smarty_test.tpl
 
-	模板中直接输出；views/smarty_test.tpl
-
-	{{$title}}
-	{{$name}}
+{{$title}}
+{{$name}}
 
 </pre>
-<br />
-<br />
+
 <br />
 <br />
 <br />
