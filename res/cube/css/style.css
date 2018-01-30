@@ -63,7 +63,7 @@ a:hover,a:focus{text-decoration: underline;color: #CC0000;}
 .cube-catalog > ul > li{padding:1px 35px;font-size:14px;}
 
 /* h123 */
-.cube-article,.cube-guide{line-height:1.8;word-break:break-all;word-wrap:break-word;}
+.cube-article,.cube-guide{line-height:1.8;word-break:break-all;word-wrap:break-word;overflow:hidden;}
 .cube-guide .h1{padding:28px 0px; font-size:28px;}
 .cube-guide .h2{font-size:28px; padding:40px 0 20px 0;}
 .cube-guide .h3{font-size:28px; padding:40px 0 20px 20px;}
