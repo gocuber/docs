@@ -67,7 +67,190 @@ var _hmt = _hmt || [];
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
 		<div class="cube-title">Redis</div>
-		<div class="h1">CubePHP框架 —— 更好、更快、更强的PHP开发框架</div>	</div>
+		<div class="h1">Redis</div>
+
+<ul class="cube-catalog">
+	<li><a href="#config"># 配置</a></li>
+	<li><a href="#connect"># Redis连接 Cache_Redis::connect()</a></li>
+	<ul>
+		<li><a href="#master"># master()</a></li>
+		<li><a href="#slave"># slave()</a></li>
+	</ul>
+	<li><a href="#use"># Redis 使用</a></li>
+</ul>
+
+<div class="h2"><a name="config">#</a> 配置</div>
+
+<p class="text">　　配置文件 config.php</p>
+
+<pre class="brush: php;">
+	// 默认配置
+	$_G['redis']['default'] = array(
+	    'host' => '127.0.0.1',
+	    'port' => 6379,
+	    'auth' => '123456',    // 如果需要认证 配置 auth
+	);
+</pre>
+
+<p class="text">　　与数据库一样 Redis 也可配置主从</p>
+
+<pre class="brush: php;">
+	// user 配置
+	$_G['redis']['user'] = array(
+	    'host'  => '127.0.0.1',
+	    'port'  => 6379,
+	    'slave' => array(       // 配置 slave
+	        array(
+        	    'host' => '127.0.0.2',
+        	    'port' => 6379,
+        	),
+	        array(
+        	    'host' => '127.0.0.3',
+        	    'port' => 6379,
+        	),
+	    ),
+	);
+</pre>
+
+<div class="h2"><a name="connect">#</a> Redis连接 Cache_Redis::connect()</div>
+
+<pre class="brush: php;">
+
+Cache_Redis::connect();        // 连接默认Redis
+Cache_Redis::connect('user');  // 连接用户Redis
+
+</pre>
+
+<p class="text">　　使用 connect() 连接始终返回的都是 master 主Redis；如果配置了 slave ，可以使用 master() 或 slave() 来分别连接主或从Redis；</p>
+
+<div class="h3"><a name="master">master()</a></div>
+<pre class="brush: php;">
+
+Cache_Redis::master();       // 连接默认 主Redis
+Cache_Redis::master('user'); // 连接用户 主Redis
+
+</pre>
+
+<div class="h3"><a name="slave">slave()</a></div>
+<pre class="brush: php;">
+
+Cache_Redis::slave();       // 连接默认 从Redis
+Cache_Redis::slave('user'); // 连接用户 从Redis
+
+</pre>
+
+<p class="text">　　如果没有配置 slave ，那么调用 slave() 返回的也是主Redis；实际上connect()方法第二个参数就是用来区分连接 master 还是 slave ，默认值是 master ；</p>
+
+<pre class="brush: php;">
+
+/**
+ * connect
+ *
+ * @return Cache_Redis
+ */
+public static function connect($conf = null, $mode = 'master'){}
+
+/**
+ * master
+ *
+ * @return Cache_Redis
+ */
+public static function master($conf = null)
+{
+	return self::connect($conf, 'master');
+}
+
+/**
+ * slave
+ *
+ * @return Cache_Redis
+ */
+public static function slave($conf = null)
+{
+	return self::connect($conf, 'slave');
+}
+
+</pre>
+
+
+<div class="h2"><a name="use">#</a> Redis 使用</div>
+
+<p class="text">　　Cache_Redis 类对 Redis 的持久化连接做了一个封装，返回原始底层的 Redis 实例，接下来使用 Redis 的接口方法来操作 Redis ；</p>
+
+<pre class="brush: php;">
+
+$redis = Cache_Redis::connect();
+
+// Keys and Strings
+
+$redis->get('key');
+
+$redis->set('key', 'value');
+$redis->setEx('key', 3600, 'value');
+$redis->pSetEx('key', 100, 'value');
+$redis->setNx('key', 'value');
+
+$redis->delete('key1', 'key2');
+$redis->exists('key');
+
+$redis->incr('key1');
+$redis->incrBy('key1', 10);
+$redis->incrByFloat('key1', -1.5);
+
+$redis->decr('key1');
+$redis->decrBy('key1', 10);
+
+$redis->mGet(array('key1', 'key2', 'key3'));
+
+$redis->sAdd('s', 5);
+$redis->sAdd('s', 4);
+$redis->sAdd('s', 2);
+$redis->sort('s');
+$redis->sort('s', array('sort' => 'desc'));
+
+$redis->mSet(array('key0' => 'value0', 'key1' => 'value1'));
+
+// Hashes
+$redis->hSet('h', 'key1', 'hello');
+$redis->hGet('h', 'key1');
+$redis->hSetNx('h', 'key1', 'hello');
+$redis->hLen('h');
+$redis->hKeys('h');
+$redis->hVals('h');
+$redis->hGetAll('h');
+
+$redis->hIncrBy('h', 'x', 2);
+$redis->hIncrByFloat('h', 'x', -3.0);
+$redis->hMSet('user:1', array('name' => 'Joe', 'salary' => 2000));
+$redis->hMGet('h', array('field1', 'field2'));
+
+// Lists
+$redis->lPush('key1', 'A');
+$redis->blPop('key1', 'key2', 10);
+$redis->brPop('key1', 'key2', 10);
+$redis->rPush('key1', 'A');
+$redis->lGet('key1', 0);
+$redis->lGet('key1', 0);
+
+// Sets
+$redis->sAdd('key1' , 'member2', 'member3');
+$redis->sCard('key1');
+$redis->sMove('key1', 'key2', 'member13');
+$redis->sPop('key1');
+$redis->sRem('key1', 'member2', 'member3');
+
+// Sorted sets
+$redis->zAdd('key', 5, 'val5');
+$redis->zRange('key', 0, -1);
+$redis->zDelete('key', 'val2');
+
+// ...
+</pre>
+
+<p class="text">　　<a href="https://github.com/phpredis/phpredis" target="_blank">Redis 权威指南参考</a></p>
+
+
+<br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	
