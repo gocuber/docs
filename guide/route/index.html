@@ -280,7 +280,7 @@ Route::get('{all}', function(){
 	echo '停服维护中..';
 });
 
-// 放在 routes.php 结尾，就会拦截配置之外的全部，相当于全部访问都需要配置在 routes.php 中
+// 放在 routes.php 结尾，就会拦截配置之外的全部访问，相当于全部访问都需要配置在 routes.php 中
 Route::get('{all}', function(){
 	// page_404
 });
