@@ -74,7 +74,7 @@ var _hmt = _hmt || [];
 	<li><a href="#func"># 路由方法</a></li>
 	<ul>
 		<li><a href="#get"># get() 路由设置</a></li>
-		<li><a href="#wildcard"># wildcard() 通配符限定</a></li>
+		<li><a href="#wildcard"># wildcard() 全局通配符限定</a></li>
 		<li><a href="#domain"># domain() 子域名路由组</a></li>
 	</ul>
 	<li><a href="#closure"># 闭包路由</a></li>
@@ -107,7 +107,7 @@ var _hmt = _hmt || [];
 <p class="text">
 　　get() 方法三个参数：<br />
 　　第一个参数：访问url；<br />
-　　第二个参数：路由规则，可以是一个闭包函数，也可以指定到控制器；<br />
+　　第二个参数：路由规则，可以是一个闭包函数，也可以指定到控制器、动作；<br />
 　　第三个参数：通配符限定规则；
 </p>
 
@@ -122,28 +122,33 @@ Route::get('/', function(){
 Route::get('hello', 'demo/hello');
 
 // 通配符限定
-Route::get('detail/{id}/{name}', 'demo/detail/?id={:1}&name={:2}', ['id'=>'[0-9]+', 'name'=>'[a-z]+']);
+Route::get('detail/{id}/{name}', 'demo/detail/?id={id}&name={name}', ['id' => '[0-9]+', 'name' => '[a-z]+']);
 
 </pre>
 
 
-<div class="h3"><a name="wildcard">wildcard() 通配符</a></div>
+<div class="h3"><a name="wildcard">wildcard() 全局通配符限定</a></div>
 
-<p class="text">　　使用 wildcard() 方法定义常用的全局约束通配符，get() 方法直接使用这些通配符；</p>
+<p class="text">　　使用 wildcard() 方法定义常用的全局约束通配符；</p>
 
 <pre class="brush: php;">
 
 // 使用正则来设置通配符
-
 Route::wildcard(array(
-	'id'   => '[0-9]+',             // + 匹配 1次~多次
+	'id'   => '[0-9]+',
 	'name' => '[a-z]+',
 	'year' => '[0-9]{4}',
-	'all'  => '.*',                 // * 匹配 0次~多次
-	'd'    => '\/?',                // ? 匹配 0次~1次
+	'all'  => '.*',
 ));
 
-Route::get('detail/{id}', 'article/detail/?id={:1}');
+// 使用全局通配符
+Route::get('detail/{id}', 'article/detail/?id={id}');
+
+// 这样并不会覆盖全局通配符 这里的 ['id' => '[0-5]+'] 只作用于本次，只在本次有效
+Route::get('class/{id}', 'class/?id={id}', ['id' => '[0-5]+']);
+
+// 使用全局通配符
+Route::get('news/{id}', 'news/detail/?id={id}');
 
 Route::get('{all}', function(){
 	// 404
@@ -155,12 +160,12 @@ Route::get('{all}', function(){
 
 <div class="h3"><a name="domain">domain() 子域名路由组</a></div>
 
-<p class="text">　　domain() 方法用来给指定域名设置一组路由规则，这组路由规则只在当前指定域名下有效；例如给用户中心模块指定一个子域名 ucenter.gocuber.com</p>
+<p class="text">　　domain() 方法用来为指定的域名设置一组路由规则，这组路由规则只在当前指定的域名下有效；例如给用户中心模块指定一个子域名 ucenter.gocuber.com</p>
 
 <pre class="brush: php;">
 
 Route::domain('ucenter.gocuber.com', function(){
-    Route::get('{all}', 'ucenter/{:1}');
+    Route::get('{all}', 'ucenter/{all}');
 });
 
 </pre>
@@ -176,7 +181,7 @@ Route::get('/', function(){
 });
 
 // 调用视图
-Route::get('/', function(){
+Route::get('hello', function(){
 	View::display('demo_welcome');
 });
 
@@ -191,17 +196,31 @@ Route::get('/', function(){
 
 <pre class="brush: php;">
 
-Route::get('detail/{id}', function($p1){
-	echo $p1;
+Route::get('detail/{id}', function($id){
+	echo $id;
 });
 
-Route::get('news/{class}', function($p1){
-	View::display($p1 . 'list');
-}, ['class'=>'code|guide|demo']);
+Route::get('detail/{name}', function($name='cuber'){
+	echo $name;
+});
 
-Route::get('news/{month}/{day}', function($p1, $p2){
-	echo $p1 . '-' . $p2;
-}, ['month'=>'[0-9]{2}', 'day'=>'[0-9]{2}']);
+Route::get('news/{class}/{id}', function($class, $id){
+	echo $class;
+	echo $id;
+}, ['class' => 'code|guide|demo']);
+
+Route::get('list/{class}', function($class='code'){
+	echo $class;
+}, ['class' => '(code|guide|demo)?']);
+
+// 相信你已经注意到这两条路由里的class了，他们是有区别的；
+
+['class' => 'code|guide|demo']       // class 必须是三个其中的一个
+['class' => '(code|guide|demo)']     // 同上
+
+['class' => '(code|guide|demo)?']    // class 必须是三个其中的一个，或者没有
+['class' => '(|code|guide|demo)']    // 同上
+['class' => '|code|guide|demo']      // 同上
 
 </pre>
 
@@ -210,13 +229,13 @@ Route::get('news/{month}/{day}', function($p1, $p2){
 
 <p class="text">
 　　控制器路由路由格式：'模块/控制器/动作/?参数=值&参数=值'<br />
-　　如果是默认模块则可以省略；如果是默认动作 index 同样也可以省略；
+　　如果是默认模块则可以省略；如果是默认控制器或动作，同样也可以省略；
 </p>
 
 <div class="h3"><a name="#controllerbase">简单控制器路由</a></div>
 
 <pre class="brush: php;">
-// 下面三条配置实际是同一个规则，只要访问 hello，就会分配到默认default模块 welcome控制器 index动作来处理
+// 下面三条配置实际是同一个规则，只要访问 hello，就会被分配到默认default模块 welcome控制器 index动作
 
 Route::get('hello', 'welcome/index');
 
@@ -224,7 +243,7 @@ Route::get('hello', 'default/welcome/index');
 
 Route::get('hello', 'welcome');
 
-// 指定参数
+// 指定GET参数
 Route::get('download', 'article/detail/?code=download');
 
 </pre>
@@ -233,18 +252,18 @@ Route::get('download', 'article/detail/?code=download');
 
 <pre class="brush: php;">
 
-Route::get('detail/{id}', 'article/detail/?id={:1}');
+Route::get('detail/{id}', 'article/detail/?id={id}');
 
-Route::get('article/{class}', 'article/list/?code={:1}', ['class'=>'code|guide|demo']);
+Route::get('article/{class}', 'article/list/?class={class}', ['class' => 'code|guide|demo']);
 
-Route::get('user/{abc}/{id}', 'user/list/?code={:1}&id={:2}', ['abc'=>'[a-z]+']);
+Route::get('user/{code}/{id}', 'user/list/?code={code}&id={id}', ['code' => '[a-z]+']);
 
 </pre>
 
 
 <div class="h2"><a name="groupdomain">#</a> 子域名路由组</div>
 
-<p class="text">　　domain() 方法用来给指定域名设置一组路由规则，这组路由规则只在当前指定域名下有效；</p>
+<p class="text">　　domain() 方法用来为指定的域名设置一组路由规则，这组路由规则只在当前指定的域名下有效；</p>
 
 <pre class="brush: php;">
 
@@ -256,35 +275,38 @@ Route::domain('ucenter.gocuber.com', function(){
 	Route::get('edit', 'ucenter/user/edit');
 	// ...
 
-    Route::get('{all}', 'ucenter/{:1}');
+    Route::get('{all}', 'ucenter/{all}');
 });
 
 </pre>
 
 
 <div class="h2"><a name="defaultall">#</a> 默认路由与全拦截路由</div>
-<div class="h3"><a name="default">默认路由</a></div>
-<p class="text">　　当url中没有包含任何路由信息，如首页，就会执行 '/' 指定的控制器及动作；</p>
-<pre class="brush: php;">
 
-// 默认路由就是一个 '/' 默认值 'default/index/index'
-Route::get('/', 'default/index/index');
+<div class="h3"><a name="default">默认路由</a></div>
+<p class="text">　　默认路由 '/' ；当url中没有包含任何路由信息，如首页，就会执行 '/' 指定的控制器及动作；默认值为 'default/index/index' ；</p>
+<pre class="brush: php;">
+Route::get('/', 'welcome');
 </pre>
 
 <div class="h3"><a name="all">全拦截路由</a></div>
+<p class="text">　　使用通配符 ['all' => '.*'] 全部拦截</p>
+<pre class="brush: php;">
+Route::get('{all}', function(){}, ['all' => '.*']);
+</pre>
+
+<p class="text">　　如果将这行放在 routes.php 开始，将会全部拦截所有访问，如果放在结尾，将会拦截 routes.php 中配置之外的全部访问，相当于全部访问都需要配置在 routes.php 中；</p>
 
 <pre class="brush: php;">
-
-// 全部拦截，将这行放在 routes.php 开始
+// 放在开始
 Route::get('{all}', function(){
-	echo '停服维护中..';
-});
+	echo '停服升级中..';
+}, ['all' => '.*']);
 
-// 放在 routes.php 结尾，就会拦截配置之外的全部访问，相当于全部访问都需要配置在 routes.php 中
+// 放在结尾
 Route::get('{all}', function(){
 	// page_404
-});
-
+}, ['all' => '.*']);
 </pre>
 
 
