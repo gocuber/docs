@@ -75,7 +75,7 @@ var _hmt = _hmt || [];
 	<ul>
 		<li><a href="#get"># get() 路由设置</a></li>
 		<li><a href="#wildcard"># wildcard() 通配符限定</a></li>
-		<li><a href="#domain"># domain() 子域名路由</a></li>
+		<li><a href="#domain"># domain() 子域名路由组</a></li>
 	</ul>
 	<li><a href="#closure"># 闭包路由</a></li>
 	<ul>
@@ -122,14 +122,14 @@ Route::get('/', function(){
 Route::get('hello', 'demo/hello');
 
 // 通配符限定
-Route::get('detail/{id}', 'demo/detail/?id={:1}', ['id'=>'[0-9]+']);
+Route::get('detail/{id}/{name}', 'demo/detail/?id={:1}&name={:2}', ['id'=>'[0-9]+', 'name'=>'[a-z]+']);
 
 </pre>
 
 
 <div class="h3"><a name="wildcard">wildcard() 通配符</a></div>
 
-<p class="text">　　使用 wildcard() 方法定义常用的全局约束通配符；</p>
+<p class="text">　　使用 wildcard() 方法定义常用的全局约束通配符，get() 方法直接使用这些通配符；</p>
 
 <pre class="brush: php;">
 
@@ -145,6 +145,10 @@ Route::wildcard(array(
 
 Route::get('detail/{id}', 'article/detail/?id={:1}');
 
+Route::get('{all}', function(){
+	// 404
+});
+
 // ...
 </pre>
 
@@ -156,7 +160,7 @@ Route::get('detail/{id}', 'article/detail/?id={:1}');
 <pre class="brush: php;">
 
 Route::domain('ucenter.gocuber.com', function(){
-    Route::get('{all}', 'ucenter/{:1}', ['all'=>'.*']);
+    Route::get('{all}', 'ucenter/{:1}');
 });
 
 </pre>
@@ -231,7 +235,7 @@ Route::get('download', 'article/detail/?code=download');
 
 Route::get('detail/{id}', 'article/detail/?id={:1}');
 
-Route::get('article/{abc}', 'article/list/?code={:1}', ['abc'=>'code|guide|demo']);
+Route::get('article/{class}', 'article/list/?code={:1}', ['class'=>'code|guide|demo']);
 
 Route::get('user/{abc}/{id}', 'user/list/?code={:1}&id={:2}', ['abc'=>'[a-z]+']);
 
@@ -252,7 +256,7 @@ Route::domain('ucenter.gocuber.com', function(){
 	Route::get('edit', 'ucenter/user/edit');
 	// ...
 
-    Route::get('{all}', 'ucenter/{:1}', ['all'=>'.*']);
+    Route::get('{all}', 'ucenter/{:1}');
 });
 
 </pre>
@@ -260,26 +264,26 @@ Route::domain('ucenter.gocuber.com', function(){
 
 <div class="h2"><a name="defaultall">#</a> 默认路由与全拦截路由</div>
 <div class="h3"><a name="default">默认路由</a></div>
-
+<p class="text">　　当url中没有包含任何路由信息，如首页，就会执行 '/' 指定的控制器及动作；</p>
 <pre class="brush: php;">
 
-// 默认路由就是一个 '/'
+// 默认路由就是一个 '/' 默认值 'default/index/index'
 Route::get('/', 'default/index/index');
-
-// 如果不设置默认路由 就会加载默认模块默认控制器和默认动作 'default/index/index'
 </pre>
 
 <div class="h3"><a name="all">全拦截路由</a></div>
 
 <pre class="brush: php;">
 
-// 设定通配符匹配全部 '.*' .代表任意字符 *代表0次~多次
+// 全部拦截，将这行放在 routes.php 开始
+Route::get('{all}', function(){
+	echo '停服维护中..';
+});
 
-// 这条路由规则放在 routes.php 开始，就会拦截全部访问
-Route::get('{all}', function(){echo '停服维护中..';}, ['all'=>'.*']);
-
-// 放在 routes.php 结尾，就会拦截配置之外的全部，相当于全部访问都需要配置路由
-Route::get('{all}', 'page/404', ['all'=>'.*']);
+// 放在 routes.php 结尾，就会拦截配置之外的全部，相当于全部访问都需要配置在 routes.php 中
+Route::get('{all}', function(){
+	// page_404
+});
 
 </pre>
 
