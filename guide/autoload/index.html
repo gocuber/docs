@@ -93,7 +93,7 @@ strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
 
 <pre class="brush: php;">
 $_G['class_map'] = array(
-	'Sys_Article' => '/class/Sys/Article.php',
+	'Article_List' => '/class/Article/List.php',
 	'Models\\Uc_User' => '/models/Uc/User.php',
 );
 </pre>
@@ -113,7 +113,7 @@ $_G['include_path'] = array(
 </pre>
 
 <p class="text">
-　　这样在 models/ 或 class/ 目录下的类名可以省去 class_ 或 models_，可以使用 namespace 命名空间来解决类重名问题；<br />
+　　这样在 models/ 或 class/ 目录下的类名可以省去 models_ 或 class_，可以使用 namespace 命名空间来解决类重名问题；<br />
 代码：
 </p>
 

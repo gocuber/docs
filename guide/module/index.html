@@ -81,7 +81,7 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="module">#</a> 介绍</div>
 <p class="text">
-　　Module 模块 是由 控制器、视图 及 模型 组成的一个功能模块；实际上模块就是一个应用；一般情况下存放在 apps 目录下；完全可以把模块看成是一个独立的应用；<br />
+　　Module 模块是由控制器、视图及模型组成的一个功能模块；实际上模块就是一个应用；一般情况下存放在 apps 目录下；完全可以把模块看成是一个独立的应用；<br />
 <br />再来看下目录结构：
 </p>
 
@@ -98,12 +98,11 @@ var _hmt = _hmt || [];
 |-- |-- controllers
 |-- |-- views
 
-|-- testapp                      其他应用模块
+|-- app1                         其他模块
 |-- |-- controllers
 |-- |-- views
 
-
-/models                          模型目录
+/models                          模型
 
 */
 </pre>
@@ -115,25 +114,25 @@ var _hmt = _hmt || [];
 <div class="h3"><a name="list">['module_list'] 模块列表</a></div>
 
 <p class="text">
-　　一般情况下，在开发项目时，会有多个模块；只需修改配置文件 config.php $_G['module_list'] 就可以了；<br />
+　　一般情况下，在开发项目时，会有多个模块；只需修改配置 $_G['module_list'] 就可以了；<br />
 <br />代码：
 </p>
 
 <pre class="brush: php;">
-//模块列表 一个数组
-$_G['module_list'] = array('default','test','admin','cron');
+// 模块列表
+$_G['module_list'] = array('default','admin','cron','app1','app2');
 </pre>
 
 
 <div class="h3"><a name="default">['module_default'] 默认模块</a></div>
 
 <p class="text">
-　　我们访问url的格式是：http://.../模块/控制器/动作/ ；当访问url省略模块时就会加载默认模块；同样修改配置文件 config.php<br />
+　　我们访问url的格式是：http://.../模块/控制器/动作/ ；当访问url省略模块时就会加载默认模块；同样修改配置 $_G['module_default']<br />
 <br />代码：
 </p>
 
 <pre class="brush: php;">
-//默认模块
+// 默认模块
 $_G['module_default'] = 'default'; //默认值是 default 所以为空或没有配置时加载 default 模块
 </pre>
 
@@ -146,38 +145,38 @@ $_G['module_default'] = 'default'; //默认值是 default 所以为空或没有�
 </p>
 
 <pre class="brush: php;">
-//默认目录 /apps/test/
+// 默认目录 /apps/app1/
 
 /*
 
 /apps
-|-- test
-|-- |-- controllers       默认控制器
-|-- |-- views             默认视图
+|-- app1
+|-- |-- controllers       控制器
+|-- |-- views             视图
 
 */
 
 
-//存放在 /testapp 目录下
-$_G['module_dir']['test'] = SYSTEM_DIR.'testapp/';
+// 存放在 /app1 目录下
+$_G['module_dir']['app1'] = SYSTEM_DIR . 'app1/';
 
 /*
 
-/testapp
-|-- controllers       控制器
-|-- views             视图
+/app1
+|-- controllers
+|-- views
 
 */
 
 
-//或者直接放 / 根目录下
+// 存放在 / 根目录下
 
-$_G['module_dir']['test'] = SYSTEM_DIR;
+$_G['module_dir']['app1'] = SYSTEM_DIR;
 
 /*
 
-/controllers       控制器
-/views             视图
+/controllers
+/views
 
 */
 

@@ -118,7 +118,7 @@ var _hmt = _hmt || [];
 <div class="h3"><a name="rule_view">视图</a></div>
 
 <p class="text">
-　　视图模板文件默认保存在：/apps/模块/views/ 目录下；可以创建子级目录；目录及文件名尽量小写（不做强制限制，怎么写的怎么用就行了）；<br />
+　　视图模板文件默认保存在：/apps/模块/views/ 目录下；可以创建子级目录；目录及文件名尽量小写；<br />
 /apps/default/views/index.php<br />
 /apps/default/views/demo/index.php
 </p>
@@ -126,7 +126,12 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="class">#</a> models 及 class 规则</div>
 
-<p class="text">　　models 与 class 目录文件及类名称，对大小写不做强制限制；不过在开发时；还是要尽量定义一种统一的风格；参考类自动加载章节；</p>
+<p class="text">　　一般情况下，在创建和命名类的时候要遵循如下规则；类文件完整路径能通过以下代码取得；参考类自动加载章节；</p>
+
+<pre class="brush: php;">
+strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
+</pre>
+
 
 <br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->
