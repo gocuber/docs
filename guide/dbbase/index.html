@@ -93,33 +93,38 @@ var _hmt = _hmt || [];
 
 	// 默认数据库配置
 	$_G['db']['default'] = array(
-		'master'   => '192.168.0.1:3306',    // 主库
-		'slave'    => '192.168.0.2:3306',    // 从库
+		'host'     => '192.168.0.1',         // 主库
+		'port'     => 3306,                  // 端口
 		'username' => 'root',                // 用户名
 		'password' => '***',                 // 密码
 		'database' => 'db_cube',             // 数据库名
 		'charset'  => 'utf8',                // 编码
 		'driver'   => 'mysql',               // 数据库类型
+		'slave'    => array(                 // 从库
+			'host'  => '192.168.0.2',
+			'port'  => 3306,
+		),
 	);
 
 </pre>
 
-<p class="text">　　可以配置主从库来实现读写分离，其中 master 是主库地址，slave 是从库地址，slave 从库可以配置多个，如下：</p>
+<p class="text">　　可以配置主从库来实现读写分离，其中 slave 是从库配置，slave 从库可以配置多个，如下：</p>
 
 <pre class="brush: php;">
 
 	// 默认数据库配置
 	$_G['db']['default'] = array(
-		'master' => '127.0.0.1:3306',
-		'slave'  => array(
-			'slave1',
-			'slave2',  // slave3 slave4 ...
-		),
+		'host'     => '192.168.0.1',
+		'port'     => 3306,
 		'username' => 'root',
 		'password' => '***',
 		'database' => 'db_cube',
 		'charset'  => 'utf8',
 		'driver'   => 'mysql',
+		'slave'    => array(
+			array('host' => 'slave1', 'port' => 3306),    // slave1
+			array('host' => 'slave2', 'port' => 3306),    // slave2 slave3 slave4 ...
+		),
 	);
 
 </pre>
