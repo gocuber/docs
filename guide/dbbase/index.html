@@ -153,6 +153,21 @@ var _hmt = _hmt || [];
 
 </pre>
 
+<p class="text">　　如果配置了 slave 从库，则默认是读写分离模式，使用 useMaster() 方法切换到读写主库；</p>
+
+<pre class="brush: php;">
+
+	// 切换到读写主库
+	$db = DB::connect()->useMaster();
+
+	$db->select();
+	$db->select();
+	// ...
+
+	$db->useMaster(false); // 切换到默认读写分离模式
+
+</pre>
+
 
 <div class="h2"><a name="curd">#</a> 增删查改使用基础</div>
 <div class="h3"><a name="select">select() 查询</a></div>
@@ -327,7 +342,7 @@ var _hmt = _hmt || [];
 
 
 	<div class="cube-container cube-footer">
-		<a href="#">意见反馈</a><br />
+		意见反馈邮箱 cuber@gocuber.com<br />
 		版权所有 <span>&copy;</span> 2012-2018 goCuber.com Powered by <a href="http://www.gocuber.com/">CubePHP</a>
 	</div>
 	<div class="cube-top">TOP</div>
