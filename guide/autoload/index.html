@@ -107,11 +107,12 @@ $_G['class_map'] = array(
 
 <pre class="brush: php;">
 $_G['include_path'] = array(
-	'/data0/extend/',
+	APP_DIR . 'models/',
+	APP_DIR . 'libs/',
 );
 </pre>
 
-<!-- p class="text">
+<p class="text">
 　　这样在 models/ 或 libs/ 目录下的类名可以省去 models_ 或 libs_，可以使用 namespace 命名空间来解决类重名问题；<br />
 代码：
 </p>
@@ -120,7 +121,7 @@ $_G['include_path'] = array(
 namespace libs;
 
 class Article_List{}
-</pre -->
+</pre>
 
 <div class="h2"><a name="composer">#</a> 使用其他自动加载器</div>
 
