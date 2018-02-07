@@ -90,20 +90,20 @@ var _hmt = _hmt || [];
 <pre class="brush: php;">
 
 	$_G['filecache']['default'] = array(
-		'dir'       => SYSTEM_DIR . 'data/filecache/default/', // 缓存目录
+		'dir'       => '/tmp/filecache/default/', // 缓存目录
 	    'is_subdir' => 1,                                      // 是否自动生成子集缓存目录 默认1是 0否
 	);
 
 	// 可以按不同的功能模块配置多个
 	$_G['filecache']['user'] = array(
-	    'dir'       => SYSTEM_DIR . 'data/filecache/user/',
+	    'dir'       => '/tmp/filecache/user/',
 	    'is_subdir' => 0,
 	);
 
 </pre>
 
 <p class="text">　　为了防止缓存目录下的文件数过多，is_subdir 为1时会自动生成三层子集目录，如下：<br />
-SYSTEM_DIR . 'data/filecache/default/1c/59/3d/'
+'/tmp/filecache/default/1c/59/3d/'
 </p>
 
 

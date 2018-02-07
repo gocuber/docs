@@ -81,14 +81,14 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="module">#</a> 介绍</div>
 <p class="text">
-　　Module 模块是由控制器、视图及模型组成的一个功能模块；实际上模块就是一个应用；一般情况下存放在 apps 目录下；完全可以把模块看成是一个独立的应用；<br />
+　　Module 模块是由控制器、视图及模型组成的一个功能模块；实际上模块就是一个应用；一般情况下存放在 app 目录下；完全可以把模块看成是一个独立的应用；<br />
 <br />再来看下目录结构：
 </p>
 
 <pre class="brush: php;">
 /*
 
-/apps                            应用目录
+/app                             应用目录
 
 |-- default                      默认应用
 |-- |-- controllers
@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
 |-- |-- controllers
 |-- |-- views
 
-/models                          模型
+|-- models                       模型
 
 */
 </pre>
@@ -140,16 +140,16 @@ $_G['module_default'] = 'default'; //默认值是 default 所以为空或没有�
 <div class="h3"><a name="dir">['module_dir'] 模块目录</a></div>
 
 <p class="text">
-　　一般情况下模块存放在 apps 目录下；当然我们可以修改配置文件，把模块存放到任意想要的目录；<br />
+　　一般情况下模块存放在 app 目录下；当然我们可以修改配置文件，把模块存放到任意想要的目录；<br />
 <br />代码：
 </p>
 
 <pre class="brush: php;">
-// 默认目录 /apps/app1/
+// 默认目录 /app/app1/
 
 /*
 
-/apps
+/app
 |-- app1
 |-- |-- controllers       控制器
 |-- |-- views             视图
@@ -157,26 +157,27 @@ $_G['module_default'] = 'default'; //默认值是 default 所以为空或没有�
 */
 
 
-// 存放在 /app1 目录下
-$_G['module_dir']['app1'] = SYSTEM_DIR . 'app1/';
+// 存放在 /app/a8/ 目录下
+$_G['module_dir']['app1'] = APP_DIR . 'a8/';
 
 /*
 
-/app1
-|-- controllers
-|-- views
+/app
+|-- a8
+|-- |-- controllers
+|-- |-- views
 
 */
 
 
-// 存放在 / 根目录下
-
-$_G['module_dir']['app1'] = SYSTEM_DIR;
+// 存放在 app 根目录下
+$_G['module_dir']['app1'] = APP_DIR;
 
 /*
 
-/controllers
-/views
+/app
+|-- controllers
+|-- views
 
 */
 
