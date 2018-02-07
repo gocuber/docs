@@ -71,18 +71,18 @@ var _hmt = _hmt || [];
 
 <p class="text">
 　　一般情况下，入口文件是唯一一个用户可以访问到的文件。<br />
-　　这个文件代码非常简单，只需告诉框架系统所在目录就可以了；代码：
+　　这个文件代码非常简单，只需定义应用项目所在目录就可以了；代码：
 </p>
 
 <pre class="brush: php;">
 
-	//定义常量SYSTEM_DIR，系统所在的目录
-	define('SYSTEM_DIR', dirname(__FILE__) . '/');
+	// 定义常量 APP_DIR
+	define('APP_DIR', '/data0/app');
 
-	//包含Cube引导文件
-	require(SYSTEM_DIR . 'cube/common/cube.php');
+	// 包含Cube引导文件
+	require(APP_DIR . '../cube/common/cube.php');
 
-	//执行
+	// 执行
 	Cube::run();
 
 </pre>

@@ -93,25 +93,25 @@ strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
 
 <pre class="brush: php;">
 $_G['class_map'] = array(
-	'libs\\Article_List' => '/libs/Article/List.php',
-	'Uc_User' => '/models/Uc/User.php',
+	'libs\\Article_List' => APP_DIR . 'libs/Article/List.php',
+	'Uc_User' => APP_DIR . 'models/Uc/User.php',
 );
 </pre>
 
 <div class="h2"><a name="includepath">#</a> ['include_path'] 配置</div>
 
 <p class="text">
-　　include_path 配置，默认情况下 include_path 只包含 SYSTEM_DIR 目录；你也可以添加所需要的目录到 include_path 里；<br />
+　　include_path 配置，默认情况下 include_path 只包含 APP_DIR 目录；你也可以添加所需要的目录到 include_path 里；<br />
 代码：
 </p>
 
 <pre class="brush: php;">
 $_G['include_path'] = array(
-	SYSTEM_DIR . 'models/',
-	SYSTEM_DIR . 'libs/',
+	'/data0/extend/',
 );
 </pre>
 
+<?php /*
 <p class="text">
 　　这样在 models/ 或 libs/ 目录下的类名可以省去 models_ 或 libs_，可以使用 namespace 命名空间来解决类重名问题；<br />
 代码：
@@ -122,6 +122,7 @@ namespace libs;
 
 class Article_List{}
 </pre>
+*/ ?>
 
 <div class="h2"><a name="composer">#</a> 使用其他自动加载器</div>
 
