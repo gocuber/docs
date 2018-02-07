@@ -254,7 +254,7 @@ Route::get('download', 'article/detail/?code=download');
 
 Route::get('detail/{id}', 'article/detail/?id={id}');
 
-Route::get('article/{class}', 'article/list/?class={class}', ['class' => 'code|guide|demo']);
+Route::get('article/{class}', '{class}/list', ['class' => 'code|guide|demo']);
 
 Route::get('user/{code}/{id}', 'user/list/?code={code}&id={id}', ['code' => '[a-z]+']);
 
