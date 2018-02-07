@@ -83,7 +83,7 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="example">#</a> CLI实例</div>
 
-<p class="text">　　新建控制器 /apps/cron/controllers/DemoController.php</p>
+<p class="text">　　新建控制器 /app/cron/controllers/DemoController.php</p>
 <pre class="brush: php;">
 
 	class DemoController extends Controller
@@ -101,17 +101,17 @@ var _hmt = _hmt || [];
 
 <p class="text">　　可以为CLI脚本程序单独写一个入口文件；cli.php；只比index.php入口文件多一行代码；定义常量 IS_CLI<br />define('IS_CLI', true);</p>
 <pre class="brush: php;">
-	define('SYSTEM_DIR', '/data0/webapp/');
+	define('APP_DIR', '/data0/vhosts/app/');
 	define('IS_CLI', true); // 实际上这行代码可以省略，CubePHP会自动判断是否在CLI下运行
 
-	require(SYSTEM_DIR . 'cube/common/cube.php');
+	require(APP_DIR . '../cube/common/cube.php');
 	Cube::run();
 </pre>
 
 <p class="text">　　入口文件 cli.php 可以存放在任意目录中；如果有服务器权限的话，尽量放到非 web 目录；</p>
 <p class="text">　　这时我们可以在linux或windows下打开终端，进入到入口所在目录，运行：</p>
 <pre class="brush: php;">
-	# cd /webapp/
+	# cd /data0/vhosts/app/
 	# php cli.php cron/demo/welcome
 </pre>
 
@@ -134,7 +134,7 @@ var _hmt = _hmt || [];
 
 <p class="text">　　打开终端，运行：</p>
 <pre class="brush: php;">
-	# cd /webapp/
+	# cd /data0/vhosts/app/
 	# php cli.php cron/demo/welcome -name "you name" -id 10
 </pre>
 
