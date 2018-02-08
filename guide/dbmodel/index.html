@@ -101,6 +101,8 @@ var _hmt = _hmt || [];
 	class User extends Model                  // 继承Model类
 	{
 
+		protected $_key        = 'default';   // 数据库config key 默认default
+
 		protected $_name       = 'uc_user';   // 表名称
 
 		protected $_primarykey = 'id';        // 主键
@@ -124,8 +126,8 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="model">#</a> model的使用</div>
 <p class="text">
-　　实例化或使用 DB::model('User') 来调用model类文件；<br />
-　　代码如下：
+　　实例化或使用 DB::model() 来调用model类文件；<br />
+　　代码：
 </p>
 
 <pre class="brush: php;">
