@@ -71,38 +71,26 @@ var _hmt = _hmt || [];
 
 <ul class="cube-catalog">
 	<li><a href="#text"># 介绍</a></li>
-	<li><a href="#users"># 创建model</a></li>
-	<li><a href="#extends"># 简化写法</a></li>
-	<li><a href="#model"># model的使用 DB::model()</a></li>
-	<li><a href="#field"># getFields() 方法</a></li>
-	<li><a href="#preparedata"># prepareData() 准备数据</a></li>
+	<li><a href="#create"># 创建model</a></li>
+	<li><a href="#model"># model的使用</a></li>
 	<li><a href="#settablename"># setTableName() 设置分表</a></li>
+	<li><a href="#namespace"># 使用命名空间创建model</a></li>
 </ul>
 
 <div class="h2"><a name="text">#</a> 介绍</div>
 
 <p class="text">
-　　Model 模型 是应用程序中用于处理应用程序数据逻辑的部分；<br />
+　　Model 模型是应用程序中用于处理数据逻辑的部分；<br />
 　　通常模型负责在数据库中存取数据；<br />
 　　一般情况下，一个数据库表对应一个 model 类文件；<br />
 <br />
-　　使用 DB::model('user') 来调用model类文件；<br />
-　　DB::model('User') 这里的User并不是表名称；而是对应一个model目录中的类文件；<br />
-　　注：CubePHP框架中提供一个函数方法 M(); 等同于DB::model(); 所以也可以使用 M('User'); 来调用model类文件；<br />
-<br />
-<br />
-　　举例说明；<br />
-<br />
-　　库名：ucenter    用户中心库<br />
-　　表名：uc_user    用户表<br />
-　　表名：uc_group   用户组表<br />
+　　直接实例化或使用 DB::model() 来调用model类文件；<br />
 </p>
 
 
-<div class="h2"><a name="users">#</a> 创建model</div>
+<div class="h2"><a name="create">#</a> 创建model</div>
 <p class="text">
-　　新建 Uc 目录用于存放用户中心库下所有的表 model 类文件；<br />
-　　新建用户表 model 类 User.php 保存到 models/Uc/ 目录中；<br />
+　　新建 User 类继承父类 Model；<br />
 <br />
 　　代码如下：
 </p>
@@ -110,197 +98,61 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	class Uc_User extends DB               // 继承DB类
+	class User extends Model                  // 继承Model类
 	{
 
-		public $_dbname     = 'ucenter';   // 数据库名称
-		public $_name       = 'uc_user';   // 表名称
-		public $_primarykey = 'id';        // 如果有主键；主键字段名称
+		protected $_name       = 'uc_user';   // 表名称
 
-		public function getConfig()
-		{
-			return $GLOBALS['_G']['db']['user'];      //数据库配置
-		}
+		protected $_primarykey = 'id';        // 主键
 
-	}
-
-</pre>
-<p class="text">　　接下来就可以 DB::model('Uc_User') 这样使用了；注：Uc_User 对应的是 model 类名；</p>
-
-
-<p class="text">　　新建用户组表 model 类 Group.php 保存到 models/Uc/ 目录中；如下：</p>
-<pre class="brush: php;">
-
-	class Uc_Group extends DB
-	{
-
-		public $_dbname     = 'ucenter';
-		public $_name       = 'uc_group';
-		public $_primarykey = 'id';
-
-		public function getConfig()
-		{
-			return $GLOBALS['_G']['db']['user'];
-		}
+		protected $_fields = [                // 字段
+			'id',            // 用户id
+			'username',      // 账号
+			'password',      // 密码
+			'status',        // 状态
+			'mobile',        // 手机
+			'email',         // email
+			'name',          // 姓名
+			'createtime',    // 创建时间
+			'updatetime',    // 更新时间
+		];
 
 	}
 
 </pre>
 
 
-<div class="h2"><a name="extends">#</a> 简化写法</div>
+<div class="h2"><a name="model">#</a> model的使用</div>
 <p class="text">
-　　为了简化写法；可以给每个数据库建立一个类；统一放到 models/DB/ 目录中；库中所有表继承这个类；如：<br /><br />
-　　新建 Ucenter.php 保存到 models/DB/ 目录中；
-</p>
-<pre class="brush: php;">
-
-	class DB_Ucenter extends DB
-	{
-
-		public $_dbname     = 'ucenter';
-		public function getConfig()
-		{
-			return $GLOBALS['_G']['db']['user'];
-		}
-
-	}
-
-</pre>
-
-<p class="text">　　前面的表 model 类 Uc_User Uc_Group 可以改写成：</p>
-<pre class="brush: php;">
-
-	class Uc_User extends DB_Ucenter
-	{
-		public $_name       = 'uc_user';
-		public $_primarykey = 'id';
-		// ..
-	}
-
-	class Uc_Group extends DB_Ucenter
-	{
-		public $_name       = 'uc_group';
-		public $_primarykey = 'id';
-		// ..
-	}
-
-</pre>
-
-
-
-<div class="h2"><a name="model">#</a> model的使用 DB::model()</div>
-<p class="text">　　使用 DB::model('Uc_User') 直接操作用户表；不用再使用 connect() 方法连库；也不用使用 name() 方法指定表名；如下：</p>
-<pre class="brush: php;">
-
-	DB::model('Uc_User')->get();
-
-	DB::model('Uc_User')->where()->line();
-
-	DB::model('Uc_User')->val('name');
-
-	DB::model('Uc_User')->delete();
-
-	DB::model('Uc_User')->update();
-
-	// ...
-</pre>
-
-<p class="text">
-　　DB::model('Uc_User') 相当于前面的 DB::connect()->name('user')<br />
-　　get() line() delete() update() 等方法用法同前面讲的一样；<br />
-　　还可以直接使用 M() 函数来调用 model ；如下：
+　　实例化或使用 DB::model('User') 来调用model类文件；<br />
+　　代码如下：
 </p>
 
 <pre class="brush: php;">
 
-	M('Uc_User')->get();
+	print_r((new User())->getFields());
 
-	M('Uc_User')->where()->line();
+	print_r(DB::model('User')->getFields());
 
-	M('Uc_User')->val('name');
+	$user = new User();
 
-	M('Uc_User')->delete();
+	$user->get();
 
-	M('Uc_User')->update();
+	DB::model('User')->get();
+
+	DB::model('User')->where()->line();
+
+	DB::model('User')->delete();
 
 	// ...
-</pre>
-
-
-
-<div class="h2"><a name="field">#</a> getFields() 方法</div>
-<p class="text">　　在 model 类中可以写 getFields() 方法；来指定表字段；如下：</p>
-<pre class="brush: php;">
-
-	class Uc_User extends DB_Ucenter
-	{
-		protected $_name       = 'uc_user';
-		protected $_primarykey = 'id';
-
-		public function getFields()
-		{
-			$fields = array(
-				'id',            // 用户id
-				'username',      // 账号
-				'password',      // 密码
-				'status',        // 状态
-				'is_sys',        // 是否系统用户
-				'is_super',      // 是否超级管理员
-				'mobile',        // 手机
-				'email',         // email
-				'name',          // 姓名
-				'nickname',      // 昵称
-				'lastlogintime', // 最后登录时间
-				'lastloginip',   // 最后登录IP
-				'createtime',    // 创建时间
-				'updatetime',    // 更新时间
-			);
-			return $fields;
-		}
-	}
-
-</pre>
-
-
-<div class="h2"><a name="preparedata">#</a> prepareData() 准备数据</div>
-<p class="text">　　在 model 类中可以定义 prepareData() 方法；来为 insert() update() 等操作准备数据；如下：</p>
-<pre class="brush: php;">
-
-	class Uc_User extends DB_Ucenter
-	{
-		// ...
-
-		/**
-		 * 准备数据
-		 *
-		 * @param array $array
-		 * @return array
-		 */
-		protected function prepareData(array $array)
-		{
-			$array = array_change_key_case($array, CASE_LOWER); // 转小写
-
-			$fields = $this->getFields();
-			if(empty($fields) or !is_array($fields)){
-				return $array;
-			}
-
-			$data = array();
-			// ...
-
-			return $data;
-		}
-	}
-
 </pre>
 
 
 <div class="h2"><a name="settablename">#</a> setTableName() 设置分表</div>
-<p class="text">　　可以定义 setTableName() 方法；来实现数据库分表；如下：</p>
+<p class="text">　　可以随意扩充方法；如定义 setTableName() 方法，来实现数据库分表；代码：</p>
 <pre class="brush: php;">
 
-	class Uc_User extends DB_Ucenter
+	class User extends Model
 	{
 		// ...
 
@@ -316,6 +168,31 @@ var _hmt = _hmt || [];
 			return $this;
 		}
 	}
+
+</pre>
+
+
+<div class="h2"><a name="namespace">#</a> 使用命名空间创建model</div>
+<p class="text">　　代码：</p>
+<pre class="brush: php;">
+
+	namespace models;
+
+	class User extends \Model
+	{
+		// ...
+	}
+
+	// ...
+	DB::model('models\User')->getFields();
+
+	// ...
+	(new models\User())->getFields();
+
+	// ...
+	use models\User;
+
+	(new User())->getFields();
 
 </pre>
 
