@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	
-<title>数据库模型(model)的使用 CubePHP框架开发文档 CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
-<meta name="keywords" content="数据库模型(model)的使用,CubePHP框架开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
-<meta name="description" content="数据库模型(model)的使用,CubePHP框架开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<title>异常处理 CubePHP框架开发文档 CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="异常处理,CubePHP框架开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="异常处理,CubePHP框架开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
 <link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
@@ -59,147 +59,76 @@ var _hmt = _hmt || [];
 <div class="cube-container">
 <div class="cube-breadcrumb">
 	<a href="http://www.gocuber.com/">首页</a>
-	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 数据库模型(model)的使用</div>
+	 &raquo; <a href="http://www.gocuber.com/guide/">开发文档</a> &raquo; 异常处理</div>
 </div>
 
 <div class="cube-container cube-change-layout">
 
     <div class="cube-big-layout cube-guide">
     <div class="cube-block">
-		<div class="cube-title">数据库模型(model)的使用</div>
-		<div class="h1">数据库模型(model)的使用</div>
+		<div class="cube-title">异常处理</div>
+		<div class="h1">异常处理</div>
 
 <ul class="cube-catalog">
-	<li><a href="#text"># 介绍</a></li>
-	<li><a href="#create"># 创建model</a></li>
-	<li><a href="#model"># model的使用</a></li>
-	<li><a href="#settablename"># setTableName() 设置分表</a></li>
-	<li><a href="#namespace"># 使用命名空间创建model</a></li>
+	<li><a href="#config"># 配置</a></li>
+	<li><a href="#cubeexception"># CubeException 异常处理类调用</a></li>
 </ul>
 
-<div class="h2"><a name="text">#</a> 介绍</div>
+<div class="h2"><a name="config">#</a> 配置</div>
 
-<p class="text">
-　　Model 模型是应用程序中用于处理数据逻辑的部分；<br />
-　　通常模型负责在数据库中存取数据；<br />
-　　一般情况下，一个数据库表对应一个 model 类文件；<br />
-<br />
-　　直接实例化或使用 DB::model() 来调用model类文件；<br />
-</p>
-
-
-<div class="h2"><a name="create">#</a> 创建model</div>
-<p class="text">
-　　新建 User 类继承父类 Model；<br />
-<br />
-　　代码如下：
-</p>
-
-
+<p class="text">　　默认情况下程序异常信息不直接显示，可以在开发环境下配置常量 APP_DEBUG 值为 true 来显示异常信息；</p>
 <pre class="brush: php;">
+define('APP_DEBUG', true);
+</pre>
 
-	class User extends Model                  // 继承Model类
-	{
+<p class="text">　　配置 $_G['error_log'] 将异常信息写到log日志目录；</p>
+<pre class="brush: php;">
+$_G['error_log'] = APP_DIR . '../tmp/error_log/';
+</pre>
 
-		protected $_key        = 'default';   // 数据库config key 默认default
+<p class="text">　　如果程序抛出异常信息，将会在 ['error_log'] 目录下按天生成log日志文件；</p>
+<pre class="brush: php;">
+// 20180208_app_error.log
+// 20180208_mysql_error.log
+// 20180208_system_error.log
+// 20180208_app_cli_error.log
+</pre>
 
-		protected $_name       = 'uc_user';   // 表名称
-
-		protected $_primarykey = 'id';        // 主键
-
-		protected $_fields = [                // 字段
-			'id',            // 用户id
-			'username',      // 账号
-			'password',      // 密码
-			'status',        // 状态
-			'mobile',        // 手机
-			'email',         // email
-			'name',          // 姓名
-			'createtime',    // 创建时间
-			'updatetime',    // 更新时间
-		];
-
-	}
-
+<p class="text">　　['error_log'] 默认值为 /tmp/error_log/ ，可以配置为 false 来关闭log日志记录；</p>
+<pre class="brush: php;">
+$_G['error_log'] = false;
 </pre>
 
 
-<div class="h2"><a name="model">#</a> model的使用</div>
-<p class="text">
-　　实例化或使用 DB::model() 来调用model类文件；<br />
-　　代码：
-</p>
+<div class="h2"><a name="cubeexception">#</a> CubeException 异常处理类调用</div>
 
 <pre class="brush: php;">
-
-	print_r((new User())->getFields());
-
-	print_r(DB::model('User')->getFields());
-
-	$user = new User();
-
-	$user->get();
-
-	DB::model('User')->get();
-
-	DB::model('User')->where()->line();
-
-	DB::model('User')->delete();
+try {
 
 	// ...
+	throw new CubeException("Class '{$class}' not found");
+
+} catch (CubeException $e) {
+
+	$e->log(CubeException::ERROR_TYPE_APP);
+
+}
 </pre>
 
-
-<div class="h2"><a name="settablename">#</a> setTableName() 设置分表</div>
-<p class="text">　　可以随意扩充方法；如定义 setTableName() 方法，来实现数据库分表；代码：</p>
 <pre class="brush: php;">
+try {
 
-	class User extends Model
-	{
-		// ...
+	// ...
+	throw new Exception("Class '{$class}' not found");
 
-		public function setTableName()
-		{
-			// 根据具体的业务需求来定义分表
+} catch (Exception $e) {
 
-			// $tablename = 'log_' . date('Ymd');
-			// $tablename = 'stat_' . date('Ymd');
-			// $tablename = 'md5_' . substr(md5('abc'), -2);
+	(new CubeException($e->getMessage()))->log(CubeException::ERROR_TYPE_APP);
 
-			$this->_name = $tablename;
-			return $this;
-		}
-	}
-
+}
 </pre>
 
-
-<div class="h2"><a name="namespace">#</a> 使用命名空间创建model</div>
-<p class="text">　　代码：</p>
-<pre class="brush: php;">
-
-	namespace models;
-
-	class User extends \Model
-	{
-		// ...
-	}
-
-	// ...
-	DB::model('models\User')->getFields();
-
-	// ...
-	(new models\User())->getFields();
-
-	// ...
-	use models\User;
-
-	(new User())->getFields();
-
-</pre>
-
-
-<br /><br /><br /><br />	</div>
+<br /><br /><br /><br /><br />	</div>
 	</div><!-- /big -->
 
 	
