@@ -123,7 +123,7 @@ try {
 
 } catch (Exception $e) {
 
-	(new CubeException($e->getMessage()))->log(CubeException::ERROR_TYPE_APP);
+	(new CubeException())->log(CubeException::ERROR_TYPE_APP, $e);
 
 }
 </pre>
