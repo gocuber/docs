@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+<title>开发规范 CubePHP框架2.0开发文档 CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="开发规范,CubePHP框架2.0开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="开发规范,CubePHP框架2.0开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2df9ce934dc484bd6d51074b34da2854";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+</head>
+<body>
+
+
+<div class="cube-container cube-header">
+	<div class="site">
+		<div class="title"><a href="/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
+		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
+	</div>
+	<div class="logo"><a href="/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
+</div>
+
+<div class="cube-nav">
+	<div class="cube-container">
+		<div class="cube-nav-brand"><a href="/">Cube</a></div>
+		<div class="cube-nav-toggle"><div><span></span><span></span><span></span></div></div>
+		<div class="cube-navbar">
+			<ul class="cube-nav-left">
+				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
+				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
+				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
+				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
+				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
+			</ul>
+			
+		</div>
+	</div>
+	<div class="cube-clear"></div>
+</div>
+
+<div class="cube-container">
+<div class="cube-breadcrumb">
+	<a href="/">首页</a>
+	 &raquo; <a href="/guide/">开发文档</a> &raquo; <a href="/guide/2.0/">2.0</a> &raquo; 开发规范</div>
+</div>
+
+<div class="cube-container cube-change-layout">
+
+    <div class="cube-big-layout cube-guide">
+    <div class="cube-block">
+		<div class="cube-title">开发规范</div>
+		<div class="h1">开发规范</div>
+
+<ul class="cube-catalog">
+	<li><a href="#rule"># 控制器及视图规则</a></li>
+	<ul>
+		<li><a href="#rule_controller"># 控制器</a></li>
+		<li><a href="#rule_action"># 动作</a></li>
+		<li><a href="#rule_view"># 视图</a></li>
+	</ul>
+	<li><a href="#model"># 模型及类库规则</a></li>
+</ul>
+
+<div class="h2"><a name="rule">#</a> 控制器及视图规则</div>
+
+<div class="h3"><a name="rule_controller">控制器</a></div>
+
+<p class="text">
+　　控制器文件默认保存在：/app/模块/controllers/ 目录下；文件名与类名统一；<br />
+　　控制器类命名规则：第一个字母大写，后面跟 Controller ；控制器继承 Controller 类；<br />
+/app/default/controllers/DemoController.php
+</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{}
+
+</pre>
+
+
+<div class="h3"><a name="rule_action">动作</a></div>
+
+<p class="text">
+　　动作命名规则：全部小写，后面跟 Action ；<br />
+/app/default/controllers/DemoController.php
+</p>
+<pre class="brush: php;">
+
+	class DemoController extends Controller
+	{
+
+		function indexAction()
+		{}
+
+	}
+
+</pre>
+
+
+<div class="h3"><a name="rule_view">视图</a></div>
+
+<p class="text">
+　　视图模板文件默认保存在：/app/模块/views/ 目录下；可以创建子级目录；目录及文件名尽量小写；<br />
+/app/default/views/index.php<br />
+/app/default/views/demo/index.php
+</p>
+
+
+<div class="h2"><a name="model">#</a> 模型及类库规则</div>
+
+<p class="text">　　一般情况下，在创建和命名类的时候要遵循如下规则；类文件完整路径能通过以下代码取得；参考类自动加载章节；</p>
+
+<pre class="brush: php;">
+strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
+</pre>
+
+
+<br /><br /><br /><br /><br />	</div>
+	</div><!-- /big -->
+
+	
+    <div class="cube-small-layout">
+    <div class="cube-block">
+
+    		<div class="cube-title">开发文档</div>
+		<ul class="cube-menu">
+		<li>开始</li><ul><li><a href="/guide/2.0/about/">简介</a></li><li><a href="/guide/2.0/down/">下载和安装</a></li><li><a href="/guide/2.0/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="/guide/2.0/directory/">目录结构</a></li><li><a href="/guide/2.0/entrance/">入口文件</a></li><li><a href="/guide/2.0/urlmodel/">URL模式</a></li><li><a href="/guide/2.0/rewrite/">URL重写</a></li><li><a href="/guide/2.0/controller/">Controller 控制器</a></li><li><a href="/guide/2.0/view/">View 视图模板</a></li><li><a href="/guide/2.0/model/">Model 模型</a></li><li><a href="/guide/2.0/module/">Module 模块</a></li><li><a href="/guide/2.0/route/">URL路由</a></li><li><a href="/guide/2.0/autoload/">类自动加载</a></li><li><a href="/guide/2.0/rule/">开发规范</a></li><li><a href="/guide/2.0/exception/">异常处理</a></li></ul><li>数据库</li><ul><li><a href="/guide/2.0/dbbase/">数据库配置与使用基础</a></li><li><a href="/guide/2.0/dbquery/">数据库查询结构器</a></li><li><a href="/guide/2.0/dbmodel/">数据库模型(model)的使用</a></li><li><a href="/guide/2.0/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="/guide/2.0/memcache/">Memcache</a></li><li><a href="/guide/2.0/redis/">Redis</a></li><li><a href="/guide/2.0/filecache/">文件缓存</a></li><li><a href="/guide/2.0/cachesession/">使用缓存存储SESSION</a></li></ul><li>搜索引擎</li><ul><li><a href="/guide/2.0/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="/guide/2.0/func/">系统函数说明</a></li><li><a href="/guide/2.0/class/">系统类库说明</a></li><li><a href="/guide/2.0/session/">SESSION使用</a></li><li><a href="/guide/2.0/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="/guide/2.0/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="/guide/2.0/smarty/">使用Smarty</a></li><li><a href="/guide/2.0/lib/">使用第三方库</a></li><li><a href="/guide/2.0/sae/">SAE环境下开发</a></li></ul>		</ul>
+	
+    </div>
+    </div><!-- /small -->
+
+</div><!-- /cube-container -->
+
+
+	<div class="cube-container cube-footer">
+		意见反馈邮箱 cuber@gocuber.com<br />
+		版权所有 <span>&copy;</span> 2012-2018 goCuber.com Powered by <a href="/">CubePHP</a>
+	</div>
+	<div class="cube-top">TOP</div>
+	
+
+<script language="javascript" type="text/javascript">
+/* 全局变量 */
+var G = {
+	'cubeUrl' : '/',
+	'resUrl' : '/res/',
+	'publicKey' : 0
+};
+</script>
+
+<div class="cube-dn"><script src="https://s19.cnzz.com/z_stat.php?id=1272829783&web_id=1272829783" language="JavaScript"></script></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="/res/cube/js/global.js"></script>
+
+<script src="/res/global/js/syntaxhighlighter_2.1.382/scripts/shCore.js"></script>
+<script src="/res/global/js/syntaxhighlighter_2.1.382/scripts/shBrushPhp.js"></script>
+<link type="text/css" rel="stylesheet" href="/res/global/js/syntaxhighlighter_2.1.382/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="/res/global/js/syntaxhighlighter_2.1.382/styles/shThemeDefault.css"/>
+<script type="text/javascript">
+SyntaxHighlighter.config.clipboardSwf = '/res/global/js/syntaxhighlighter_2.1.382/scripts/clipboard.swf';
+SyntaxHighlighter.all();
+</script>
+
+</body>
+</html>

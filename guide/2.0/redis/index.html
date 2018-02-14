@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	
+<title>Redis CubePHP框架2.0开发文档 CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站</title>
+<meta name="keywords" content="Redis,CubePHP框架2.0开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<meta name="description" content="Redis,CubePHP框架2.0开发文档,CubePHP框架,CubePHP,PHP框架,MVC框架,PHPMVC框架,gocuber,CubePHP框架 - 更好、更快、更强的PHP开发框架 - CubePHP官方网站">
+<link href="/res/cube/css/style.css" rel="stylesheet" type="text/css" />
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2df9ce934dc484bd6d51074b34da2854";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+</head>
+<body>
+
+
+<div class="cube-container cube-header">
+	<div class="site">
+		<div class="title"><a href="/" title="CubePHP框架">CubePHP框架</a><em>Beta</em></div>
+		<div class="subtitle">—— 更好、更快、更强的PHP开发框架</div>
+	</div>
+	<div class="logo"><a href="/" title="CubePHP"><img src="/res/cube/images/logo1.jpg" alt="CubePHP" /></a></div>
+</div>
+
+<div class="cube-nav">
+	<div class="cube-container">
+		<div class="cube-nav-brand"><a href="/">Cube</a></div>
+		<div class="cube-nav-toggle"><div><span></span><span></span><span></span></div></div>
+		<div class="cube-navbar">
+			<ul class="cube-nav-left">
+				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
+				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
+				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
+				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
+				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
+			</ul>
+			
+		</div>
+	</div>
+	<div class="cube-clear"></div>
+</div>
+
+<div class="cube-container">
+<div class="cube-breadcrumb">
+	<a href="/">首页</a>
+	 &raquo; <a href="/guide/">开发文档</a> &raquo; <a href="/guide/2.0/">2.0</a> &raquo; Redis</div>
+</div>
+
+<div class="cube-container cube-change-layout">
+
+    <div class="cube-big-layout cube-guide">
+    <div class="cube-block">
+		<div class="cube-title">Redis</div>
+		<div class="h1">Redis</div>
+
+<ul class="cube-catalog">
+	<li><a href="#config"># 配置</a></li>
+	<li><a href="#connect"># Redis连接 Cache_Redis::connect()</a></li>
+	<ul>
+		<li><a href="#master"># master()</a></li>
+		<li><a href="#slave"># slave()</a></li>
+	</ul>
+	<li><a href="#use"># Redis 使用</a></li>
+</ul>
+
+<div class="h2"><a name="config">#</a> 配置</div>
+
+<p class="text">　　配置文件 config.php</p>
+
+<pre class="brush: php;">
+	// 默认配置
+	$_G['redis']['default'] = array(
+	    'host' => '127.0.0.1',
+	    'port' => 6379,
+	    'auth' => '123456',    // 如果需要认证 配置 auth
+	);
+</pre>
+
+<p class="text">　　与数据库一样 Redis 也可配置主从</p>
+
+<pre class="brush: php;">
+	// user 配置
+	$_G['redis']['user'] = array(
+	    'host'  => '127.0.0.1',
+	    'port'  => 6379,
+	    'slave' => array(       // 配置 slave
+	        array(
+        	    'host' => '127.0.0.2',
+        	    'port' => 6379,
+        	),
+	        array(
+        	    'host' => '127.0.0.3',
+        	    'port' => 6379,
+        	),
+	    ),
+	);
+</pre>
+
+<div class="h2"><a name="connect">#</a> Redis连接 Cache_Redis::connect()</div>
+
+<pre class="brush: php;">
+
+Cache_Redis::connect();        // 连接默认Redis
+Cache_Redis::connect('user');  // 连接用户Redis
+
+</pre>
+
+<p class="text">　　使用 connect() 连接始终返回的都是 master 主Redis；如果配置了 slave ，可以使用 master() 或 slave() 来分别连接主或从Redis；</p>
+
+<div class="h3"><a name="master">master()</a></div>
+<pre class="brush: php;">
+
+Cache_Redis::master();       // 连接默认 主Redis
+Cache_Redis::master('user'); // 连接用户 主Redis
+
+</pre>
+
+<div class="h3"><a name="slave">slave()</a></div>
+<pre class="brush: php;">
+
+Cache_Redis::slave();       // 连接默认 从Redis
+Cache_Redis::slave('user'); // 连接用户 从Redis
+
+</pre>
+
+<p class="text">　　如果没有配置 slave ，那么调用 slave() 返回的也是主Redis；实际上connect()方法第二个参数就是用来区分连接 master 还是 slave ，默认值是 master ；</p>
+
+<pre class="brush: php;">
+
+/**
+ * connect
+ *
+ * @return Cache_Redis
+ */
+public static function connect($conf = null, $mode = 'master'){}
+
+/**
+ * master
+ *
+ * @return Cache_Redis
+ */
+public static function master($conf = null)
+{
+	return self::connect($conf, 'master');
+}
+
+/**
+ * slave
+ *
+ * @return Cache_Redis
+ */
+public static function slave($conf = null)
+{
+	return self::connect($conf, 'slave');
+}
+
+</pre>
+
+
+<div class="h2"><a name="use">#</a> Redis 使用</div>
+
+<p class="text">　　Cache_Redis 类对 Redis 的持久化连接做了一个封装，返回原始底层的 Redis 实例，接下来使用 Redis 的接口方法来操作 Redis ；</p>
+
+<pre class="brush: php;">
+
+$redis = Cache_Redis::connect();
+
+// Keys and Strings
+
+$redis->get('key');
+
+$redis->set('key', 'value');
+$redis->setEx('key', 3600, 'value');
+$redis->pSetEx('key', 100, 'value');
+$redis->setNx('key', 'value');
+
+$redis->delete('key1', 'key2');
+$redis->exists('key');
+
+$redis->incr('key1');
+$redis->incrBy('key1', 10);
+$redis->incrByFloat('key1', -1.5);
+
+$redis->decr('key1');
+$redis->decrBy('key1', 10);
+
+$redis->mGet(array('key1', 'key2', 'key3'));
+
+$redis->sAdd('s', 5);
+$redis->sAdd('s', 4);
+$redis->sAdd('s', 2);
+$redis->sort('s');
+$redis->sort('s', array('sort' => 'desc'));
+
+$redis->mSet(array('key0' => 'value0', 'key1' => 'value1'));
+
+// Hashes
+$redis->hSet('h', 'key1', 'hello');
+$redis->hGet('h', 'key1');
+$redis->hSetNx('h', 'key1', 'hello');
+$redis->hLen('h');
+$redis->hKeys('h');
+$redis->hVals('h');
+$redis->hGetAll('h');
+
+$redis->hIncrBy('h', 'x', 2);
+$redis->hIncrByFloat('h', 'x', -3.0);
+$redis->hMSet('user:1', array('name' => 'Joe', 'salary' => 2000));
+$redis->hMGet('h', array('field1', 'field2'));
+
+// Lists
+$redis->lPush('key1', 'A');
+$redis->blPop('key1', 'key2', 10);
+$redis->brPop('key1', 'key2', 10);
+$redis->rPush('key1', 'A');
+$redis->lGet('key1', 0);
+$redis->lGet('key1', 0);
+
+// Sets
+$redis->sAdd('key1' , 'member2', 'member3');
+$redis->sCard('key1');
+$redis->sMove('key1', 'key2', 'member13');
+$redis->sPop('key1');
+$redis->sRem('key1', 'member2', 'member3');
+
+// Sorted sets
+$redis->zAdd('key', 5, 'val5');
+$redis->zRange('key', 0, -1);
+$redis->zDelete('key', 'val2');
+
+// ...
+</pre>
+
+<p class="text">　　<a href="https://github.com/phpredis/phpredis" target="_blank">Redis 权威指南参考</a></p>
+
+
+<br /><br /><br /><br />	</div>
+	</div><!-- /big -->
+
+	
+    <div class="cube-small-layout">
+    <div class="cube-block">
+
+    		<div class="cube-title">开发文档</div>
+		<ul class="cube-menu">
+		<li>开始</li><ul><li><a href="/guide/2.0/about/">简介</a></li><li><a href="/guide/2.0/down/">下载和安装</a></li><li><a href="/guide/2.0/app/">创建第一个应用</a></li></ul><li>基础知识</li><ul><li><a href="/guide/2.0/directory/">目录结构</a></li><li><a href="/guide/2.0/entrance/">入口文件</a></li><li><a href="/guide/2.0/urlmodel/">URL模式</a></li><li><a href="/guide/2.0/rewrite/">URL重写</a></li><li><a href="/guide/2.0/controller/">Controller 控制器</a></li><li><a href="/guide/2.0/view/">View 视图模板</a></li><li><a href="/guide/2.0/model/">Model 模型</a></li><li><a href="/guide/2.0/module/">Module 模块</a></li><li><a href="/guide/2.0/route/">URL路由</a></li><li><a href="/guide/2.0/autoload/">类自动加载</a></li><li><a href="/guide/2.0/rule/">开发规范</a></li><li><a href="/guide/2.0/exception/">异常处理</a></li></ul><li>数据库</li><ul><li><a href="/guide/2.0/dbbase/">数据库配置与使用基础</a></li><li><a href="/guide/2.0/dbquery/">数据库查询结构器</a></li><li><a href="/guide/2.0/dbmodel/">数据库模型(model)的使用</a></li><li><a href="/guide/2.0/dbtransaction/">数据库事务处理</a></li></ul><li>缓存</li><ul><li><a href="/guide/2.0/memcache/">Memcache</a></li><li><a href="/guide/2.0/redis/">Redis</a></li><li><a href="/guide/2.0/filecache/">文件缓存</a></li><li><a href="/guide/2.0/cachesession/">使用缓存存储SESSION</a></li></ul><li>搜索引擎</li><ul><li><a href="/guide/2.0/elasticsearch/">Elasticsearch</a></li></ul><li>类库及函数</li><ul><li><a href="/guide/2.0/func/">系统函数说明</a></li><li><a href="/guide/2.0/class/">系统类库说明</a></li><li><a href="/guide/2.0/session/">SESSION使用</a></li><li><a href="/guide/2.0/cookie/">COOKIE使用</a></li></ul><li>CLI命令行</li><ul><li><a href="/guide/2.0/cli/">以命令行方式运行</a></li></ul><li>扩展</li><ul><li><a href="/guide/2.0/smarty/">使用Smarty</a></li><li><a href="/guide/2.0/lib/">使用第三方库</a></li><li><a href="/guide/2.0/sae/">SAE环境下开发</a></li></ul>		</ul>
+	
+    </div>
+    </div><!-- /small -->
+
+</div><!-- /cube-container -->
+
+
+	<div class="cube-container cube-footer">
+		意见反馈邮箱 cuber@gocuber.com<br />
+		版权所有 <span>&copy;</span> 2012-2018 goCuber.com Powered by <a href="/">CubePHP</a>
+	</div>
+	<div class="cube-top">TOP</div>
+	
+
+<script language="javascript" type="text/javascript">
+/* 全局变量 */
+var G = {
+	'cubeUrl' : '/',
+	'resUrl' : '/res/',
+	'publicKey' : 0
+};
+</script>
+
+<div class="cube-dn"><script src="https://s19.cnzz.com/z_stat.php?id=1272829783&web_id=1272829783" language="JavaScript"></script></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="/res/cube/js/global.js"></script>
+
+<script src="/res/global/js/syntaxhighlighter_2.1.382/scripts/shCore.js"></script>
+<script src="/res/global/js/syntaxhighlighter_2.1.382/scripts/shBrushPhp.js"></script>
+<link type="text/css" rel="stylesheet" href="/res/global/js/syntaxhighlighter_2.1.382/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="/res/global/js/syntaxhighlighter_2.1.382/styles/shThemeDefault.css"/>
+<script type="text/javascript">
+SyntaxHighlighter.config.clipboardSwf = '/res/global/js/syntaxhighlighter_2.1.382/scripts/clipboard.swf';
+SyntaxHighlighter.all();
+</script>
+
+</body>
+</html>
