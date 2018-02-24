@@ -45,7 +45,7 @@ var _hmt = _hmt || [];
 			<ul class="cube-nav-left">
 				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
 				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
-				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/guide/2.0/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
 				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
 				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
@@ -82,28 +82,28 @@ var _hmt = _hmt || [];
 <p class="text">　　为了实现逻辑和界面分离，大部分逻辑应该被放置于控制器或模型中，而视图仅仅用于显示结果。接下来，我们做一个简单的实例，控制器代码：</p>
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{
+namespace controllers;
 
-		//...
+class Demo extends \Controller
+{
 
-		function welcomeAction()
-		{
-			View::assign('title', 'Hello World');   //赋值
-			View::assign('date',  date('Y-m-d'));   //赋值
-			View::display('demo_welcome');          //显示视图模板
-		}
-
+    public function welcome()
+    {
+		View::assign('title', 'Hello World');   //赋值
+		View::assign('date',  date('Y-m-d'));   //赋值
+		View::display('demo_welcome');          //显示视图模板
 	}
+
+}
 
 </pre>
 
 
-<p class="text">　　创建一个模板文件，demo_welcome.php，保存到 default/views/ 文件夹下，代码：</p>
+<p class="text">　　创建一个模板文件，demo_welcome.php，保存到 app/views/ 文件夹下，代码：</p>
 <pre class="brush: php;">
 
-	echo $title; //Hello World
-	echo $date;  //当前日期
+	echo $title; // Hello World
+	echo $date;  // 日期
 
 </pre>
 
@@ -116,32 +116,16 @@ var _hmt = _hmt || [];
 </p>
 
 <pre class="brush: php;">
-
-	class DemoController extends Controller
-	{
-
-		//...
-
-		function welcomeAction()
-		{
-			$array = array(
-				'title' => 'Hello World',
-				'date'  => date('Y-m-d'),
-			);
-			View::assign($array);
-			View::display('demo_welcome');
-		}
-
-	}
-
+View::assign(['title' => 'Hello World', 'date' => date('Y-m-d')]);
+View::display('demo_welcome');
 </pre>
 
 <p class="text">　　模板代码：</p>
 
 <pre class="brush: php;">
 
-	echo $title; //Hello World
-	echo $date;  //输出日期
+	echo $title; // Hello World
+	echo $date;  // 日期
 
 </pre>
 
@@ -152,23 +136,7 @@ var _hmt = _hmt || [];
 <p class="text">　　display() 方法用于调用视图模板显示；也可以调用视图同时赋值；代码：</p>
 
 <pre class="brush: php;">
-
-	class DemoController extends Controller
-	{
-
-		//...
-
-		function welcomeAction()
-		{
-			$array = array(
-				'title' => 'Hello World',
-				'date'  => date('Y-m-d'),
-			);
-			View::display('demo_welcome', $array); //调用视图同时赋值
-		}
-
-	}
-
+View::display('demo_welcome', ['title' => 'Hello World', 'date' => date('Y-m-d')]); // 调用视图同时赋值
 </pre>
 
 <p class="text">　　这样就可以省去 assign() 赋值方法；</p>
@@ -182,22 +150,22 @@ var _hmt = _hmt || [];
 
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{
+namespace controllers;
 
-		//...
+class Demo extends \Controller
+{
 
-		function welcomeAction()
-		{
-			$array = array(
-				'menu'  => array('首页','下载','开发文档','代码'),
-				'title' => 'Hello World',
-				'date'  => date('Y-m-d'),
-			);
-			View::display('demo_welcome', $array); //调用视图同时赋值
-		}
-
+    public function welcome()
+    {
+		$hash = [
+			'menu'  => ['首页','下载','开发文档','代码'],
+			'title' => 'Hello World',
+			'date'  => date('Y-m-d'),
+		];
+		View::display('demo_welcome', $hash); // 调用视图同时赋值
 	}
+
+}
 
 </pre>
 
@@ -207,8 +175,8 @@ var _hmt = _hmt || [];
 
 	View::load('header');
 
-	echo $title; //Hello World
-	echo $date;  //输出日期
+	echo $title; // Hello World
+	echo $date;  // 日期
 
 	// ...
 
@@ -235,10 +203,10 @@ var _hmt = _hmt || [];
 
 	View::load('header');
 
-	echo $title; //Hello World
-	echo $date;  //输出日期
+	echo $title; // Hello World
+	echo $date;  // 日期
 
-	View::load('footer', arrray( 'copy'=>'版权所有', 'powered'=>'CubePHP' )); //赋值
+	View::load('footer', [ 'copy'=>'版权所有', 'powered'=>'CubePHP' ]); // 赋值
 
 </pre>
 

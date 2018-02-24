@@ -45,7 +45,7 @@ var _hmt = _hmt || [];
 			<ul class="cube-nav-left">
 				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
 				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
-				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/guide/2.0/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
 				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
 				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
@@ -71,6 +71,7 @@ var _hmt = _hmt || [];
 
 <ul class="cube-catalog">
 	<li><a href="#catalog"># 目录结构</a></li>
+	<li><a href="#module"># 模块子目录</a></li>
 	<li><a href="#model"># 模型及类库目录</a></li>
 	<li><a href="#res"># 静态资源及其他目录</a></li>
 </ul>
@@ -82,27 +83,38 @@ var _hmt = _hmt || [];
 /*
 
 /public                          web根目录
-
 |-- index.php                    入口文件
 
 /app                             应用目录
 
-|-- cli.php                      CLI入口文件
-|-- config.php                   配置文件
-|-- routes.php                   路由
-
-|-- default                      默认应用
-|-- |-- controllers              控制器
-|-- |-- views                    视图
-
-|-- app1                         其他应用模块 app1 app2 ..
-|-- |-- controllers
-|-- |-- views
-
+|-- controllers                  控制器
+|-- views                        视图
 |-- models                       模型
 |-- libs                         类库
 
+|-- cli.php                      cli入口文件
+|-- config.php                   配置文件
+|-- routes.php                   路由文件
+
 /cube                            CubePHP框架
+
+*/
+</pre>
+
+<div class="h2"><a name="module">#</a> 模块子目录</div>
+
+<p class="text">　　控制器及视图可创建子级目录；</p>
+
+<pre class="brush: php;">
+/*
+
+/app                             应用目录
+
+|-- controllers
+|-- |-- Ucenter                  用户中心模块
+|-- |-- Admin                    管理中心模块
+
+|-- views                        视图
 
 */
 </pre>
@@ -110,7 +122,7 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="model">#</a> 模型及类库目录</div>
 
-<p class="text">　　模型及类库目录在开发时自创建，目录名称可以随意model或models都可，甚至可以直接放app目录下；可创建子目录；</p>
+<p class="text">　　模型及类库目录名称可以随意自定义，甚至可以直接放app目录下；可创建子目录；</p>
 
 
 <div class="h2"><a name="res">#</a> 静态资源及其他目录</div>

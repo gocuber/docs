@@ -45,7 +45,7 @@ var _hmt = _hmt || [];
 			<ul class="cube-nav-left">
 				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
 				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
-				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/guide/2.0/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
 				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
 				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
@@ -119,10 +119,10 @@ Route::get('/', function(){
 });
 
 // 指定到控制器
-Route::get('hello', 'demo/hello');
+Route::get('hello', 'Demo@hello');
 
 // 通配符限定
-Route::get('detail/{id}/{name}', 'demo/detail/?id={id}&name={name}', ['id' => '[0-9]+', 'name' => '[a-z]+']);
+Route::get('detail/{id}/{name}', 'Demo@detail?id={id}&name={name}', ['id' => '[0-9]+', 'name' => '[a-z]+']);
 
 </pre>
 
@@ -142,13 +142,13 @@ Route::wildcard(array(
 ));
 
 // 使用全局通配符
-Route::get('detail/{id}', 'article/detail/?id={id}');
+Route::get('detail/{id}', 'Article@detail?id={id}');
 
 // 这样并不会覆盖全局通配符 这里的 ['id' => '[0-5]+'] 只作用于本次，只在本次有效
-Route::get('class/{id}', 'class/?id={id}', ['id' => '[0-5]+']);
+Route::get('class/{id}', 'Class@index?id={id}', ['id' => '[0-5]+']);
 
 // 使用全局通配符
-Route::get('news/{id}', 'news/detail/?id={id}');
+Route::get('news/{id}', 'News@detail?id={id}');
 
 Route::get('{all}', function(){
 	// 404
@@ -165,7 +165,7 @@ Route::get('{all}', function(){
 <pre class="brush: php;">
 
 Route::domain('ucenter.gocuber.com', function(){
-    Route::get('{all}', 'ucenter/{all}');
+    // ...
 });
 
 </pre>
@@ -228,23 +228,16 @@ Route::get('list/{class}', function($class='code'){
 <div class="h2"><a name="#controller">#</a> 控制器路由</div>
 
 <p class="text">
-　　控制器路由路由格式：'模块/控制器/动作/?参数=值&参数=值'<br />
-　　如果是默认模块则可以省略；如果是默认控制器或动作，同样也可以省略；
+　　控制器路由格式 '访问url', '控制器@动作?参数=值&参数=值'<br />
 </p>
 
 <div class="h3"><a name="#controllerbase">简单控制器路由</a></div>
 
 <pre class="brush: php;">
-// 下面三条配置实际是同一个规则，只要访问 hello，就会被分配到默认default模块 welcome控制器 index动作
-
-Route::get('hello', 'welcome/index');
-
-Route::get('hello', 'default/welcome/index');
-
-Route::get('hello', 'welcome');
+Route::get('hello', 'Demo@welcome');
 
 // 指定GET参数
-Route::get('download', 'article/detail/?code=download');
+Route::get('download', 'Article@detail?code=download');
 
 </pre>
 
@@ -252,11 +245,11 @@ Route::get('download', 'article/detail/?code=download');
 
 <pre class="brush: php;">
 
-Route::get('detail/{id}', 'article/detail/?id={id}');
+Route::get('detail/{id}', 'Article@detail?id={id}');
 
-Route::get('article/{class}', '{class}/list', ['class' => 'code|guide|demo']);
+Route::get('article/{class}', 'Article@{class}', ['class' => 'code|guide|demo']);
 
-Route::get('user/{code}/{id}', 'user/list/?code={code}&id={id}', ['code' => '[a-z]+']);
+Route::get('user/{code}/{id}', 'User@get?code={code}&id={id}', ['code' => '[a-z]+']);
 
 </pre>
 
@@ -271,11 +264,10 @@ Route::domain('ucenter.gocuber.com', function(){
 
 	// 这里设置的一组规则只在当前域下有效
 
-	Route::get('hello', 'ucenter/user/info');
-	Route::get('edit', 'ucenter/user/edit');
+	Route::get('hello', 'Ucenter\User@info');
+	Route::get('edit', 'Ucenter\User@edit');
 	// ...
 
-    Route::get('{all}', 'ucenter/{all}');
 });
 
 </pre>
@@ -284,7 +276,7 @@ Route::domain('ucenter.gocuber.com', function(){
 <div class="h2"><a name="defaultall">#</a> 默认路由与全拦截路由</div>
 
 <div class="h3"><a name="default">默认路由</a></div>
-<p class="text">　　默认路由 '/' ；当url中没有包含任何路由信息，如首页，就会执行 '/' 指定的控制器及动作；默认值为 'default/index/index' ；</p>
+<p class="text">　　默认路由 '/' ；当url中没有包含任何路由信息，如首页，就会执行 '/' 指定的控制器及动作；默认值为 'Index@index'</p>
 <pre class="brush: php;">
 Route::get('/', 'welcome');
 </pre>

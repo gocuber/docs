@@ -45,7 +45,7 @@ var _hmt = _hmt || [];
 			<ul class="cube-nav-left">
 				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
 				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
-				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/guide/2.0/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
 				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
 				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
@@ -81,7 +81,7 @@ var _hmt = _hmt || [];
 <p class="text">　　一般情况下，在创建和命名类的时候要遵循如下规则；类文件完整路径能通过以下代码取得；</p>
 
 <pre class="brush: php;">
-strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
+strtr($class, ['\\'=>'/', '_'=>'/']) . '.php';
 </pre>
 
 <div class="h2"><a name="classmap">#</a> ['class_map'] 类映射</div>
@@ -92,10 +92,10 @@ strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
 </p>
 
 <pre class="brush: php;">
-$_G['class_map'] = array(
+$_G['class_map'] = [
 	'libs\\Article_List' => APP_DIR . 'libs/Article/List.php',
-	'Uc_User' => APP_DIR . 'models/Uc/User.php',
-);
+	'User_List' => APP_DIR . 'libs/User/List.php',
+];
 </pre>
 
 <div class="h2"><a name="includepath">#</a> ['include_path'] 配置</div>
@@ -106,21 +106,10 @@ $_G['class_map'] = array(
 </p>
 
 <pre class="brush: php;">
-$_G['include_path'] = array(
+$_G['include_path'] = [
 	'/data0/extend/',
-);
+];
 </pre>
-
-<!-- p class="text">
-　　这样在 models/ 或 libs/ 目录下的类名可以省去 models_ 或 libs_，可以使用 namespace 命名空间来解决类重名问题；<br />
-代码：
-</p>
-
-<pre class="brush: php;">
-namespace libs;
-
-class Article_List{}
-</pre -->
 
 <div class="h2"><a name="composer">#</a> 使用其他自动加载器</div>
 

@@ -45,7 +45,7 @@ var _hmt = _hmt || [];
 			<ul class="cube-nav-left">
 				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
 				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
-				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/guide/2.0/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
 				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
 				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
@@ -84,14 +84,16 @@ var _hmt = _hmt || [];
 <div class="h3"><a name="rule_controller">控制器</a></div>
 
 <p class="text">
-　　控制器文件默认保存在：/app/模块/controllers/ 目录下；文件名与类名统一；<br />
-　　控制器类命名规则：第一个字母大写，后面跟 Controller ；控制器继承 Controller 类；<br />
-/app/default/controllers/DemoController.php
+　　控制器类文件存放在 app/controllers 目录下；<br /><br />
+　　控制器类名及子目录名第一个字母大写，控制器继承 \Controller 类；<br />
+app/controllers/Ucenter/User.php
 </p>
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{}
+namespace controllers\Ucenter;
+
+class User extends \Controller
+{}
 
 </pre>
 
@@ -99,28 +101,28 @@ var _hmt = _hmt || [];
 <div class="h3"><a name="rule_action">动作</a></div>
 
 <p class="text">
-　　动作命名规则：全部小写，后面跟 Action ；<br />
-/app/default/controllers/DemoController.php
+app/controllers/Ucenter/User.php
 </p>
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{
+namespace controllers\Ucenter;
 
-		function indexAction()
-		{}
+class User extends \Controller
+{
 
-	}
+	publicfunction welcome()
+	{}
 
+}
 </pre>
 
 
 <div class="h3"><a name="rule_view">视图</a></div>
 
 <p class="text">
-　　视图模板文件默认保存在：/app/模块/views/ 目录下；可以创建子级目录；目录及文件名尽量小写；<br />
-/app/default/views/index.php<br />
-/app/default/views/demo/index.php
+　　视图模板文件默认保存在：app/views/ 目录下；可以创建子级目录；目录及文件名尽量小写；<br />
+/app/views/index.php<br />
+/app/views/demo/index.php
 </p>
 
 
@@ -129,7 +131,7 @@ var _hmt = _hmt || [];
 <p class="text">　　一般情况下，在创建和命名类的时候要遵循如下规则；类文件完整路径能通过以下代码取得；参考类自动加载章节；</p>
 
 <pre class="brush: php;">
-strtr($class, array('\\'=>'/', '_'=>'/')) . '.php';
+strtr($class, ['\\'=>'/', '_'=>'/']) . '.php';
 </pre>
 
 

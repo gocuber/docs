@@ -45,7 +45,7 @@ var _hmt = _hmt || [];
 			<ul class="cube-nav-left">
 				<li><a href="/" title="CubePHP框架官方首页">首页</a></li>
 				<li><a href="/download/" title="CubePHP框架下载">下载</a></li>
-				<li><a href="/guide/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
+				<li><a href="/guide/2.0/" title="CubePHP框架开发文档" class="active">开发文档</a></li>
 				<li><a href="/code/" title="CubePHP框架相关代码">代码</a></li>
 				<li><a href="/extend/" title="CubePHP框架扩展">扩展</a></li>
 				<li><a href="/demo/" title="CubePHP框架演示">演示</a></li>
@@ -71,125 +71,118 @@ var _hmt = _hmt || [];
 
 <ul class="cube-catalog">
 	<li><a href="#example"># 控制器简单实例</a></li>
-	<li><a href="#action"># 创建动作方法</a></li>
+	<li><a href="#module"># 子模块控制器</a></li>
 	<li><a href="#namerule"># 命名规则</a></li>
-	<li><a href="#directory"># 控制器目录</a></li>
+	<li><a href="#bindroute"># 与路由绑定</a></li>
 	<li><a href="#construct"># 构造方法</a></li>
-	<li><a href="#init"># init() 方法</a></li>
 </ul>
 
 <div class="h2"><a name="example">#</a> 控制器简单实例</div>
 
 <p class="text">
-　　控制器是由一个或多个 action() 动作方法组成；<br />
-　　我们先来创建一个简单的控制器，DemoController.php，保存到 app/default/controllers/ 文件夹下；<br />代码如下：
+　　控制器是由一个或多个 action() 动作方法组成，控制器类文件存放在 app/controllers 目录下；<br />
+　　我们先来创建一个简单的控制器 app/controllers/Demo.php 并添加一个动作方法 welcome()<br />代码：
 </p>
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{
+namespace controllers;
 
-		function indexAction()
-		{
-			echo 'Welcome to CubePHP框架 !';
-		}
+class Demo extends \Controller
+{
 
-	}
+    public function welcome()
+    {
+        echo 'Welcome to CubePHP !';
+    }
+
+}
 
 </pre>
 
 <p class="text">
-　　现在通过URL http://localhost/demo/ 来访问这个控制器，会显示：Welcome to CubePHP框架 !<br />
-　　默认的控制器/动作都是：index；<br />
+　　现在通过URL http://localhost/demo/welcome/ 来访问，会显示：Welcome to CubePHP !<br />
 </p>
 
 
+<div class="h2"><a name="module">#</a> 子模块控制器</div>
 
-<div class="h2"><a name="action">#</a> 创建动作方法</div>
-
-<p class="text">　　接下来我们在创建一个新的动作方法 welcomeAction()</p>
+<p class="text">
+　　控制器可以按功能模块创建子级目录，例如新建一个目录 Ucenter 来存放用户中心模块控制器；<br />
+　　新建控制器 app/controllers/Ucenter/User.php<br />代码：
+</p>
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{
+namespace controllers\Ucenter;
 
-		//...
+class User extends \Controller
+{
 
-		function welcomeAction()
-		{
-			echo '新创建的动作方法：welcome';
-		}
+    public function show()
+    {
+        echo 'Hello ' . $_GET['name'];
+    }
 
-	}
+}
 
 </pre>
-<p class="text">
-　　访问URL http://localhost/demo/welcome/，会显示：新创建的动作方法：welcome
-</p>
 
+<p class="text">
+　　现在通过URL http://localhost/ucenter/user/show?name=cuber 来访问，会显示：Hello cuber<br />
+</p>
 
 
 <div class="h2"><a name="namerule">#</a> 命名规则</div>
 
 <p class="text">
-　　控制器命名规则为：第一个字母大写，后面跟 Controller ；控制器继承 Controller 类；<br />
-　　动作命名规则为：全部小写，后面跟 Action ；<br />
+　　一般情况下控制器类名及子目录名第一个字母大写（否则将无法通过url访问到）；控制器继承 \Controller 类；<br />
 </p>
+
+
+<div class="h2"><a name="bindroute">#</a> 与路由绑定</div>
+
 <pre class="brush: php;">
-
-	class DemoController extends Controller
-	{
-		function indexAction()
-		{}
-		function welcomeAction()
-		{}
-	}
-
+Route::get('welcome', 'Demo@welcome');
 </pre>
 
-
-<div class="h2"><a name="directory">#</a> 控制器目录</div>
-
 <p class="text">
-　　一般情况下，控制器默认目录是 app/模块/controllers/ ；<br />
-　　但是，实际上控制器可以存放在任意目录；我们可以通过配置 config.php 来指定控制器的目录；参考模块目录配置章节；
-</p>
-
-
-<div class="h2"><a name="directory">#</a> 构造方法</div>
-
-<p class="text">
-　　可以在控制器中使用 __construct() 构造方法；但是需要注意一定要将下面这行代码写在里面；或者直接使用 init() 方法；代码：
+　　访问URL http://localhost/welcome 显示：Welcome to CubePHP !<br />
 </p>
 
 <pre class="brush: php;">
-
-	class DemoController extends Controller
-	{
-		function __construct()
-		{
-			parent::__construct(); // 调用父类构造方法
-		}
-	}
-
+Route::get('user/{name}', 'Ucenter\User@show?name={name}');
 </pre>
 
-
-<div class="h2"><a name="init">#</a> init() 方法</div>
+<p class="text">
+　　访问URL http://localhost/user/cuber 显示：Hello cuber<br />
+</p>
 
 <p class="text">
-　　init() 方法同构造方法一样，会在控制器被调用时自动执行；代码：
+　　控制器路由格式 '访问url', '控制器@动作?参数=值&参数=值'<br />
+　　更多路由配置参考 URL路由 章节；
+</p>
+
+
+<div class="h2"><a name="construct">#</a> 构造方法</div>
+
+<p class="text">
+　　可以在控制器中使用 __construct() 构造方法；但是需要注意一定要将下面这行代码写在里面；代码：
 </p>
 
 <pre class="brush: php;">
 
-	class DemoController extends Controller
-	{
-		function init()
-		{
-			// ...
-		}
-	}
+namespace controllers;
+
+class Demo extends \Controller
+{
+
+    public function __construct($opt = [])
+    {
+        parent::__construct($opt); // 调用父类构造方法
+
+		// ...
+    }
+
+}
 
 </pre>
 
