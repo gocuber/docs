@@ -101,7 +101,14 @@ class Demo extends \Controller
 
 <p class="text">
 　　现在通过URL http://localhost/demo/welcome/ 来访问，会显示：Welcome to CubePHP !<br />
+　　如果你不希望某个方法被url访问使用 private 或 protected <br />代码：
 </p>
+<pre class="brush: php;">
+private function init()
+{
+	// ...
+}
+</pre>
 
 
 <div class="h2"><a name="module">#</a> 子模块控制器</div>
