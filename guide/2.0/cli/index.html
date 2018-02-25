@@ -83,17 +83,20 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="example">#</a> CLI实例</div>
 
-<p class="text">　　新建控制器 /app/cron/controllers/DemoController.php</p>
+<p class="text">　　新建控制器 app/controllers/Cron/Demo.php</p>
 <pre class="brush: php;">
 
-	class DemoController extends Controller
+namespace controllers\Cron;
+
+class Demo extends \Controller
+{
+
+    public function welcome()
 	{
-		public function welcomeAction()
-		{
-			echo 'Welcome to CubePHP !';
-		}
+		echo 'Welcome to CubePHP !';
 	}
 
+}
 </pre>
 
 
@@ -122,14 +125,18 @@ var _hmt = _hmt || [];
 <p class="text">　　cli参数处理；如：php cli.php cron/demo/welcome -name "you name" -id 10</p>
 
 <pre class="brush: php;">
-	class DemoController extends Controller
+namespace controllers\Cron;
+
+class Demo extends \Controller
+{
+
+    public function welcome()
 	{
-		public function welcomeAction()
-		{
-			echo $this->_argv['-name'];
-			echo $this->_argv['-id'];
-		}
+		s($this->_argv['-name']);
+		s($this->_argv['-id']);
 	}
+
+}
 </pre>
 
 <p class="text">　　打开终端，运行：</p>
