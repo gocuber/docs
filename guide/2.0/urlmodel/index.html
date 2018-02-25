@@ -80,20 +80,18 @@ var _hmt = _hmt || [];
 
 <div class="h2"><a name="url">#</a> 介绍</div>
 <p class="text">
-　　URL模式，主要介绍如何从访问URL中把路由部分获取出来；得到模块控制器和动作；<br /><br />
+　　URL模式，主要介绍如何从访问URL中把路由部分获取出来；得到控制器和动作；<br /><br />
 　　一般情况下访问URL格式是这样的：<br />
-　　http://localhost/index.php/模块/控制器/动作/<br /><br />
+　　http://localhost/index.php/控制器/动作/<br /><br />
 　　可以配置重写规则去掉URL中的入口文件：<br />
-　　http://localhost/模块/控制器/动作/<br />
+　　http://localhost/控制器/动作/<br />
 </p>
 
-<p class="text">　　如果URL中没有输入路由部分，那么系统会访问默认模块 default 默认控制器 index 和默认动作 index ；因此下面的访问是等效的：<br /></p>
+<p class="text">　　如果URL中没有输入路由部分，那么系统会访问 Index 控制器和 index 动作 ；因此下面的访问是等效的：<br /></p>
 <pre class="brush: php;">
 
 	http://localhost/
-	http://localhost/index/
-	http://localhost/default/index/
-	http://localhost/default/index/index/
+	http://localhost/index/index/
 
 </pre>
 
@@ -113,7 +111,7 @@ var _hmt = _hmt || [];
 </p>
 <pre class="brush: php;">
 
-	http://localhost/index.php/default/index/index/
+	http://localhost/index.php/index/index/
 
 </pre>
 
@@ -121,7 +119,7 @@ var _hmt = _hmt || [];
 </p>
 <pre class="brush: php;">
 
-	http://localhost/default/index/index/
+	http://localhost/index/index/
 
 </pre>
 
@@ -155,7 +153,7 @@ var _hmt = _hmt || [];
 </p>
 <pre class="brush: php;">
 
-	http://localhost/index.php?r=default/index/index
+	http://localhost/index.php?r=index/index
 
 </pre>
 
@@ -171,7 +169,7 @@ var _hmt = _hmt || [];
 </p>
 <pre class="brush: php;">
 
-	http://localhost/default/index/index/
+	http://localhost/index/index/
 
 </pre>
 
