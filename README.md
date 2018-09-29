@@ -1,5 +1,14 @@
 # Cuber
 —— 更好、更快、更强的PHP开发框架
+
+## 下载与安装
+
+```
+git clone https://github.com/gocuber/cuber.git
+composer install
+```
+
+## 目录结构
 ---
 | 项目      |    价格 | 数量  |
 | :-------- | --------:| :--: |
