@@ -4,18 +4,28 @@
 ## 下载与安装
 
 ```
-git clone https://github.com/gocuber/cuber.git
+git clone https://github.com/gocuber/cuber.git cuber
+cd cuber
 composer install
 ```
 
 ## 目录结构
----
-| 项目      |    价格 | 数量  |
-| :-------- | --------:| :--: |
-| Computer  | 1600 元 |  5   |
-| Phone     |   12 元 |  12  |
-| Pipe      |    1 元 | 234  |
----
+
+目录|说明
+:--------|:--------
+|app | 应用目录
+|-- Controllers | 控制器目录
+|-- Libs | 类目录
+|-- Models | Model目录
+|-- views | 视图目录
+|bootstrap|入口
+|config|配置
+|public|index
+|config|配置
+|route|路由
+|storage|数据存储
+|vendor|Composer
+
 
 #### 开发文档
 
