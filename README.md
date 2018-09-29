@@ -9,11 +9,11 @@ cd cuber
 composer install
 ```
 
-## 创建第一个应用 Hello World
+## 创建第一个应用 Hello Cuber
 
 ```php
 Route::get('/', function () {
-    echo 'Hello World';
+    echo 'Hello Cuber';
 });
 ```
 
@@ -35,7 +35,6 @@ vendor|Composer加载的依赖
 
 
 ###### 基础
-- 目录结构
 - 入口文件
 - URL模式
 - URL重写
