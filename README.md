@@ -9,31 +9,30 @@ cd cuber
 composer install
 ```
 
+## 创建第一个应用
+
+```
+<?php
+
+// ...
+```
+
 ## 目录结构
 
-目录|说明
-:--------|:--------
-|app | 应用目录
-|-- Controllers | 控制器目录
-|-- Libs | 类目录
-|-- Models | Model目录
-|-- views | 视图目录
-|bootstrap|入口
-|config|配置
-|public|index
-|config|配置
-|route|路由
-|storage|数据存储
-|vendor|Composer
+|目录|说明
+|:--------|:--------
+||app|应用目录
+||-- Controllers|控制器目录
+||-- Libs|类目录
+||-- Models|Model目录
+||-- views|视图目录
+||bootstrap|用于框架的启动和自动载入配置
+||config|目录包含了应用所有的配置文件
+||public|目录包含了应用入口文件 index.php 和前端资源文件（图片、JavaScript、CSS等），该目录也是 Apache 或 Nginx 等 Web 服务器所指向的应用根目录
+||route|目录包含了应用定义的所有路由
+||storage|缓存文件、临时文件、log日志等
+||vendor|Composer加载的依赖
 
-
-#### 开发文档
-
-###### 开始
-
-- 简介
-- 下载和安装
-- 创建第一个应用
 
 ###### 基础
 - 目录结构
