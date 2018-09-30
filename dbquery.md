@@ -25,7 +25,7 @@
 - [修改](#update)
 
 
-#### <a name="select">#</a> 查询
+#### <a name="select">查询</a>
 
 ##### <a name="name">name() 指定表名</a>
 　　使用 name() 方法指定数据库表名称；

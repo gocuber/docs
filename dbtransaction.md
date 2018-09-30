@@ -1,9 +1,9 @@
 # 数据库事务处理
 
-- [transaction() 执行一组事务(#transaction)
-- [beginTransaction() 开始一个事务(#begin)
-- [commit() 提交事务(#commit)
-- [rollBack() 回滚事务(#rollback)
+- [transaction() 执行一组事务](#transaction)
+- [beginTransaction() 开始一个事务](#begin)
+- [commit() 提交事务](#commit)
+- [rollBack() 回滚事务](#rollback)
 
 
 #### <a name="transaction">transaction() 执行一组事务</a>
