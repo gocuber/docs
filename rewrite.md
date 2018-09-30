@@ -40,7 +40,7 @@ handle:
 - rewrite: if ( !is_dir() && !is_file() ) goto "/index.php/$1"
 ```
 
-好了，接下来我们可以访问URL：<br />
-http://localhost/demo/welcome/<br />
-URL重写之前的：<br />
-http://localhost/index.php/demo/welcome/
+　　好了，接下来我们可以访问URL：<br />
+　　http://localhost/demo/welcome/<br />
+　　URL重写之前的：<br />
+　　http://localhost/index.php/demo/welcome/
