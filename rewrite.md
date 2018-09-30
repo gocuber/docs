@@ -1,47 +1,46 @@
-# URLÖØĞ´
+# URLé‡å†™
 
-- [# Apache Rewrite¹æÔò](#apache)
-- [# Nginx Rewrite¹æÔò](#nginx)
-- [# SAE Rewrite¹æÔò](#sae)
+- [Apache Rewriteè§„åˆ™](#apache)
+- [Nginx Rewriteè§„åˆ™](#nginx)
+- [SAE Rewriteè§„åˆ™](#sae)
 
-¡¡¡¡Ä¬ÈÏÇé¿öÏÂ£¬ÎÒÃÇ·ÃÎÊµÄURLÖĞ°üº¬index.phpÈë¿ÚÎÄ¼ş£¬ÎªÁËËÑË÷ÒıÇæ¸ü¼ÓÓÑºÃ£¬ÎÒÃÇ¿ÉÒÔ½èÖúÓÚRewrite¹æÔòÀ´Òş²Øindex.php£»
+ã€€ã€€é»˜è®¤æƒ…å†µä¸‹ï¼Œæˆ‘ä»¬è®¿é—®çš„URLä¸­åŒ…å«index.phpå…¥å£æ–‡ä»¶ï¼Œä¸ºäº†æœç´¢å¼•æ“æ›´åŠ å‹å¥½ï¼Œæˆ‘ä»¬å¯ä»¥å€ŸåŠ©äºRewriteè§„åˆ™æ¥éšè—index.phpï¼›
 
+#### <a name="apache">Apache Rewriteè§„åˆ™</a>
 
-#### <a name="apache">#</a> Apache Rewrite¹æÔò
-
-¡¡¡¡ApacheµÄRewrite¹æÔò£¬¿ÉÒÔĞŞ¸ÄApacheÅäÖÃÎÄ¼şhttpd.conf£¬»òĞÂ½¨.htaccessÎÄ¼ş·Åµ½Èë¿ÚÎÄ¼şµÄÍ¬¼¶Ä¿Â¼ÏÂ£»
+ã€€ã€€Apacheçš„Rewriteè§„åˆ™ï¼Œå¯ä»¥ä¿®æ”¹Apacheé…ç½®æ–‡ä»¶httpd.confï¼Œæˆ–æ–°å»º.htaccessæ–‡ä»¶æ”¾åˆ°å…¥å£æ–‡ä»¶çš„åŒçº§ç›®å½•ä¸‹ï¼›
 
 ```shell
-	RewriteEngine on
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(.*)$ ./index.php/$1 [L]
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ ./index.php/$1 [L]
+```
+
+#### <a name="nginx">Nginx Rewriteè§„åˆ™</a>
+
+ã€€ã€€Nginxçš„Rewriteè§„åˆ™ï¼ŒNginxé…ç½®æ–‡ä»¶nginx.confï¼›
+
+```shell
+if (!-e $request_filename) {
+	rewrite ^/(.*) /index.php/$1 last;
+}
 ```
 
 
-#### <a name="nginx">#</a> Nginx Rewrite¹æÔò
-¡¡¡¡NginxµÄRewrite¹æÔò£¬NginxÅäÖÃÎÄ¼şnginx.conf£»
+#### <a name="sae">SAE Rewriteè§„åˆ™</a>
+
+ã€€ã€€SAEçš„Rewriteè§„åˆ™ï¼Œé…ç½®æ–‡ä»¶config.yamlï¼›
 
 ```shell
-	if (!-e $request_filename) {
-		rewrite ^/(.*) /index.php/$1 last;
-	}
+name: appname
+version: 1
+handle:
+
+- rewrite: if ( !is_dir() && !is_file() ) goto "/index.php/$1"
 ```
 
-
-#### <a name="sae">#</a> SAE Rewrite¹æÔò
-¡¡¡¡SAEµÄRewrite¹æÔò£¬ÅäÖÃÎÄ¼şconfig.yaml£»
-
-```shell
-	name: appname
-	version: 1
-	handle:
-
-	- rewrite: if ( !is_dir() && !is_file() ) goto "/index.php/$1"
-```
-
-
-ºÃÁË£¬½ÓÏÂÀ´ÎÒÃÇ¿ÉÒÔ·ÃÎÊURL£º<br />
+å¥½äº†ï¼Œæ¥ä¸‹æ¥æˆ‘ä»¬å¯ä»¥è®¿é—®URLï¼š<br />
 http://localhost/demo/welcome/<br />
-URLÖØĞ´Ö®Ç°µÄ£º<br />
+URLé‡å†™ä¹‹å‰çš„ï¼š<br />
 http://localhost/index.php/demo/welcome/
