@@ -44,3 +44,4 @@ handle:
 　　http://localhost/demo/welcome/<br />
 　　URL重写之前的：<br />
 　　http://localhost/index.php/demo/welcome/
+
