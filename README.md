@@ -10,6 +10,7 @@ cd cuber
 composer install
 ```
 
+
 ## Hello Cuber
 
 ```php
@@ -17,6 +18,55 @@ Route::get('/', function () {
     echo 'Hello Cuber';
 });
 ```
+
+
+## Code
+
+```php
+// 路由
+
+// 闭包路由
+Route::get('welcome', function () {
+    View::display('demo/welcome'); // 调用视图
+});
+Route::get('user/info', function () {
+    return 'UserController@infoAction';
+});
+
+// 控制器路由
+Route::get('hello', 'Demo@hello');
+Route::get('hello', 'DemoController@helloAction');
+
+// 数据库
+
+$db = DB::connect();
+$db->select("select id,name from user where status = ? ", [ 1 ]);
+$db->select("select id,name from user where id = :id ", [ 'id'=>10 ]);
+$db->update("update user set status= ? where name= ? ", [ 1, 'abc' ]);
+$db->update("update user set status = :status where name = :name ", [ 'status'=>1, 'name'=>'abc' ]);
+
+$db = DB::model('User');
+$db->where([ 'id'=>1, 'status'=>1 ])->get();
+$db->where([ 'status'=>1 ])->andWhere([ 'id'=>1 ])->line();
+$db->where([ 'id'=>1 ])->update([ 'status'=>1, 'name'=>'abc' ]);
+
+// 缓存
+
+// Redis
+$redis = Cache_Redis::connect();
+$redis->get('key');
+$redis->set('key', 'value');
+$redis->hSet('h', 'key1', 'hello');
+$redis->hGet('h', 'key1');
+$redis->hGetAll('h');
+
+// Memcache
+
+$cache = Cache_Mem::connect();
+$cache->set('key1', 'Cuber', 3600);
+$cache->get('key1'); // Cuber
+```
+
 
 ## 目录结构
 
