@@ -1,7 +1,8 @@
-# Cuber
-—— 更好、更快、更强的PHP开发框架
+# Cuber - 更好、更快、更强的PHP开发框架
+—— The Cuber PHP Framework
 
-## 下载与安装
+
+## 安装
 
 ```
 git clone https://github.com/gocuber/cuber.git cuber
@@ -9,7 +10,7 @@ cd cuber
 composer install
 ```
 
-## 创建第一个应用 Hello Cuber
+## 创建第一个应用
 
 ```php
 Route::get('/', function () {
