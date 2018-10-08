@@ -10,7 +10,7 @@ cd cuber
 composer install
 ```
 
-## 创建第一个应用
+## Hello Cuber
 
 ```php
 Route::get('/', function () {
