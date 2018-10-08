@@ -23,7 +23,9 @@ Route::get('/', function () {
 ## Code
 
 ```php
-// 路由
+/**
+ * 路由
+ */
 
 // 闭包路由
 Route::get('welcome', function () {
@@ -37,7 +39,9 @@ Route::get('user/info', function () {
 Route::get('hello', 'Demo@hello');
 Route::get('hello', 'DemoController@helloAction');
 
-// 数据库
+/**
+ * 数据库
+ */
 
 $db = DB::connect();
 $db->select("select id,name from user where status = ? ", [ 1 ]);
@@ -50,7 +54,9 @@ $db->where([ 'id'=>1, 'status'=>1 ])->get();
 $db->where([ 'status'=>1 ])->andWhere([ 'id'=>1 ])->line();
 $db->where([ 'id'=>1 ])->update([ 'status'=>1, 'name'=>'abc' ]);
 
-// 缓存
+/**
+ * 缓存
+ */
 
 // Redis
 $redis = Cache_Redis::connect();
@@ -61,7 +67,6 @@ $redis->hGet('h', 'key1');
 $redis->hGetAll('h');
 
 // Memcache
-
 $cache = Cache_Mem::connect();
 $cache->set('key1', 'Cuber', 3600);
 $cache->get('key1'); // Cuber
