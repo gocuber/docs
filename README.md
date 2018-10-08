@@ -98,6 +98,7 @@ vendor|Composer加载的依赖
     - [创建第一个应用](https://github.com/gocuber/guide/blob/master/md/app.md)
 - 基础
     - [目录结构](https://github.com/gocuber/guide/blob/master/md/directory.md)
+    - [配置文件](https://github.com/gocuber/guide/blob/master/md/config.md)
     - [入口文件](https://github.com/gocuber/guide/blob/master/md/entrance.md)
     - [URL模式](https://github.com/gocuber/guide/blob/master/md/urlmodel.md)
     - [URL重写](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
