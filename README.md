@@ -35,16 +35,21 @@ storage|缓存文件、临时文件、log日志等
 vendor|Composer加载的依赖
 
 
-###### 基础
-- [入口文件](https://github.com/gocuber/guide/blob/master/md/install.md)
-- [URL模式](https://github.com/gocuber/guide/blob/master/md/urlmodel.md)
-- [URL重写](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
-- [Controller 控制器](https://github.com/gocuber/guide/blob/master/md/controller.md)
-- [View 视图模板](https://github.com/gocuber/guide/blob/master/md/view.md)
-- [Model 模型](https://github.com/gocuber/guide/blob/master/md/model.md)
-- [URL路由](https://github.com/gocuber/guide/blob/master/md/route.md)
-- [类自动加载](https://github.com/gocuber/guide/blob/master/md/autoload.md)
-- [异常处理](https://github.com/gocuber/guide/blob/master/md/exception.md)
+- 开始
+    - [简介](https://github.com/gocuber/guide/blob/master/md/about.md)
+    - [安装](https://github.com/gocuber/guide/blob/master/md/install.md)
+    - [创建第一个应用](https://github.com/gocuber/guide/blob/master/md/app.md)
+- 基础
+    - [目录结构](https://github.com/gocuber/guide/blob/master/md/directory.md)
+    - [入口文件](https://github.com/gocuber/guide/blob/master/md/entrance.md)
+    - [URL模式](https://github.com/gocuber/guide/blob/master/md/urlmodel.md)
+    - [URL重写](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
+    - [Controller 控制器](https://github.com/gocuber/guide/blob/master/md/controller.md)
+    - [View 视图模板](https://github.com/gocuber/guide/blob/master/md/view.md)
+    - [Model 模型](https://github.com/gocuber/guide/blob/master/md/model.md)
+    - [URL路由](https://github.com/gocuber/guide/blob/master/md/route.md)
+    - [类自动加载](https://github.com/gocuber/guide/blob/master/md/autoload.md)
+    - [异常处理](https://github.com/gocuber/guide/blob/master/md/exception.md)
 ###### 数据库
 - [数据库配置与使用基础](https://github.com/gocuber/guide/blob/master/md/dbbase.md)
 - [数据库查询结构器](https://github.com/gocuber/guide/blob/master/md/dbquery.md)
