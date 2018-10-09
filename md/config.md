@@ -91,7 +91,7 @@ Config::redis('default');
 
 #### <a name="ini">config.ini</a>
 
-　　`config/config.ini`
+　　`config/config.ini` 该文件格式等同于 `php.ini` 文件；
 
 ```php
 ; database default config
@@ -116,7 +116,7 @@ REDIS_DEFAULT_PORT = "6379"
 DEBUG = true
 ```
 
-　　使用 `env()` 获取 `config/config.ini` 的值
+　　使用 `env()` 获取 `config/config.ini` 的值；
 
 ```php
 env('DEBUG');
