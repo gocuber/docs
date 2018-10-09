@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 // 闭包路由
 Route::get('welcome', function () {
-    View::display('demo/welcome'); // 调用视图
+    View::display('welcome'); // 调用视图
 });
 Route::get('user/info', function () {
     return 'UserController@infoAction';
@@ -117,9 +117,12 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [Memcache](https://github.com/gocuber/guide/blob/master/md/memcache.md)
     - [Redis](https://github.com/gocuber/guide/blob/master/md/redis.md)
     - [文件缓存](https://github.com/gocuber/guide/blob/master/md/filecache.md)
+- 搜索引擎
+    - [Elasticsearch](https://github.com/gocuber/guide/blob/master/md/elasticsearch.md)
 - 类库及函数
     - [SESSION使用](https://github.com/gocuber/guide/blob/master/md/session.md)
     - [COOKIE使用](https://github.com/gocuber/guide/blob/master/md/cookie.md)
 - CLI命令行
     - [以命令行方式运行](https://github.com/gocuber/guide/blob/master/md/cli.md)
-
+- 扩展
+    - [使用第三方库](https://github.com/gocuber/guide/blob/master/md/lib.md)
