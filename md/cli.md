@@ -38,8 +38,8 @@ require __DIR__ . '/app.php';
 　　入口文件 cli.php 可以存放在任意目录中，尽量放到非 web 目录；这时我们可以在linux或windows下打开终端，进入到入口所在目录，运行：
 
 ```php
-# cd /data0/vhosts/bootstrap/
-# php cli.php cron/demo/welcome
+cd /data0/vhosts/bootstrap/
+php cli.php cron/demo/welcome
 ```
 
 　　终端显示：`Welcome to Cuber !`

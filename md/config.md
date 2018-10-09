@@ -6,80 +6,122 @@
 
 #### <a name="config">介绍</a>
 
-　　`config`是Command Line Interface的缩写，即命令行界面。Cuber框架可以运行在CLI下；例如：配置crontab定时运行任务；定时备份数据，统计数据，更新缓存等；
+　　`config` 目录包含了应用所有的配置文件；目录下一般会有两个文件，`config/app.php` 定义了应用、数据库及缓存等相关配置；`config/config.ini` 该文件针对多服务器或多环境之间定义配置不同的值，例如生产环境和开发环境，或者多服务器之间配置不同的从库地址等；该文件不会提交到代码仓库中，通常要加入到代码管理的忽略列表中，如 `Git` 的 `.gitignore` 文件；
 
+#### <a name="app">app.php</a>
 
-#### <a name="example">CLI实例</a>
+　　`config/app.php`
 
-　　新建控制器 app/Controllers/Cron/Demo.php
 ```php
+return [
 
-namespace App\Controllers\Cron;
+    'name' => 'Cuber',
 
-use Cuber\Foundation\Controller;
+    'timezone' => 'PRC',
 
-class Demo extends Controller
-{
-    public function welcome()
-	{
-		echo 'Welcome to Cuber !';
-	}
-}
+    'charset' => 'utf-8',
+
+    'debug' => env('DEBUG', false),
+
+    // controller namespace prefix
+    'controller_namespace' => 'App\\Controllers\\',
+
+    // model namespace prefix
+    'model_namespace' => 'App\\Models\\',
+
+    // alias
+    'alias' => [
+        'Route' => 'Cuber\\Foundation\\Route',
+        'View' => 'Cuber\\Foundation\\View',
+    ],
+
+    // 数据库配置
+    'db' => [
+        'default' => [
+            'host'     => env('DB_DEFAULT_HOST', '127.0.0.1'),
+            'port'     => env('DB_DEFAULT_PORT', 3306),
+            'username' => env('DB_DEFAULT_USERNAME', ''),
+            'password' => env('DB_DEFAULT_PASSWORD', ''),
+            'database' => env('DB_DEFAULT_DATABASE', ''),
+            'charset'  => 'utf8mb4',
+            'driver'   => 'mysql',
+        ],
+    ],
+
+    // Memcache配置
+    'memcache' => [
+        'default' => [
+            'host' => env('MEM_DEFAULT_HOST', '127.0.0.1'),
+            'port' => env('MEM_DEFAULT_PORT', 11211),
+        ],
+    ],
+
+    // Redis配置
+    'redis' => [
+        'default' => [
+            'host' => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
+            'port' => env('REDIS_DEFAULT_PORT', 6379),
+        ],
+    ],
+
+    // 可以自定义配置
+    'is_redis' => true, // 是否启用redis
+
+    // ...
+
+];
 ```
 
-
-#### <a name="page">CLI入口文件</a>
-
-　　为CLI脚本程序单独写一个入口文件`bootstrap/cli.php`
+　　配置获取使用 `use Cuber\Config\Config;`
 
 ```php
-require __DIR__ . '/app.php';
+Config::get('name');             // Cuber
+Config::get('is_redis', true);   // true
+Config::get('charset', 'utf-8'); // utf-8
+Config::debug();                 // true
+
+Config::db('default');     // 获取默认数据库配置
+Config::get('db.default'); // 同上
+Config::db(null);          // 获取全部数据库配置
+Config::get('db');         // 同上
+
+Config::mem('default');
+Config::redis('default');
 ```
 
-　　入口文件 cli.php 可以存放在任意目录中，尽量放到非 web 目录；<br>
-　　这时我们可以在linux或windows下打开终端，进入到入口所在目录，运行：
+#### <a name="ini">config.ini</a>
+
+　　`config/config.ini`
+
 ```php
-# cd /data0/vhosts/bootstrap/
-# php cli.php cron/demo/welcome
+; database default config
+DB_DEFAULT_HOST     = "127.0.0.1"
+DB_DEFAULT_PORT     = "3306"
+DB_DEFAULT_USERNAME = "root"
+DB_DEFAULT_PASSWORD = "123456"
+DB_DEFAULT_DATABASE = "db_blog"
+
+; database slave config
+DB_DEFAULT_SLAVE = "slave1:3306,slave2:3306,slave3:3306"
+
+; memcache
+MEM_DEFAULT_HOST = "127.0.0.1"
+MEM_DEFAULT_PORT = "11211"
+
+; redis
+REDIS_DEFAULT_HOST = "127.0.0.1"
+REDIS_DEFAULT_PORT = "6379"
+
+; DEBUG
+DEBUG = true
 ```
 
-　　终端显示：Welcome to Cuber !
-
-
-#### <a name="argv">参数处理</a>
-　　cli参数处理；如：php cli.php cron/demo/welcome -name "you name" -id 10
+　　使用 `env()` 获取 `config/config.ini` 的值
 
 ```php
-namespace App\Controllers\Cron;
+env('DEBUG');
+env('IS_REDIS', false);
 
-use Cuber\Foundation\Controller;
-
-class Demo extends Controller
-{
-
-    public function welcome()
-	{
-		echo $this->_argv['-name'];
-		echo $this->_argv['-id'];
-	}
-
-}
-```
-
-　　打开终端，运行：
-```php
-# cd /data0/vhosts/bootstrap/
-# php cli.php cron/demo/welcome -name "you name" -id 10
-```
-
-　　终端显示：
-```php
-you name
-10
-```
-
-
-　　CLI参数格式：
-```php
-php cli.php 模块/控制器/动作 -参数 值 -参数 值
+env('DB_DEFAULT_HOST', '127.0.0.1');
+env('DB_DEFAULT_PORT', 3306);
 ```
