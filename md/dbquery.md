@@ -113,7 +113,6 @@ echo $val; //name1
 
 ##### <a name="count">count() 总数 max() 最大 min() 最小 avg() 平均 sum() 求和</a>
 ```php
-
 // count() 总数
 $val = DB::connect()->name('user')->count();
 // 或
@@ -138,7 +137,6 @@ $val = DB::connect()->name('user')->val('avg(id)');
 $val = DB::connect()->name('user')->sum('price');
 // 或
 $val = DB::connect()->name('user')->val('sum(price)');
-
 ```
 
 
@@ -195,10 +193,10 @@ $db->where([ ['id','>',1], 'status'=>1 ]);   // 又一个 key=>value 格式 KV�
 
 　　三、组合嵌套格式：`[ 'and|or', [], [] ... ]`<br>
 
->>>
-`'and|or'` 可省略，省略默认为 `and`，如果省略 `'and|or'` 实际上就是上面第二种格式；<br>
-同样的上面第二种格式 加上 `'and|or'` 就是组合嵌套格式；<br>
->
+
+> `'and|or'` 可省略，省略默认为 `and`，如果省略 `'and|or'` 实际上就是上面第二种格式；<br>
+> 同样的上面第二种格式 加上 `'and|or'` 就是组合嵌套格式；<br>
+
 
 ```php
 // 格式 [ 'and|or', [], [] ... ]
@@ -220,11 +218,11 @@ $db->where([ 'and', ['or','id'=>1,'status'=>1], ['or','a'=>1,'b'=>1] ]);
 $db->where(['and', ['id','>',1], ['or','status'=>1,'name'=>'name1']]);
 ```
 
->>>
-相信你已经发现以上三种格式可以总结为一种：`[ 'and|or', 表达式1, 表达式2 ... ]`<br>
-`'and|or'` 可省略，省略默认为 and；<br>
-表达式可以是 字符串 或 `key=>value` 或 数组 `[]`；<br>
->
+
+> 相信你已经发现以上三种格式可以总结为一种：`[ 'and|or', 表达式1, 表达式2 ... ]`<br>
+> `'and|or'` 可省略，省略默认为 and；<br>
+> 表达式可以是 字符串 或 `key=>value` 或 数组 `[]`；<br>
+
 
 ```php
 // where a in (1,2) or b = 1
