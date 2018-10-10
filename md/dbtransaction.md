@@ -9,63 +9,51 @@
 #### <a name="transaction">transaction() 执行一组事务</a>
 
 ```php
-
-	DB::connect()->transaction(function(){
-		DB::connect()->insert("...");
-		DB::connect()->insert("...");
-		DB::connect()->update("...");
-	});
-
+DB::connect()->transaction(function(){
+    DB::connect()->insert("...");
+    DB::connect()->insert("...");
+    DB::connect()->update("...");
+});
 ```
-　　其中任意一条执行失败或抛出任何异常，则自动回滚整个事务；<br><br>
 
+　　其中任意一条执行失败或抛出任何异常，则自动回滚整个事务；<br>
 
 　　有时你需要更加灵活的控制事务：
 
 #### <a name="begin">beginTransaction() 开始一个事务</a>
 ```php
-
-	DB::connect()->beginTransaction();
-
+DB::connect()->beginTransaction();
 ```
 
 #### <a name="commit">commit() 提交事务</a>
 ```php
-
-	DB::connect()->commit();
-
+DB::connect()->commit();
 ```
-
 
 #### <a name="rollback">rollBack() 回滚事务</a>
 ```php
-
-	DB::connect()->rollBack();
-
+DB::connect()->rollBack();
 ```
-
 
 　　代码：
 ```php
+$db = DB::connect();
 
-	$db = DB::connect();
+try {
 
-	try {
+    $db->beginTransaction();  // 开始事务
 
-		$db->beginTransaction();  // 开始事务
+    $db->insert("...");
+    $db->update("...");
+    // ...
 
-		$ret = $db->insert("...");
-		$ret = $db->update("...");
-		// ...
+    $db->commit(); // 执行成功 提交事务
 
-		$db->commit(); // 执行成功 提交事务
+} catch (CubeException $e) {
 
-	} catch (CubeException $e) {
+    $db->rollBack();                          // 执行失败 回滚事务
+    $e->log(CubeException::ERROR_TYPE_MYSQL); // 异常信息
 
-		$db->rollBack();                          // 执行失败 回滚事务
-		$e->log(CubeException::ERROR_TYPE_MYSQL); // 异常信息
-
-	}
-
+}
 ```
 

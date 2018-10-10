@@ -8,24 +8,15 @@
 #### <a name="text">介绍</a>
 
 
-　　Model 模型是应用程序中用于处理数据逻辑的部分；<br />
-　　通常模型负责在数据库中存取数据；<br />
-　　一般情况下，一个数据库表对应一个 model 类文件；<br />
-<br />
-　　直接实例化或使用 DB::model() 来调用model类文件；<br />
-
+　　`Model` 模型是应用程序中用于处理数据逻辑的部分；通常 `Model` 模型负责在数据库中存取数据；一般情况下，一个数据库表对应一个 `Model` 类文件；<br />
+　　直接实例化或使用 `DB::model()` 来调用 `Model` 类文件；<br />
 
 
 #### <a name="create">创建model</a>
 
-　　新建 User 类继承父类 Model；<br />
-<br />
-　　代码如下：
-
-
+　　新建 `app/Models/User.php` 类继承父类 Model；代码：
 
 ```php
-
 namespace App\Models;
 
 use Cuber\Database\Model;
@@ -52,15 +43,11 @@ class User extends Model                  // 继承Model类
     ];
 
 }
-
 ```
-
 
 #### <a name="model">model的使用</a>
 
-　　实例化或使用 DB::model() 来调用model类文件；<br />
-　　代码：
-
+　　实例化或使用 `DB::model()` 来调用 `Model` 类文件；代码：
 
 ```php
 DB::model('User')->getFields();
@@ -69,7 +56,7 @@ DB::model('User')->get();
 
 DB::model('User')->where()->line();
 
-DB::model('User')->delete();
+DB::model('User')->where()->delete();
 
 (new App\Models\User())->getFields();
 
@@ -78,9 +65,10 @@ DB::model('User')->delete();
 
 
 #### <a name="settablename">setTableName() 设置分表</a>
-　　可以随意扩充方法；如定义 setTableName() 方法，来实现数据库分表；代码：
-```php
 
+　　可以随意扩充方法；如定义 `setTableName()` 方法，来实现数据库分表；代码：
+
+```php
 namespace App\Models;
 
 use Cuber\Database\Model;
@@ -91,10 +79,9 @@ class User extends Model
 
     public function setTableName()
     {
-        $this->_name = $tablename;
+        $this->_name = '';
 
         return $this;
     }
 }
-
 ```
