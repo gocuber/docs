@@ -29,15 +29,9 @@
         'host' => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
         'port' => env('REDIS_DEFAULT_PORT', 6379),
         'auth' => '123456',
-        'slave' => [              // 配置 slave
-            [
-                'host' => 'slave1',
-                'port' => 6379,
-            ],
-            [
-                'host' => 'slave2',
-                'port' => 6379,
-            ],
+        'slave' => [                           // 配置 slave
+            ['host'=>'slave1', 'port'=>6379],
+            ['host'=>'slave2', 'port'=>6379],
         ],
     ],
     // user redis
