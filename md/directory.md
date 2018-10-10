@@ -43,7 +43,7 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
 
 ##### <a name="public">public</a>
 
-　　目录包含了应用入口文件 `index.php` 和前端资源文件（图片、JavaScript、CSS等）<br>该目录也是 Apache 或 Nginx 等 Web 服务器所指向的应用根目录。
+　　目录包含了应用入口文件 `index.php` 和前端资源文件（图片、JavaScript、CSS等），该目录也是 Apache 或 Nginx 等 Web 服务器所指向的应用根目录。
 
 ##### <a name="route">route</a>
 

@@ -22,11 +22,9 @@ Route::get('/', function () {
 
 ## Code
 
-```php
-/**
- * 路由
- */
+#### 路由
 
+```php
 // 闭包路由
 Route::get('welcome', function () {
     View::display('welcome'); // 调用视图
@@ -38,30 +36,31 @@ Route::get('user/info', function () {
 // 控制器路由
 Route::get('hello', 'Demo@hello');
 Route::get('hello', 'DemoController@helloAction');
+```
 
-/**
- * 数据库
- */
+#### 数据库
 
+```php
 $db = DB::connect();
-$db->select("select id,name from user where status = ? ", [ 1 ]);
-$db->select("select id,name from user where id = :id ", [ 'id'=>10 ]);
-$db->update("update user set status= ? where name= ? ", [ 1, 'abc' ]);
-$db->update("update user set status = :status where name = :name ", [ 'status'=>1, 'name'=>'abc' ]);
+$db->select("select id,name from user where id = :id and status = :status", ['id'=>1001, 'status'=>1]);
+$db->insert("insert into user (name,status) values ( ? , ? )", ['name1', 1]);
+$db->update("update user set name = :name where id = :id", ['id'=>1001, 'name'=>'name2']);
+$db->delete("delete from user where id = ? and status = ?", [1001, 1]);
 
-$db = DB::model('User');
-$db->where([ 'id'=>1, 'status'=>1 ])->get();
-$db->where([ 'status'=>1 ])->andWhere([ 'id'=>1 ])->line();
-$db->where([ 'id'=>1 ])->update([ 'status'=>1, 'name'=>'abc' ]);
+$user = DB::model('User');
+$user->where(['id'=>1001, 'status'=>1])->get();
+$user->insert(['name'=>'name2']);
+$user->where(['id'=>1001])->update(['status'=>1, 'name'=>'name1']);
+$user->where(['id'=>1001])->delete();
+```
 
-/**
- * 缓存
- */
+#### 缓存
 
+```php
 // Redis
 $redis = Cache_Redis::connect();
-$redis->get('key');
 $redis->set('key', 'value');
+$redis->get('key');
 $redis->hSet('h', 'key1', 'hello');
 $redis->hGet('h', 'key1');
 $redis->hGetAll('h');
@@ -126,3 +125,4 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [以命令行方式运行](https://github.com/gocuber/guide/blob/master/md/cli.md)
 - 扩展
     - [使用第三方库](https://github.com/gocuber/guide/blob/master/md/lib.md)
+
