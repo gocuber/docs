@@ -1,12 +1,22 @@
 # COOKIE使用
 
-- [set() 写COOKIE](#set)
-- [get() 获取COOKIE](#get)
-- [del() 删除COOKIE](#del)
-- [setraw() 写COOKIE](#setraw)
+- [COOKIE使用](#use)
+    - [set() 写COOKIE](#set)
+    - [get() 获取COOKIE](#get)
+    - [del() 删除COOKIE](#del)
+    - [setraw() 写COOKIE](#setraw)
+
+#### <a name="set">COOKIE使用</a>
 
 ```php
 use Cuber\Cookie\Cookie;
+```
+
+　　`COOKIE` 配置 `config/app.php`
+
+```php
+'cookie_prefix' => '',      // cookie 前缀 默认 ''
+'cookie_domain' => null,    // cookie 域   默认 null
 ```
 
 ##### <a name="set">set() 写COOKIE</a>
@@ -25,7 +35,7 @@ Cookie::del('key');
 ```
 
 ##### <a name="setraw">setraw() 写COOKIE</a>
-　　与 `set()` 几乎完全相同，不同的是 `setraw()` 不会对 `COOKIE` 值进行 `urlencode()` `URL` 编码；
+　　与 `set()` 几乎完全相同，不同的是 `setraw()` 不会对 `COOKIE` 值进行 `urlencode()` URL编码；
 ```php
 Cookie::setraw('key', 'value', 3600, '/', 'gocuber.com');
 ```
