@@ -47,12 +47,12 @@ try {
     $db->update("...");
     // ...
 
-    $db->commit(); // 执行成功 提交事务
+    $db->commit();            // 执行成功 提交事务
 
-} catch (CubeException $e) {
+} catch (Exception $e) {
 
-    $db->rollBack();                          // 执行失败 回滚事务
-    $e->log(CubeException::ERROR_TYPE_MYSQL); // 异常信息
+    $db->rollBack();                       // 执行失败 回滚事务
+    $e->log(Exception::ERROR_TYPE_MYSQL);  // 异常信息
 
 }
 ```
