@@ -118,8 +118,9 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [文件缓存](https://github.com/gocuber/guide/blob/master/md/filecache.md)
 - 搜索引擎
     - [Elasticsearch](https://github.com/gocuber/guide/blob/master/md/elasticsearch.md)
-- 类库及函数
+- 会话
     - [SESSION使用](https://github.com/gocuber/guide/blob/master/md/session.md)
+    - [使用Redis存储SESSION](https://github.com/gocuber/guide/blob/master/md/session.md#cache)
     - [COOKIE使用](https://github.com/gocuber/guide/blob/master/md/cookie.md)
 - CLI命令行
     - [以命令行方式运行](https://github.com/gocuber/guide/blob/master/md/cli.md)
