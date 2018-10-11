@@ -82,11 +82,9 @@ Route::get('{all}', function () {
 　　`domain()` 方法用来为指定的域名设置一组路由规则，这组路由规则只在当前指定的域名下有效；例如给用户中心模块指定一个子域名 `ucenter.gocuber.com`
 
 ```php
-
 Route::domain('ucenter.gocuber.com', function () {
     // ...
 });
-
 ```
 
 #### <a name="closure">闭包路由</a>
@@ -137,12 +135,12 @@ Route::get('article/{action}/{id}', function ($action = 'code', $id = 1) {
     return 'ArticleController@' . $action . 'Action?id=' . $id;
 }, ['action' => '(code|guide|demo)?', 'id' => '|[0-9]+']);
 
-// 注意这两条路由里的 action，他们是有区别的；
+// 注意这两条路由里的 action 他们是有区别的
 
 ['action' => 'code|guide|demo']       // action 必须是三个其中的一个
 ['action' => '(code|guide|demo)']     // 同上
 
-['action' => '(code|guide|demo)?']    // action 必须是三个其中的一个，或者没有
+['action' => '(code|guide|demo)?']    // action 必须是三个其中的一个 或者没有
 ['action' => '(|code|guide|demo)']    // 同上
 ['action' => '|code|guide|demo']      // 同上
 ```
