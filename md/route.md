@@ -125,26 +125,26 @@ Route::get('detail/{name}', function ($name = 'cuber') {
     echo $name;
 });
 
-Route::get('post/{action}', function ($action) {
-    return 'Post@' . $action;
-}, ['action' => 'add|edit|del']);
+Route::get('post/{opt}', function ($opt) {
+    return 'Post@' . $opt;
+}, ['opt' => 'add|edit|del']);
 
-Route::get('news/{class}/{id}', function ($class, $id) {
-    return 'NewsController@' . $class . 'Action?id=' . $id;
-}, ['class' => 'code|guide|demo']);
+Route::get('article/{action}/{id}', function ($action, $id) {
+    return 'ArticleController@' . $action . 'Action?id=' . $id;
+}, ['action' => 'code|guide|demo']);
 
-Route::get('article/{class}', function ($class = 'code') {
-    return 'NewsController@indexAction?class=' . $class . '&id=' . $id;
-}, ['class' => '(code|guide|demo)?']);
+Route::get('article/{action}/{id}', function ($action = 'code', $id = 1) {
+    return 'ArticleController@' . $action . 'Action?id=' . $id;
+}, ['action' => '(code|guide|demo)?', 'id' => '|[0-9]+']);
 
-// 注意这两条路由里的 class，他们是有区别的；
+// 注意这两条路由里的 action，他们是有区别的；
 
-['class' => 'code|guide|demo']       // class 必须是三个其中的一个
-['class' => '(code|guide|demo)']     // 同上
+['action' => 'code|guide|demo']       // action 必须是三个其中的一个
+['action' => '(code|guide|demo)']     // 同上
 
-['class' => '(code|guide|demo)?']    // class 必须是三个其中的一个，或者没有
-['class' => '(|code|guide|demo)']    // 同上
-['class' => '|code|guide|demo']      // 同上
+['action' => '(code|guide|demo)?']    // action 必须是三个其中的一个，或者没有
+['action' => '(|code|guide|demo)']    // 同上
+['action' => '|code|guide|demo']      // 同上
 ```
 
 
