@@ -2,7 +2,7 @@
 
 - [控制器简单实例](#example)
 - [子模块控制器](#module)
-- [命名规则](#namerule)
+- [命名规则](#namingrules)
 - [与路由绑定](#bindroute)
 - [构造方法](#construct)
 
@@ -59,6 +59,9 @@ class User extends Controller
 ```
 
 　　现在通过URL http://localhost/ucenter/user/show?name=cuber 来访问，会显示：`Hello cuber`<br />
+
+
+#### <a name="namingrules">命名规则</a>
 
 　　控制器命名规则遵循 `PSR-4`，使用 `PSR-4` 自动载入标准自动加载；控制器继承 `Cuber\Foundation\Controller` 类；<br />
 
