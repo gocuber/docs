@@ -35,7 +35,7 @@
 ```
 
 
-#### <a name="cubeexception">Exception 异常处理类调用</a>
+#### <a name="exception">Exception 异常处理类调用</a>
 
 `use Cuber\Support\Exception;`
 

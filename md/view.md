@@ -1,6 +1,6 @@
-View 视图模板
+# View 视图模板
 
-- [View 视图类简单实例](#view)
+- [View 简单实例](#view)
 - [assign() 赋值](#assign)
 - [display() 显示视图模板](#display)
 - [load() 视图中加载其他视图文件](#load)
