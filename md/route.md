@@ -215,7 +215,7 @@ Route::get('{all}', function(){}, ['all' => '.*']);
 　　如果将这行放在 `route/app.php` 头部，将会全部拦截所有访问，如果放在结尾，将会拦截配置之外的全部访问，相当于全部访问都需要配置在 `route/app.php` 中；
 
 ```php
-// 放在开始
+// 放在头部
 Route::get('{all}', function () {
     echo '停服升级中..';
 }, ['all' => '.*']);
