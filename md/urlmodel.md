@@ -12,10 +12,10 @@
 　　一般情况下访问URL格式是这样的：<br />
 　　http://localhost/index.php/控制器/动作/<br /><br />
 　　可以配置重写规则去掉URL中的入口文件：<br />
-　　http://localhost/控制器/动作/<br />
+　　http://localhost/控制器/动作/<br /><br />
 
 
-　　如果URL中没有输入路由部分，那么系统会访问 Index 控制器和 index 动作 ；因此下面的访问是等效的：<br />
+　　如果URL中没有输入路由部分，那么系统会访问 `Index` 控制器和 `index` 动作 ；因此下面的访问是等效的：<br />
 
 ```php
 http://localhost/
@@ -46,7 +46,7 @@ http://localhost/index/index/
 
 #### <a name="pathinfo">PATHINFO模式</a>
 
-　　PATHINFO模式，是通过服务器变量 `$_SERVER['PATH_INFO']` 直接获取路由部分，因此比普通模式稍快一点；但是默认情况下只兼容apache环境；<br />
+　　PATHINFO模式，是通过服务器变量 `$_SERVER['PATH_INFO']` 直接获取路由部分，因此比普通模式稍快一点；但是默认情况下只兼容 `Apache` 环境；<br />
 　　修改配置文件：<br />
 
 ```php
@@ -73,7 +73,7 @@ http://localhost/index.php?r=index/index
 ```
 
 　　当然可以配置重写规则去掉URL中的入口文件，URL地址：<br />
-　　apache重写规则 （完整的重写规则请参考URL重写章节）：
+　　`Apache` 重写规则 （完整的重写规则请参考 [URL重写](https://github.com/gocuber/guide/blob/master/md/rewrite.md) 章节）：
 
 ```php
 RewriteRule ^(.*)$ ./index.php?r=$1 [L]
@@ -91,7 +91,7 @@ http://localhost/index/index/
 　　代码：<br />
 
 ```php
-'url_model'  => 4, // 自定义模式
+'url_model'  => 4,           // 自定义模式
 'route_func' => 'get_route', // 函数方法名称 默认 get_route
 
 function get_route()

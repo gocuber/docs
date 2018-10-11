@@ -4,13 +4,13 @@
 - [Nginx Rewrite规则](#nginx)
 - [SAE Rewrite规则](#sae)
 
-　　默认情况下，我们访问的URL中包含index.php入口文件，为了搜索引擎更加友好，我们可以借助于Rewrite规则来隐藏index.php；
+　　默认情况下，我们访问的 `URL` 中包含 `index.php` 入口文件，为了搜索引擎更加友好，我们可以借助于 `Rewrite` 规则来隐藏 `index.php` ；
 
 #### <a name="apache">Apache Rewrite规则</a>
 
-　　Apache的Rewrite规则，可以修改Apache配置文件httpd.conf，或新建.htaccess文件放到入口文件的同级目录下；
+　　`Apache` 的 `Rewrite` 规则，可以修改 `Apache` 配置文件 `httpd.conf` ，或新建 `.htaccess` 文件放到入口文件的同级目录下；
 
-```shell
+```php
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -19,20 +19,20 @@ RewriteRule ^(.*)$ ./index.php/$1 [L]
 
 #### <a name="nginx">Nginx Rewrite规则</a>
 
-　　Nginx的Rewrite规则，Nginx配置文件nginx.conf；
+　　`Nginx` 的 `Rewrite` 规则，`Nginx` 配置文件 `nginx.conf`；
 
-```shell
+```php
 if (!-e $request_filename) {
-	rewrite ^/(.*) /index.php/$1 last;
+    rewrite ^/(.*) /index.php/$1 last;
 }
 ```
 
 
 #### <a name="sae">SAE Rewrite规则</a>
 
-　　SAE的Rewrite规则，配置文件config.yaml；
+　　`SAE` 的 `Rewrite` 规则，配置文件 `config.yaml`；
 
-```shell
+```php
 name: appname
 version: 1
 handle:
