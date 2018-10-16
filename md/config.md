@@ -23,17 +23,24 @@ return [
 
     'debug' => env('DEBUG', false),
 
-    // controller namespace prefix
-    'controller_namespace' => 'App\\Controllers\\',
+    // controllers namespace prefix
+    'controllers_namespace' => 'App\\Controllers\\',
 
-    // model namespace prefix
-    'model_namespace' => 'App\\Models\\',
+    // models namespace prefix
+    'models_namespace' => 'App\\Models\\',
+
+    // views dir
+    'views' => BASE_PATH . 'app/views/',
 
     // alias
     'alias' => [
         'Route' => 'Cuber\\Foundation\\Route',
-        'View' => 'Cuber\\Foundation\\View',
+        'View'  => 'Cuber\\Foundation\\View',
     ],
+
+    // cookie配置
+    'cookie_prefix' => null,  // cookie 前缀
+    'cookie_domain' => null,  // cookie 域
 
     // 数据库配置
     'db' => [
@@ -45,6 +52,7 @@ return [
             'database' => env('DB_DEFAULT_DATABASE', ''),
             'charset'  => 'utf8mb4',
             'driver'   => 'mysql',
+            'slave'    => [],
         ],
     ],
 
@@ -59,13 +67,24 @@ return [
     // Redis配置
     'redis' => [
         'default' => [
-            'host' => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
-            'port' => env('REDIS_DEFAULT_PORT', 6379),
+            'host'  => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
+            'port'  => env('REDIS_DEFAULT_PORT', 6379),
+            'auth'  => env('REDIS_DEFAULT_AUTH', ''),
+            'slave' => [],
         ],
     ],
 
     // 可以自定义配置
     'is_redis' => true, // 是否启用redis
+
+    // 异常
+    'error_log' => BASE_PATH . 'storage/logs/',
+
+    // authcode
+    'authcode' => env('AUTH_CODE', ''),
+
+    // rsa
+    'rsa' => [],
 
     // ...
 
