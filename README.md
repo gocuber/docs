@@ -101,10 +101,11 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [入口文件](https://github.com/gocuber/guide/blob/master/md/entrance.md)
     - [URL模式](https://github.com/gocuber/guide/blob/master/md/urlmodel.md)
     - [URL重写](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
+    - [URL路由](https://github.com/gocuber/guide/blob/master/md/route.md)
     - [Controller 控制器](https://github.com/gocuber/guide/blob/master/md/controller.md)
     - [View 视图模板](https://github.com/gocuber/guide/blob/master/md/view.md)
     - [Model 模型](https://github.com/gocuber/guide/blob/master/md/model.md)
-    - [URL路由](https://github.com/gocuber/guide/blob/master/md/route.md)
+    - [Module 模块](https://github.com/gocuber/guide/blob/master/md/module.md)
     - [类自动加载](https://github.com/gocuber/guide/blob/master/md/autoload.md)
     - [异常处理](https://github.com/gocuber/guide/blob/master/md/exception.md)
 - 数据库

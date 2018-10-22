@@ -14,43 +14,46 @@
 
 ```php
 'module' => [
-    'admin' => [                                    // 后台模块
-        'route'      => 'admin',                    // 模块路由文件 router/admin.php
-        'namespace'  => 'App\\Admin\\',             // 模块控制器目录 命名空间前缀
-        'domain'     => env('ADMIN_DOMAIN'),        // 模块域名
+    'default' => [                                       // 默认模块
+        'route'       => 'blog',                         // 模块路由文件
+        'controllers' => 'App\\Controllers\\Blog\\',     // 模块控制器目录 命名空间前缀
+        'views'       => BASE_PATH . 'app/views/blog/',  // 视图模板目录
     ],
-    'ucenter' => [
-        'route'      => 'ucenter',
-        'namespace'  => 'App\\Controllers\\Ucenter\\',
-        'domain'     => env('UCENTER_DOMAIN'),
+    'cli' => [                                           // 当以CLI命令行方式运行时会自动加载 cli 模块
+        'route'       => 'cli',
+        'controllers' => 'App\\Controllers\\Cli\\',
     ],
-    'cron' => [
-        'route'      => 'cron',
-        'namespace'  => 'App\\Cron\\',
+    'admin' => [                                         // 后台模块
+        'route'       => 'admin',
+        'controllers' => 'App\\Controllers\\Admin\\',
+        'views'       => BASE_PATH . 'app/views/admin/',
+        'domain'      => env('ADMIN_DOMAIN'),
+    ],
+    'ucenter' => [                                       // 用户中心模块
+        'route'       => 'ucenter',
+        'controllers' => 'App\\Controllers\\Ucenter\\',
+        'views'       => BASE_PATH . 'app/views/ucenter/',
+        'domain'      => env('UCENTER_DOMAIN'),
     ],
 ],
 ```
 
+　　模块控制器目录可以任意指定 如 `App\\Cli\\` `App\\Cron\\` `App\\Ucenter\\` 等，当以CLI命令行方式运行时会自动加载 `cli` 模块；
 
 #### <a name="route">模块路由</a>
 
-　　`router/admin.php`
+　　`route/admin.php` 可以为模块配置独立的路由文件；
 
 ```php
-'module' => [
-    'admin' => [                                    // 后台模块
-        'route'      => 'admin',                    // 模块路由文件 router/admin.php
-        'namespace'  => 'App\\Admin\\',             // 模块控制器目录 命名空间前缀
-        'domain'     => env('ADMIN_DOMAIN'),        // 模块域名
-    ],
-    'ucenter' => [
-        'route'      => 'ucenter',
-        'namespace'  => 'App\\Controllers\\Ucenter\\',
-        'domain'     => env('UCENTER_DOMAIN'),
-    ],
-    'cron' => [
-        'route'      => 'cron',
-        'namespace'  => 'App\\Cron\\',
-    ],
-],
+Route::get('{controller}/{action}', function ($controller = 'index', $action = 'index') {
+    return ucfirst(strtolower($controller)) . 'Controller@' . strtolower($action) . 'Action';
+});
+
+Route::get('{all}', function () {
+    ret404();
+});
+
+Route::pattern(['all'=>'.*', 'controller'=>'|[a-z]+', 'action'=>'|[a-z]+']);
 ```
+
+<br><br><br><br><br>
