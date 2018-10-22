@@ -223,3 +223,5 @@ Route::get('{all}', function () {
     // page_404
 }, ['all' => '.*']);
 ```
+
+<br><br><br><br><br>

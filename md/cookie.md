@@ -15,8 +15,10 @@ use Cuber\Cookie\Cookie;
 　　`COOKIE` 配置 `config/app.php`
 
 ```php
-'cookie_prefix' => '',      // cookie 前缀 默认 ''
-'cookie_domain' => null,    // cookie 域   默认 null
+'cookie' => [
+    'prefix' => '',      // cookie 前缀 默认 ''
+    'domain' => null,    // cookie 域   默认 null
+],
 ```
 
 ##### <a name="set">set() 写COOKIE</a>
@@ -39,3 +41,5 @@ Cookie::del('key');
 ```php
 Cookie::setraw('key', 'value', 3600, '/', 'gocuber.com');
 ```
+
+<br><br><br><br><br>

@@ -38,9 +38,32 @@ return [
         'View'  => 'Cuber\\Foundation\\View',
     ],
 
+    // 模块配置
+    'module' => [
+        'default' => [
+            'route'       => 'app',
+            'controllers' => 'App\\Controllers\\',
+        ],
+        'cli' => [
+            'route'       => 'cli',
+            'controllers' => 'App\\Cli\\',
+        ],
+    ],
+
     // cookie配置
-    'cookie_prefix' => null,  // cookie 前缀
-    'cookie_domain' => null,  // cookie 域
+    'cookie' => [
+        'prefix' => null,  // cookie 前缀
+        'domain' => null,  // cookie 域
+    ],
+
+    // session配置
+    'session' => [
+        'driver'  => env('SESSION_DRIVER', 'file'),
+        'connect' => 'session',
+        'prefix'  => '',
+        'cookie'  => null,    // session_id cookie key
+        'time'    => null,
+    ],
 
     // 数据库配置
     'db' => [

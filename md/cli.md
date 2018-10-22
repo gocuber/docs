@@ -11,7 +11,7 @@
 
 #### <a name="example">CLI实例</a>
 
-　　`config/app.php` `cli` 模块配置
+　　`cli` 模块配置 `config/app.php`
 
 ```php
 'module' => [
