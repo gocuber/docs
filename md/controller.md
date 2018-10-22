@@ -86,7 +86,7 @@ Route::get('user/{name}', function ($name = 'Cuber') {
 
 　　访问URL http://localhost/user/cuber 显示：`Hello cuber`<br />
 
-　　控制器路由格式 `'访问url', '模块\控制器@动作?参数=值&参数=值'`<br />
+　　控制器路由格式 `'访问url', '控制器@动作?参数=值&参数=值'`<br />
 　　更多路由配置参考 [URL路由](https://github.com/gocuber/guide/blob/master/md/route.md) 章节；
 
 
