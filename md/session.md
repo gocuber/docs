@@ -82,8 +82,8 @@ Session::del('key');          // 删除
 Session::del();               // 删除全部
 Session::destroy();           // 销毁全部
 
-// session_start() 一般情况下，不用手动调用，在使用 Session 时会自动调用
-Session::start();
+// start() 一般情况下，不用手动调用，在使用 Session 时会自动调用
+Session::start(); // session_start()
 
 // id() 设置与获取 session_id
 Session::id($id); // 设置 session_id 在使用 Session 之前调用
