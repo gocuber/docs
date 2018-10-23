@@ -93,7 +93,7 @@ Route::get('user/{name}', function ($name = 'Cuber') {
 #### <a name="construct">构造方法</a>
 
 
-　　可以在控制器中使用 `__construct()` 构造方法；但是需要注意一定要将下面这行代码写在里面；代码：
+　　可以在控制器中使用 `__construct()` 构造方法；
 
 
 ```php
@@ -104,10 +104,8 @@ use Cuber\Foundation\Controller;
 class Demo extends Controller
 {
 
-    public function __construct($opt = [])
+    public function __construct()
     {
-        parent::__construct($opt); // 调用父类构造方法
-
         // ...
     }
 

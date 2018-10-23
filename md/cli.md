@@ -70,8 +70,8 @@ class Demo extends Controller
 {
     public function welcome()
     {
-        echo $this->_argv['-name'] . "\n";
-        echo $this->_argv['-id'] . "\n";
+        echo $this->_argv('-name') . "\n";
+        echo $this->_argv('-id') . "\n";
     }
 }
 ```
