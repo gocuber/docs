@@ -28,7 +28,7 @@
 // FileCache配置
 'filecache' => [
     'session' => [
-        'dir'       => BASE_PATH . 'storage/filecache/session/',  // session 文件目录
+        'dir'       => base_path() . 'storage/filecache/session/',  // session 文件目录
         'is_subdir' => 1,
     ],
 ],

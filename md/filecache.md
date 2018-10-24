@@ -18,12 +18,12 @@
 'filecache' => [
     // default
     'default' => [
-        'dir'       => BASE_PATH . 'storage/filecache/default/',  // 缓存目录
+        'dir'       => base_path() . 'storage/filecache/default/',  // 缓存目录
         'is_subdir' => 1,                                         // 是否自动生成子级缓存目录 默认1是 0否
     ],
     // user
     'user' => [
-        'dir'       => BASE_PATH . 'storage/filecache/user/',
+        'dir'       => base_path() . 'storage/filecache/user/',
         'is_subdir' => 0,
     ],
 ],

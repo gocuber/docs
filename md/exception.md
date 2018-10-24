@@ -16,7 +16,7 @@
 　　配置 `'error_log'` 将异常信息写到 `Log` 日志目录；
 
 ```php
-'error_log' => BASE_PATH . 'storage/logs/',
+'error_log' => base_path() . 'storage/logs/',
 ```
 
 　　如果程序抛出异常信息，将会在 `'error_log'` 目录下按天生成 `Log` 日志文件；
@@ -28,10 +28,10 @@
 // 20180208_app_cli_error.log
 ```
 
-　　`'error_log'` 默认值为 `BASE_PATH . 'storage/logs/'` ，可以配置为 `false` 来关闭 `Log` 日志记录；
+　　`'error_log'` 默认值为 `base_path() . 'storage/logs/'` ，可以配置为 `false` 或 `null` 来关闭 `Log` 日志记录；
 
 ```php
-'error_log' => false,
+'error_log' => null,
 ```
 
 
