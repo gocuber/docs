@@ -41,24 +41,22 @@ Route::get('hello', 'DemoController@helloAction');
 #### 数据库
 
 ```php
-$db = DB::connect();
-$db->select("select id,name from user where id = :id and status = :status", ['id'=>1001, 'status'=>1]);
-$db->insert("insert into user (name,status) values ( ? , ? )", ['name1', 1]);
-$db->update("update user set name = :name where id = :id", ['id'=>1001, 'name'=>'name2']);
-$db->delete("delete from user where id = ? and status = ?", [1001, 1]);
+DB::select("select id,name from user where id = :id and status = :status", ['id'=>1001, 'status'=>1]);
+DB::insert("insert into user (name,status) values (?,?)", ['name1', 1]);
+DB::update("update user set name = :name where id = :id", ['id'=>1001, 'name'=>'name2']);
+DB::delete("delete from user where id = ? and status = ?", [1001, 1]);
 
-$user = DB::model('User');
-$user->where(['id'=>1001, 'status'=>1])->get();
-$user->insert(['name'=>'name2']);
-$user->where(['id'=>1001])->update(['status'=>1, 'name'=>'name1']);
-$user->where(['id'=>1001])->delete();
+DB::name('user')->where(['id'=>1001, 'status'=>1])->get();
+DB::name('user')->insert(['name'=>'name2']);
+DB::name('user')->where(['id'=>1001])->update(['status'=>1]);
+DB::name('user')->where(['id'=>1001])->delete();
 ```
 
 #### 缓存
 
 ```php
 // Redis
-$redis = Cache_Redis::connect();
+$redis = Redis::connect();
 $redis->set('key', 'value');
 $redis->get('key');
 $redis->hSet('h', 'key1', 'hello');
@@ -66,7 +64,7 @@ $redis->hGet('h', 'key1');
 $redis->hGetAll('h');
 
 // Memcache
-$cache = Cache_Mem::connect();
+$cache = Mem::connect();
 $cache->set('key1', 'Cuber', 3600);
 $cache->get('key1'); // Cuber
 ```
