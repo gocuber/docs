@@ -32,9 +32,9 @@
 　　使用 `name()` 方法指定数据库表名称；
 
 ```php
-DB::connect()->name('user');
+DB::name('user');
 
-DB::connect()->name('article');
+DB::name('article');
 ```
 
 
@@ -42,7 +42,7 @@ DB::connect()->name('article');
 ```php
 // select id,name from user
 
-$list = DB::connect()->name('user')->get('id,name');
+$list = DB::name('user')->get('id,name');
 
 print_r($list);
 array(
@@ -55,7 +55,7 @@ array(
 　　`get()` 方法与 `select()` 方法返回的结果一样；如下，返回的结果 $list 是一样的；
 
 ```php
-$list = DB::connect()->select("select id,name from user");
+$list = DB::select("select id,name from user");
 
 print_r($list);
 array(
@@ -71,7 +71,7 @@ array(
 　　有时候你需要以某字段做为 `key` 返回；
 
 ```php
-$list = DB::connect()->name('user')->hash('id', 'name,date');
+$list = DB::name('user')->hash('id', 'name,date');
 
 print_r($list);
 array(
@@ -81,7 +81,7 @@ array(
 );
 
 //或者直接返回一个 key value 格式的hash数组
-$list = DB::connect()->name('user')->hash('id', 'name');
+$list = DB::name('user')->hash('id', 'name');
 
 print_r($list);
 array(
@@ -95,7 +95,7 @@ array(
 ```php
 // select id,name from user limit 1
 
-$line = DB::connect()->name('user')->line('id,name');
+$line = DB::name('user')->line('id,name');
 
 print_r($line);
 array('id'=>1, 'name'=>'name1');
@@ -105,7 +105,7 @@ array('id'=>1, 'name'=>'name1');
 ```php
 // select name from user limit 1
 
-$val = DB::connect()->name('user')->val('name');
+$val = DB::name('user')->val('name');
 
 echo $val; //name1
 ```
@@ -114,29 +114,29 @@ echo $val; //name1
 ##### <a name="count">count() 总数 max() 最大 min() 最小 avg() 平均 sum() 求和</a>
 ```php
 // count() 总数
-$val = DB::connect()->name('user')->count();
+$val = DB::name('user')->count();
 // 或
-$val = DB::connect()->name('user')->val('count(*)');
+$val = DB::name('user')->val('count(*)');
 
 // max() 最大
-$val = DB::connect()->name('user')->max('id');
+$val = DB::name('user')->max('id');
 // 或
-$val = DB::connect()->name('user')->val('max(id)');
+$val = DB::name('user')->val('max(id)');
 
 // min() 最小
-$val = DB::connect()->name('user')->min('id');
+$val = DB::name('user')->min('id');
 // 或
-$val = DB::connect()->name('user')->val('min(id)');
+$val = DB::name('user')->val('min(id)');
 
 // avg() 平均
-$val = DB::connect()->name('user')->avg('id');
+$val = DB::name('user')->avg('id');
 // 或
-$val = DB::connect()->name('user')->val('avg(id)');
+$val = DB::name('user')->val('avg(id)');
 
 // sum() 求和
-$val = DB::connect()->name('user')->sum('price');
+$val = DB::name('user')->sum('price');
 // 或
-$val = DB::connect()->name('user')->val('sum(price)');
+$val = DB::name('user')->val('sum(price)');
 ```
 
 
@@ -272,52 +272,52 @@ $db->where([ 'status'=>1 ])->orWhere([ 'status'=>2 ]);
 ##### <a name="groupby">groupBy() 分组</a>
 ```php
 // group by cid
-DB::connect()->name('user')->groupBy('cid')->get();
+DB::name('user')->groupBy('cid')->get();
 
 // group by cid,pid
-DB::connect()->name('user')->groupBy('cid,pid')->get();
+DB::name('user')->groupBy('cid,pid')->get();
 ```
 
 
 ##### <a name="having">having() 子句</a>
 ```php
 // group by cid having sum(price) > 1000
-DB::connect()->name('user')->groupBy('cid')->having('sum(price) > 1000')->get();
+DB::name('user')->groupBy('cid')->having('sum(price) > 1000')->get();
 ```
 
 
 ##### <a name="orderby">orderBy() 排序</a>
 ```php
 // order by id desc
-DB::connect()->name('user')->orderBy('id desc')->get();
+DB::name('user')->orderBy('id desc')->get();
 
 // order by status desc,id desc
-DB::connect()->name('user')->orderBy('status desc,id desc')->get();
+DB::name('user')->orderBy('status desc,id desc')->get();
 ```
 
 ##### <a name="limit">offset() 与 limit() limit语句</a>
 ```php
-DB::connect()->name('user')->limit(10)->get();                // limit 10
-DB::connect()->name('user')->offset(20)->limit(10)->get();    // limit 20,10
+DB::name('user')->limit(10)->get();                // limit 10
+DB::name('user')->offset(20)->limit(10)->get();    // limit 20,10
 ```
 
 ##### <a name="page">page() 分页</a>
 ```php
 // 查询第一页数据 每页20条
-DB::connect()->name('user')->page(1, 20)->get();    // limit 0,20
+DB::name('user')->page(1, 20)->get();    // limit 0,20
 
 // 查询第二页数据 每页20条
-DB::connect()->name('user')->page(2, 20)->get();    // limit 20,20
+DB::name('user')->page(2, 20)->get();    // limit 20,20
 ```
 
 
 ##### <a name="innerjoin">innerJoin() 联表查询</a>
 ```php
 // ... from user inner join group on user.gid = group.gid
-DB::connect()->name('user')->innerJoin('group', 'user.gid = group.gid')->get();
+DB::name('user')->innerJoin('group', 'user.gid = group.gid')->get();
 
 // 多表 join
-DB::connect()->name('user')
+DB::name('user')
     ->innerJoin('article', 'user.uid = article.uid')
     ->innerJoin('class', 'user.uid = class.uid')->get();
 ```
@@ -326,21 +326,21 @@ DB::connect()->name('user')
 ##### <a name="leftjoin">leftJoin() 联表查询</a>
 ```php
 // ... from user left join group on user.gid = group.gid
-DB::connect()->name('user')->leftJoin('group', 'user.gid = group.gid')->get();
+DB::name('user')->leftJoin('group', 'user.gid = group.gid')->get();
 ```
 
 
 ##### <a name="rightjoin">rightJoin() 联表查询</a>
 ```php
 // ... from user right join group on user.gid = group.gid
-DB::connect()->name('user')->rightJoin('group', 'user.gid = group.gid')->get();
+DB::name('user')->rightJoin('group', 'user.gid = group.gid')->get();
 ```
 
 
 ##### <a name="field">field() 查询字段</a>
 ```php
 // select id,name from user
-DB::connect()->name('user')->field('id,name')->get();
+DB::name('user')->field('id,name')->get();
 ```
 
 

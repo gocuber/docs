@@ -9,10 +9,10 @@
 #### <a name="transaction">transaction() 执行一组事务</a>
 
 ```php
-DB::connect()->transaction(function(){
-    DB::connect()->insert("...");
-    DB::connect()->insert("...");
-    DB::connect()->update("...");
+DB::transaction(function () {
+    DB::insert(...);
+    DB::insert(...);
+    DB::update(...);
 });
 ```
 
@@ -22,17 +22,17 @@ DB::connect()->transaction(function(){
 
 #### <a name="begin">beginTransaction() 开始一个事务</a>
 ```php
-DB::connect()->beginTransaction();
+DB::beginTransaction();
 ```
 
 #### <a name="commit">commit() 提交事务</a>
 ```php
-DB::connect()->commit();
+DB::commit();
 ```
 
 #### <a name="rollback">rollBack() 回滚事务</a>
 ```php
-DB::connect()->rollBack();
+DB::rollBack();
 ```
 
 　　代码：

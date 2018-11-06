@@ -9,28 +9,25 @@
 
 
 　　`Model` 模型是应用程序中用于处理数据逻辑的部分；通常 `Model` 模型负责在数据库中存取数据；一般情况下，一个数据库表对应一个 `Model` 类文件；<br />
-　　直接实例化或使用 `DB::model()` 来调用 `Model` 类文件；<br />
 
 
 #### <a name="create">创建model</a>
 
-　　新建 `app/Models/User.php` 类继承父类 Model；代码：
+　　新建 `app/Models/User.php` 类继承父类 `Cuber\Database\Model`
 
 ```php
 namespace App\Models;
 
 use Cuber\Database\Model;
 
-class User extends Model                  // 继承Model类
+class User extends Model              // 继承Model类
 {
 
-    protected $_key        = 'default';   // 数据库config key 默认default
+    protected $connect = 'default';   // 数据库连接 默认default
 
-    protected $_name       = 'uc_user';   // 表名称
+    protected $name    = 'uc_user';   // 表名称
 
-    protected $_primarykey = 'id';        // 主键
-
-    protected $_fields = [                // 字段
+    protected $fields = [             // 字段
         'id',            // 用户id
         'username',      // 账号
         'password',      // 密码
@@ -47,18 +44,16 @@ class User extends Model                  // 继承Model类
 
 #### <a name="model">model的使用</a>
 
-　　实例化或使用 `DB::model()` 来调用 `Model` 类文件；代码：
+　　可以直接使用查询结构器的所有方法；
 
 ```php
-DB::model('User')->getFields();
+use App\Models\User;
 
-DB::model('User')->get();
+User::limit(5)->get();
 
-DB::model('User')->where()->line();
+User::where(['id'=>1])->line();
 
-DB::model('User')->where()->delete();
-
-(new App\Models\User())->getFields();
+User::where(['id'=>1])->delete();
 
 // ...
 ```
