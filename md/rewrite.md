@@ -22,8 +22,18 @@ RewriteRule ^(.*)$ ./index.php/$1 [L]
 　　`Nginx` 的 `Rewrite` 规则，`Nginx` 配置文件 `nginx.conf`；
 
 ```php
-if (!-e $request_filename) {
-    rewrite ^/(.*) /index.php/$1 last;
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+```
+
+　　或者
+
+```php
+location / {
+    if (!-e $request_filename) {
+	    rewrite ^/(.*) /index.php/$1 last;
+	}
 }
 ```
 

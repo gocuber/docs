@@ -70,8 +70,7 @@ class Index extends Controller
 <?php
 if (!empty($user)) {
     foreach ($user as $value) {
-        // echo $value['id'];
-        // echo $value['name'];
+        print_r($value);
     }
 }
 ?>

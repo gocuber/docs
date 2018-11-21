@@ -92,14 +92,13 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
 - 开始
     - [简介](https://github.com/gocuber/guide/blob/master/md/about.md)
     - [安装](https://github.com/gocuber/guide/blob/master/md/install.md)
-    - [Hello Cuber](https://github.com/gocuber/guide/blob/master/md/app.md)
+    - [快速开始](https://github.com/gocuber/guide/blob/master/md/app.md)
 - 基础
     - [目录结构](https://github.com/gocuber/guide/blob/master/md/directory.md)
     - [配置文件](https://github.com/gocuber/guide/blob/master/md/config.md)
     - [入口文件](https://github.com/gocuber/guide/blob/master/md/entrance.md)
-    - [URL模式](https://github.com/gocuber/guide/blob/master/md/urlmodel.md)
-    - [URL重写](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
-    - [URL路由](https://github.com/gocuber/guide/blob/master/md/route.md)
+    - [优雅URL](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
+    - [路由](https://github.com/gocuber/guide/blob/master/md/route.md)
     - [Controller 控制器](https://github.com/gocuber/guide/blob/master/md/controller.md)
     - [View 视图模板](https://github.com/gocuber/guide/blob/master/md/view.md)
     - [Model 模型](https://github.com/gocuber/guide/blob/master/md/model.md)
