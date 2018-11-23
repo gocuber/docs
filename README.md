@@ -90,9 +90,8 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
 ## 开发文档
 
 - 开始
-    - [简介](https://github.com/gocuber/guide/blob/master/md/about.md)
     - [安装](https://github.com/gocuber/guide/blob/master/md/install.md)
-    - [快速开始](https://github.com/gocuber/guide/blob/master/md/app.md)
+    - [快速开始](https://github.com/gocuber/guide/blob/master/md/quickstart.md)
 - 基础
     - [目录结构](https://github.com/gocuber/guide/blob/master/md/directory.md)
     - [配置文件](https://github.com/gocuber/guide/blob/master/md/config.md)
@@ -114,13 +113,12 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [Memcache](https://github.com/gocuber/guide/blob/master/md/memcache.md)
     - [Redis](https://github.com/gocuber/guide/blob/master/md/redis.md)
     - [文件缓存](https://github.com/gocuber/guide/blob/master/md/filecache.md)
-- 搜索引擎
-    - [Elasticsearch](https://github.com/gocuber/guide/blob/master/md/elasticsearch.md)
 - 会话
     - [SESSION使用](https://github.com/gocuber/guide/blob/master/md/session.md)
     - [COOKIE使用](https://github.com/gocuber/guide/blob/master/md/cookie.md)
 - CLI命令行
     - [以命令行方式运行](https://github.com/gocuber/guide/blob/master/md/cli.md)
 - 扩展
-    - [使用第三方库](https://github.com/gocuber/guide/blob/master/md/lib.md)
-
+    - [使用Elasticsearch](https://github.com/gocuber/guide/blob/master/md/elasticsearch.md)
+    - [使用parsedown](https://github.com/gocuber/guide/blob/master/md/parsedown.md)
+    - [使用PHPMailer](https://github.com/gocuber/guide/blob/master/md/phpmailer.md)
