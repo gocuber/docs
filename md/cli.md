@@ -65,13 +65,14 @@ php cli.php demo/welcome
 namespace App\Cli;
 
 use Cuber\Foundation\Controller;
+use Cuber\Support\Facades\Request;
 
 class Demo extends Controller
 {
     public function welcome()
     {
-        echo $this->_argv('-name') . "\n";
-        echo $this->_argv('-id') . "\n";
+        echo Request::argv('name') . "\n";
+        echo Request::argv('id') . "\n";
     }
 }
 ```
