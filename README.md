@@ -98,6 +98,7 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [入口文件](https://github.com/gocuber/guide/blob/master/md/entrance.md)
     - [优雅URL](https://github.com/gocuber/guide/blob/master/md/rewrite.md)
     - [路由](https://github.com/gocuber/guide/blob/master/md/route.md)
+    - [请求](https://github.com/gocuber/guide/blob/master/md/request.md)
     - [Controller 控制器](https://github.com/gocuber/guide/blob/master/md/controller.md)
     - [View 视图模板](https://github.com/gocuber/guide/blob/master/md/view.md)
     - [Model 模型](https://github.com/gocuber/guide/blob/master/md/model.md)
