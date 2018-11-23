@@ -2,7 +2,7 @@
 
 #### 安装
 
-　　`composer.json`
+`composer.json`
 
 ```php
 "require": {
@@ -60,4 +60,4 @@ try {
 
 ```
 
-[GitHub](https://github.com/PHPMailer/PHPMailer)
+[GitHub https://github.com/PHPMailer/PHPMailer](https://github.com/PHPMailer/PHPMailer)

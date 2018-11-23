@@ -1,8 +1,8 @@
-# 使用parsedown
+# 使用Parsedown
 
 #### 安装
 
-　　`composer.json`
+`composer.json`
 
 ```php
 "require": {
@@ -26,4 +26,4 @@ echo $Parsedown->text('Hello _Parsedown_!'); # prints: <p>Hello <em>Parsedown</e
 echo $Parsedown->line('Hello _Parsedown_!'); # prints: Hello <em>Parsedown</em>!
 ```
 
-[GitHub](https://github.com/erusev/parsedown)
+[GitHub https://github.com/erusev/parsedown](https://github.com/erusev/parsedown)

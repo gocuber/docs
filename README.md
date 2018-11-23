@@ -120,5 +120,5 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [以命令行方式运行](https://github.com/gocuber/guide/blob/master/md/cli.md)
 - 扩展
     - [使用Elasticsearch](https://github.com/gocuber/guide/blob/master/md/elasticsearch.md)
-    - [使用parsedown](https://github.com/gocuber/guide/blob/master/md/parsedown.md)
+    - [使用Parsedown](https://github.com/gocuber/guide/blob/master/md/parsedown.md)
     - [使用PHPMailer](https://github.com/gocuber/guide/blob/master/md/phpmailer.md)
