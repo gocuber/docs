@@ -2,7 +2,7 @@
 
 #### 安装
 
-　　`composer.json`
+`composer.json`
 
 ```php
 "require": {
