@@ -9,7 +9,7 @@
 #### <a name="set">COOKIE使用</a>
 
 ```php
-use Cuber\Cookie\Cookie;
+use Cuber\Support\Facades\Cookie;
 ```
 
 　　`COOKIE` 配置 `config/app.php`

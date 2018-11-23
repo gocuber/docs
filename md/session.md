@@ -5,8 +5,7 @@
     - [set() 写SESSION](#set)
     - [get() 获取SESSION](#get)
     - [del() 删除SESSION](#del)
-    - [id() 生成一个 session_id](#id)
-- [使用原始PHP操作SESSION](#php)
+    - [createId() 生成一个 session_id](#id)
 
 
 #### <a name="config">SESSION配置</a>
@@ -36,58 +35,35 @@
 
 #### <a name="use">SESSION使用</a>
 
-　　`Cuber` 使用 `Cuber\Cache\Session` 类来操作 `SESSION`
+　　`Cuber` 使用 `Cuber\Support\Facades\Session` 类来操作 `SESSION`
 
 ```php
-use Cuber\Cache\Session;
-
-Session::getInstance();
-Session::getInstance($session_id);
+use Cuber\Support\Facades\Session;
 ```
 
 ##### <a name="set">set() 写SESSION</a>
 ```php
-Session::getInstance()->set('key', 'value');
+Session::set('key', 'value');
 ```
 
 ##### <a name="get">get() 获取SESSION</a>
 ```php
-Session::getInstance()->get('key');
-Session::getInstance()->get();     // 获取全部
+Session::get('key');
+Session::get();     // 获取全部
 ```
 
 ##### <a name="del">del() 删除SESSION</a>
 ```php
-Session::getInstance()->del('key');
-Session::getInstance()->del();     // 删除全部
+Session::del('key');
+Session::del();     // 删除全部
 ```
 
-##### <a name="id">id() 生成一个 session_id</a>
+##### <a name="id">createId() 生成一个 session_id</a>
 ```php
-Session::id();
-```
+$id = Session::createId();
 
-
-#### <a name="php">使用原始PHP操作SESSION</a>
-
-　　不推荐使用原始PHP操作 `SESSION`
-
-```php
-use Cuber\Session\Session;
-
-Session::set('key', 'value'); // 写
-Session::get('key');          // 获取
-Session::get();               // 获取全部
-Session::del('key');          // 删除
-Session::del();               // 删除全部
-Session::destroy();           // 销毁全部
-
-// start() 一般情况下，不用手动调用，在使用 Session 时会自动调用
-Session::start(); // session_start()
-
-// id() 设置与获取 session_id
-Session::id($id); // 设置 session_id 在使用 Session 之前调用
-Session::id();    // 获取 session_id
+Session::id($id)->set('key', 'value');
+Session::id($id)->get('key');
 ```
 
 <br><br><br><br><br>
