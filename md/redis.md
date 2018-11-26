@@ -1,10 +1,11 @@
 # Redis
 
 - [配置](#config)
-- [Redis 使用](#use)
+- [Redis 连接](#redisconnect)
     - [connect()](#connect)
     - [master()](#master)
     - [slave()](#slave)
+- [Redis 使用](#use)
 
 #### <a name="config">配置</a>
 
@@ -41,7 +42,7 @@
 ],
 ```
 
-#### <a name="use">Redis 使用</a>
+#### <a name="redisconnect">Redis 连接</a>
 
 `use Cuber\Redis\Redis;`
 
@@ -82,6 +83,9 @@ Redis::delete('key1', 'key2');
 Redis::exists('key');
 Redis::mGet(['key1', 'key2', 'key3']);
 
+Redis::connect()->get('key');
+Redis::connect()->set('key', 'value');
+
 // Hashes
 $redis = Redis::connect('user');
 
@@ -118,5 +122,5 @@ $redis->zDelete('key', 'val2');
 // ...
 ```
 
-　　[Redis 权威指南参考](https://github.com/phpredis/phpredis)
+[Redis 权威指南参考](https://github.com/phpredis/phpredis)
 

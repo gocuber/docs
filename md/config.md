@@ -10,7 +10,7 @@
 
 #### <a name="app">app.php</a>
 
-　　`config/app.php`
+`config/app.php`
 
 ```php
 return [
@@ -114,7 +114,7 @@ return [
 ];
 ```
 
-　　配置获取使用 `use Cuber\Config\Config;`
+`use Cuber\Support\Facades\Config;`
 
 ```php
 Config::get('name');             // Cuber
@@ -133,7 +133,9 @@ Config::redis('default');
 
 #### <a name="ini">config.ini</a>
 
-　　`config/config.ini` 该文件格式等同于 `php.ini` 文件；
+　　该文件格式等同于 `php.ini` 文件；
+
+`config/config.ini`
 
 ```php
 ; database default config
