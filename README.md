@@ -27,46 +27,37 @@ Route::get('/', function () {
 ```php
 // 闭包路由
 Route::get('welcome', function () {
-    View::display('welcome'); // 调用视图
+    view('welcome'); // 调用视图
 });
 Route::get('user/info', function () {
-    return 'UserController@infoAction';
+    return 'User@info';
 });
 
 // 控制器路由
 Route::get('hello', 'Demo@hello');
-Route::get('hello', 'DemoController@helloAction');
 ```
 
 #### 数据库
 
 ```php
-DB::select("select id,name from user where id = :id and status = :status", ['id'=>1001, 'status'=>1]);
-DB::insert("insert into user (name,status) values (?,?)", ['name1', 1]);
-DB::update("update user set name = :name where id = :id", ['id'=>1001, 'name'=>'name2']);
-DB::delete("delete from user where id = ? and status = ?", [1001, 1]);
+DB::select("select id,name from user where id = :id", ['id'=>1001]);
 
-DB::name('user')->where(['id'=>1001, 'status'=>1])->get();
-DB::name('user')->insert(['name'=>'name2']);
-DB::name('user')->where(['id'=>1001])->update(['status'=>1]);
-DB::name('user')->where(['id'=>1001])->delete();
+DB::name('user')->where(['id'=>1001])->get();
 ```
 
 #### 缓存
 
 ```php
 // Redis
-$redis = Redis::connect();
-$redis->set('key', 'value');
-$redis->get('key');
-$redis->hSet('h', 'key1', 'hello');
-$redis->hGet('h', 'key1');
-$redis->hGetAll('h');
+Redis::set('key', 'value');
+Redis::get('key');
+Redis::hSet('h', 'key1', 'hello');
+Redis::hGet('h', 'key1');
+Redis::hGetAll('h');
 
 // Memcache
-$cache = Mem::connect();
-$cache->set('key1', 'Cuber', 3600);
-$cache->get('key1'); // Cuber
+Memcache::set('key1', 'Cuber', 3600);
+Memcache::get('key1'); // Cuber
 ```
 
 
