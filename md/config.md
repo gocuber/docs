@@ -30,7 +30,7 @@ return [
     'models_namespace' => 'App\\Models\\',
 
     // views dir
-    'views' => base_path() . 'app/views/',
+    'views' => base_path('app/views/'),
 
     // alias
     'alias' => [
@@ -101,7 +101,7 @@ return [
     'is_redis' => true, // 是否启用redis
 
     // 异常
-    'error_log' => base_path() . 'storage/logs/',
+    'error_log' => base_path('storage/logs/'),
 
     // authcode
     'authcode' => env('AUTH_CODE', ''),

@@ -17,7 +17,7 @@
     'default' => [                                       // 默认模块
         'route'       => 'blog',                         // 模块路由文件
         'controllers' => 'App\\Controllers\\Blog\\',     // 模块控制器目录 命名空间前缀
-        'views'       => base_path() . 'app/views/blog/',  // 视图模板目录
+        'views'       => base_path('app/views/blog/'),   // 视图模板目录
     ],
     'cli' => [                                           // 当以CLI命令行方式运行时会自动加载 cli 模块
         'route'       => 'cli',
@@ -26,13 +26,13 @@
     'admin' => [                                         // 后台模块
         'route'       => 'admin',
         'controllers' => 'App\\Controllers\\Admin\\',
-        'views'       => base_path() . 'app/views/admin/',
+        'views'       => base_path('app/views/admin/'),
         'domain'      => env('ADMIN_DOMAIN'),
     ],
     'ucenter' => [                                       // 用户中心模块
         'route'       => 'ucenter',
         'controllers' => 'App\\Controllers\\Ucenter\\',
-        'views'       => base_path() . 'app/views/ucenter/',
+        'views'       => base_path('app/views/ucenter/'),
         'domain'      => env('UCENTER_DOMAIN'),
     ],
 ],
