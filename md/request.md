@@ -67,11 +67,9 @@ Request::argv();
 ```php
 request('id');
 request('id', 1);
-request();
 
-request('id', 1, 'get');
-request('id', 1, 'post');
-request('id', null, 'argv');
+request()->get();
+request()->argv();
 ```
 
 <br><br><br><br><br>

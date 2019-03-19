@@ -25,7 +25,7 @@ class User extends Model              // 继承Model类
 
     protected $connect = 'default';   // 数据库连接 默认default
 
-    protected $name    = 'uc_user';   // 表名称
+    protected $name = 'uc_user';      // 表名称
 
     protected $fields = [             // 字段
         'id',            // 用户id
@@ -74,7 +74,7 @@ class User extends Model
 
     public function setTableName()
     {
-        $this->_name = '';
+        $this->name = '';
 
         return $this;
     }

@@ -4,6 +4,8 @@
 - [assign() 赋值](#assign)
 - [display() 显示视图模板](#display)
 - [load() 视图中加载其他视图文件](#load)
+- [component() 加载组件](#component)
+- [辅助函数 view()](#helper)
 
 #### <a name="view">View 简单实例</a>
 
@@ -116,16 +118,47 @@ View::load('header');
 echo $title; // Hello World
 echo $date;  // 日期
 
-View::load('footer', ['by'=>'Cuber']); // 赋值
+View::load('footer', ['by' => 'Cuber']); // 赋值
 ```
 
-　　`display()` `load()` 方法所传的视图模板文件都是以 `.php` 为后缀；`app/views/` 目录下可以创建子级目录；代码：
+#### <a name="component">component() 加载组件</a>
+
+　　`component` 与 `load` 的区别是 `component` 不共享视图的数据，`component` 所需的数据都需要向组件传值。
+
+```php
+View::component('components/nav', ['nav' => ['Home', 'Blog', 'Cuber', 'Login', 'Register']]);
+```
+
+　　`app/views/components/nav.php` 组件代码：
+
+```php
+foreach ($nav as $value) {
+    echo '<li>' . $value . '</li>';
+}
+```
+
+　　`display()` `load()` `component` 方法所传的视图模板文件都是以 `.php` 为后缀；`app/views/` 目录下可以创建子级目录；代码：
 
 `app/views/demo/welcome.php`
 `app/views/global/header.php`
+`app/views/components/nav.php`
 
 ```php
-View::display('demo/welcome');    // app/views/demo/welcome.php
+View::display('demo/welcome');     // app/views/demo/welcome.php
 
-View::load('global/header');      // app/views/global/header.php
+View::load('global/header');       // app/views/global/header.php
+
+View::component('components/nav'); // app/views/components/nav.php
 ```
+
+#### <a name="helper">辅助函数 view()</a>
+
+```php
+view('welcome');
+view('welcome', ['name' => 'Cuber']);
+
+view()->load();
+view()->component();
+```
+
+<br><br><br><br><br>
