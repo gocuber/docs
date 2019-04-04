@@ -1,19 +1,49 @@
 # COOKIE使用
 
 - [COOKIE使用](#use)
-    - [set() 写COOKIE](#set)
+    - [make() 创建COOKIE](#make)
+    - [forever() 创建永久COOKIE](#forever)
+    - [forget() 使COOKIE过期 删除COOKIE](#forget)
+    - [setDefaultConfig() 设置默认COOKIE配置](#default)
     - [get() 获取COOKIE](#get)
-    - [del() 删除COOKIE](#del)
-    - [setraw() 写COOKIE](#setraw)
+- [COOKIE配置](#config)
+- [辅助函数 cookie()](#helper)
 
-#### <a name="set">COOKIE使用</a>
+#### <a name="use">COOKIE使用</a>
 
 ```php
 use Cuber\Support\Facades\Cookie;
 ```
 
-　　`COOKIE` 配置 `config/app.php`
+##### <a name="make">make() 创建COOKIE</a>
+```php
+Cookie::make('name', 'value', 3600, '/', 'gocuber.com');
+```
 
+##### <a name="forever">forever() 创建永久COOKIE</a>
+```php
+Cookie::forever('name', 'value', '/', 'gocuber.com');
+```
+
+##### <a name="forget">forget() 使COOKIE过期 删除COOKIE</a>
+```php
+Cookie::forget('name');
+```
+
+##### <a name="default">setDefaultConfig() 设置默认COOKIE配置</a>
+```php
+Cookie::setDefaultConfig('/', 'gocuber.com');
+Cookie::make('name', 'value', 3600);
+```
+
+##### <a name="get">get() 获取COOKIE</a>
+```php
+Cookie::get('name');
+```
+
+#### <a name="config">`COOKIE` 配置</a>
+
+`config/app.php`
 ```php
 'cookie' => [
     'prefix' => '',      // cookie 前缀 默认 ''
@@ -21,25 +51,16 @@ use Cuber\Support\Facades\Cookie;
 ],
 ```
 
-##### <a name="set">set() 写COOKIE</a>
-```php
-Cookie::set('key', 'value', 3600, '/', 'gocuber.com');
+```
+Cookie::make('name', 'value', 3600, '/', config('cookie.domain'));
 ```
 
-##### <a name="get">get() 获取COOKIE</a>
-```php
-Cookie::get('key');
-```
+#### <a name="helper">辅助函数 cookie()</a>
 
-##### <a name="del">del() 删除COOKIE</a>
-```php
-Cookie::del('key');
 ```
-
-##### <a name="setraw">setraw() 写COOKIE</a>
-　　与 `set()` 几乎完全相同，不同的是 `setraw()` 不会对 `COOKIE` 值进行 `urlencode()` URL编码；
-```php
-Cookie::setraw('key', 'value', 3600, '/', 'gocuber.com');
+cookie('name', 'value', 3600, '/', config('cookie.domain'));
+cookie()->get();
+cookie()->setDefaultConfig()->make();
 ```
 
 <br><br><br><br><br>
