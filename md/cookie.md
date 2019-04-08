@@ -41,6 +41,11 @@ Cookie::make('name', 'value', 3600);
 Cookie::get('name');
 ```
 
+　　或者使用 `Cuber\Support\Facades\Request` 类获取 `COOKIE`
+```php
+Request::cookie('name');
+```
+
 #### <a name="config">`COOKIE` 配置</a>
 
 `config/app.php`
