@@ -32,7 +32,7 @@ $net_http = new NetHttp\Api(new HttpClient);
 $this->bind('NetHttp', $net_http);
 ```
 
-> 除非你已经实例了一个类，否则不推荐直接绑定对象实例，推荐使用传入一个闭包的方法来绑定，这样只有在类真正使用 `make()` 的时候才会真正实例化。
+> 除非你已经实例了一个类，否则不推荐直接绑定对象实例，推荐使用传入一个闭包的方法来绑定，这样只有在真正使用 `make()` 的时候才会真正实例化。
 
 绑定原始值
 ```php
@@ -42,7 +42,7 @@ $this->bind('app.dev', true);
 
 #### <a name="make">make() 解析</a>
 
-```
+```php
 $this->make('QueryList', $params);
 $this->make('ElasticSearch\Api');
 $this->make('NetHttp');
