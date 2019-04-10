@@ -83,6 +83,10 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
 - 开始
     - [安装](https://github.com/gocuber/docs/blob/master/docs/install.md)
     - [快速开始](https://github.com/gocuber/docs/blob/master/docs/quickstart.md)
+- 核心
+    - [服务容器](https://github.com/gocuber/docs/blob/master/docs/container.md)
+    - [服务提供者](https://github.com/gocuber/docs/blob/master/docs/provider.md)
+    - [门面(Facades)](https://github.com/gocuber/docs/blob/master/docs/facade.md)
 - 基础
     - [目录结构](https://github.com/gocuber/docs/blob/master/docs/directory.md)
     - [配置文件](https://github.com/gocuber/docs/blob/master/docs/config.md)
@@ -96,6 +100,7 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [Module 模块](https://github.com/gocuber/docs/blob/master/docs/module.md)
     - [类自动加载](https://github.com/gocuber/docs/blob/master/docs/autoload.md)
     - [异常处理](https://github.com/gocuber/docs/blob/master/docs/exception.md)
+    - [辅助函数](https://github.com/gocuber/docs/blob/master/docs/helper.md)
 - 数据库
     - [数据库配置与使用基础](https://github.com/gocuber/docs/blob/master/docs/dbbase.md)
     - [数据库查询结构器](https://github.com/gocuber/docs/blob/master/docs/dbquery.md)
