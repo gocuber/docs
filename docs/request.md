@@ -7,6 +7,7 @@
     - [argv() CLI](#argv)
     - [param() 全部请求](#param)
     - [cookie() COOKIE](#cookie)
+    - [session() SESSION](#session)
 - [辅助函数 request()](#helper)
 
 #### <a name="use">请求</a>
@@ -92,6 +93,8 @@ Request::param('name', 'Cuber');
 Request::param();
 ```
 
+> 注：`param()` 并不包含 `Cookie` 和 `Session` 需要获取 `Cookie` 和 `Session` 请使用 `cookie()` `session()` 方法。
+
 ##### <a name="cookie">cookie() COOKIE</a>
 
 ```php
@@ -105,6 +108,21 @@ Request::cookie('name', 'Cuber');
 
 // 获取全部 COOKIE
 Request::cookie();
+```
+
+##### <a name="session">session() SESSION</a>
+
+```php
+// 获取 SESSION
+Request::session('id');
+Request::session('name');
+
+// 获取 SESSION 指定默认值
+Request::session('id', 1);
+Request::session('name', 'Cuber');
+
+// 获取全部 SESSION
+Request::session();
 ```
 
 #### <a name="helper">辅助函数 request()</a>
