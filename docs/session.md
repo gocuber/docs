@@ -123,10 +123,11 @@ Session::id($sid2)->get(); // ['name' => 's2', 'status' => 1]
 
 > 只有在同一个请求生命周期下处理多个 `Session ID` 的时候才需要手动调用 `write()` 方法，否则在一般情况下请求生命周期结束会自动写入存储。
 
-　　使用 `createId()` 方法创建一个 `Session ID`
+　　可以使用 `createId()` 方法创建一个 `Session ID`
 
 ```php
-Session::createId(); // a6f5c4bb404972d5a7afaad1d5d9f878
+$sid1 = Session::createId(); // a6f5c4bb404972d5a7afaad1d5d9f878
+$sid2 = Session::createId(); // 5986f580a2dd820d14949f5853b7fa15
 ```
 
 ##### <a name="regenerate">regenerate() 重新生成 Session ID</a>
