@@ -1,19 +1,20 @@
 # Memcache 缓存
 
 - [配置](#config)
-- [缓存连接 Cache_Mem::connect()](#connect)
 - [Memcache 缓存使用](#use)
+    - [connect() 缓存连接](#connect)
     - [set() 写缓存](#set)
     - [get() 获取](#get)
-    - [del() 删除缓存](#del)
+    - [delete() 删除缓存](#delete)
     - [setMulti() 一次写多个](#setmulti)
     - [getMulti() 获取多个](#getmulti)
-    - [delMulti() 删除多个](#delmulti)
-    - [inc() 增加元素的值](#inc)
+    - [deleteMulti() 删除多个](#deletemulti)
+    - [increment() 增加元素的值](#increment)
     - [dec() 减小元素的值](#dec)
     - [add() 增加元素](#add)
     - [replace() 替换元素](#replace)
-    - [close() 关闭memcache连接](#close)
+    - [close() 关闭当前memcache连接](#close)
+    - [closeAll() 关闭全部memcache连接](#closeall)
 
 #### <a name="config">配置</a>
 
@@ -21,6 +22,7 @@
 
 ```php
 'memcache' => [
+    'driver' => env('MEMCACHE_DRIVER', 'memcached'),  // Memcache扩展 默认 memcached windows下一般为 memcache
     'default' => [
         'host' => env('MEM_DEFAULT_HOST', '127.0.0.1'),
         'port' => env('MEM_DEFAULT_PORT', 11211),
@@ -46,43 +48,37 @@
 ```
 
 
-#### <a name="connect">缓存连接 Cache_Mem::connect()</a>
-
-　　使用 `Cache_Mem::connect()` 连接 `Memcache` 缓存；
-
-```php
-Cache_Mem::connect();        // 连接默认Memcache
-Cache_Mem::connect('user');  // 连接用户Memcache
-```
-
-　　`Cache_Mem` 会自动检测当前环境的扩展是 `Memcached` 还是 `Memcache` ；你也可以直接调用 `Cache_Memcached` 或 `Cache_Memcache` 类；如下：
-
-```php
-Cache_Memcached::connect();        // 连接默认Memcache
-Cache_Memcached::connect('user');  // 连接用户Memcache
-```
-
 
 #### <a name="use">Memcache 缓存使用</a>
 
+`Cuber\Support\Facades\Memcache`
+
+##### <a name="connect">connect() 缓存连接</a>
+
+```php
+Memcache::connect()->set(...);        // 连接默认Memcache
+Memcache::set(...);                   // 连接默认Memcache
+Memcache::connect('user')->set(...);  // 连接用户Memcache
+```
+
 ##### <a name="set">set() 写缓存</a>
 ```php
-Cache_Mem::connect()->set('key1', 'Cuber', 3600);  // 缓存一小时
+Memcache::set('key1', 'Cuber', 3600);  // 缓存一小时
 ```
 
 ##### <a name="get">get() 获取</a>
 ```php
-Cache_Mem::connect()->get('key1');  // Cuber
+Memcache::get('key1');  // Cuber
 ```
 
-##### <a name="del">del() 删除缓存</a>
+##### <a name="delete">delete() 删除缓存</a>
 ```php
-Cache_Mem::connect()->del('key1');
+Memcache::delete('key1');
 ```
 
 ##### <a name="setmulti">setMulti() 一次写多个</a>
 ```php
-$cache = Cache_Mem::connect();
+$cache = Memcache::connect();
 
 $items = [
     'key1' => 'Cuber1',
@@ -110,19 +106,19 @@ array(
 $cache->delMulti(['key1', 'key2', 'key3']);
 ```
 
-##### <a name="inc">inc() 增加元素的值</a>
+##### <a name="increment">increment() 增加元素的值</a>
 ```php
 $cache->set('key', 0, 3600);
-$cache->inc('key');     // 默认加 1
-$cache->inc('key', 10);
+$cache->increment('key');     // 默认加 1
+$cache->increment('key', 10);
 $ret = $cache->get('key');
 
 echo $ret; // 11
 ```
 
-##### <a name="dec">dec() 减小元素的值</a>
+##### <a name="decrement">decrement() 减小元素的值</a>
 ```php
-$cache->dec('key');
+$cache->decrement('key');
 $ret = $cache->get('key');
 
 echo $ret; // 10
@@ -147,7 +143,13 @@ if(false == $ret){
 $cache->replace('key', 1, 3600);
 ```
 
-##### <a name="close">close() 关闭memcache连接</a>
+##### <a name="close">close() 关闭当前memcache连接</a>
 ```php
 $cache->close();
 ```
+
+##### <a name="closeall">closeAll() 关闭全部memcache连接</a>
+```php
+$cache->closeAll();
+```
+
