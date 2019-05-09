@@ -2,7 +2,7 @@
 
 - [介绍](#config)
 - [app.php](#app)
-- [config.ini](#ini)
+- [.env](#env)
 
 #### <a name="config">介绍</a>
 
@@ -120,24 +120,20 @@ return [
 Config::get('name');             // Cuber
 Config::get('is_redis', true);   // true
 Config::get('charset', 'utf-8'); // utf-8
-Config::debug();                 // true
 
-Config::db('default');     // 获取默认数据库配置
-Config::get('db.default'); // 同上
-Config::db(null);          // 获取全部数据库配置
-Config::get('db');         // 同上
-
-Config::mem('default');
-Config::redis('default');
+Config::get('db.default'); // 获取默认数据库配置
+Config::get('db');         // 获取全部数据库配置
 ```
 
 使用辅助函数 `config()`
 ```php
 config('name');
 config('db.default');
+config('debug');
+config('is_dev', false);
 ```
 
-#### <a name="ini">.env</a>
+#### <a name="env">.env</a>
 
 　　该文件格式等同于 `php.ini` 文件；
 

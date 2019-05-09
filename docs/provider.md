@@ -1,16 +1,14 @@
 # 服务提供者
 
-- [COOKIE使用](#use)
-    - [make() 创建COOKIE](#make)
-    - [forever() 创建永久COOKIE](#forever)
-    - [forget() 使COOKIE过期 删除COOKIE](#forget)
-    - [setDefaultConfig() 设置默认COOKIE配置](#default)
-    - [get() 获取COOKIE](#get)
-- [COOKIE配置](#config)
-- [辅助函数 cookie()](#helper)
+- [介绍](#use)
+- [服务提供者](#use)
+    - [register() 方法](#register)
 
+#### <a name="config">介绍</a>
 
-#### <a name="config">`COOKIE` 配置</a>
+　　服务提供者是用来注册服务的，进行服务容器绑定，一个提供者可以注册多个服务。
+
+#### <a name="config">服务提供者</a>
 
 `config/app.php`
 ```php

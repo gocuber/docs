@@ -53,8 +53,6 @@ $this->make('app.dev');   // true
 
 #### <a name="auto">自动注入</a>
 
-毛线~~~~ 没实现~~~~~
-
 
 #### <a name="helper">app() 辅助函数</a>
 

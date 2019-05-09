@@ -10,7 +10,7 @@
     - [getMulti() 获取多个](#getmulti)
     - [deleteMulti() 删除多个](#deletemulti)
     - [increment() 增加元素的值](#increment)
-    - [dec() 减小元素的值](#dec)
+    - [decrement() 减小元素的值](#decrement)
     - [add() 增加元素](#add)
     - [replace() 替换元素](#replace)
     - [close() 关闭当前memcache连接](#close)
