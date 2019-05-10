@@ -21,7 +21,7 @@ return [
 
     'charset' => 'utf-8',
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('DEBUG', false),
 
     // controllers namespace prefix
     'controllers_namespace' => 'App\\Controllers\\',
@@ -32,10 +32,10 @@ return [
     // views dir
     'views' => base_path('app/views/'),
 
-    // alias
-    'alias' => [
-        'Route' => 'Cuber\\Foundation\\Route',
-        'View'  => 'Cuber\\Foundation\\View',
+    // providers
+    'providers' => [
+        // ...
+        App\Providers\AppServiceProvider::class,
     ],
 
     // 模块配置
@@ -58,11 +58,12 @@ return [
 
     // session配置
     'session' => [
-        'driver'  => env('SESSION_DRIVER', 'file'),
-        'connect' => 'session',
-        'prefix'  => '',
-        'cookie'  => null,    // session_id cookie key
-        'time'    => null,
+        'driver'     => env('SESSION_DRIVER', 'file'),
+        'connect'    => 'session',      // 存储连接实例
+        'prefix'     => 'CUBERSESS_',   // 存储中的 session_id 前缀
+        'table_name' => 'app_session',  // 使用数据库存储时的表名
+        'cookie_key' => 'CUBERSESSID',  // Cookie中用来存储session_id的cookie_key
+        'expire'     => 86400 * 7,      // 到期失效的秒数 0为永久
     ],
 
     // 数据库配置
@@ -77,14 +78,25 @@ return [
             'driver'   => 'mysql',
             'slave'    => [],
         ],
+        'session' => [
+            'host'     => env('DB_SESSION_HOST', '127.0.0.1'),
+            'port'     => env('DB_SESSION_PORT', 3306),
+            'username' => env('DB_SESSION_USERNAME', ''),
+            'password' => env('DB_SESSION_PASSWORD', ''),
+            'database' => env('DB_SESSION_DATABASE', ''),
+            'charset'  => 'utf8mb4',
+            'driver'   => 'mysql',
+        ],
     ],
 
     // Memcache配置
     'memcache' => [
+        'driver' => env('MEMCACHE_DRIVER', 'memcached'),
         'default' => [
-            'host' => env('MEM_DEFAULT_HOST', '127.0.0.1'),
-            'port' => env('MEM_DEFAULT_PORT', 11211),
+            'host' => env('MEMCACHE_DEFAULT_HOST', '127.0.0.1'),
+            'port' => env('MEMCACHE_DEFAULT_PORT', 11211),
         ],
+        'session' => [],
     ],
 
     // Redis配置
@@ -94,6 +106,19 @@ return [
             'port'  => env('REDIS_DEFAULT_PORT', 6379),
             'auth'  => env('REDIS_DEFAULT_AUTH', ''),
             'slave' => [],
+        ],
+        'session' => [],
+    ],
+
+    // FileCache配置
+    'filecache' => [
+        'default' => [
+            'dir'       => base_path('storage/filecache/default/'),  // 缓存目录
+            'is_subdir' => 1,                                        // 是否自动生成子级缓存目录 默认1是 0否
+        ],
+        'session' => [
+            'dir'       => base_path('storage/filecache/session/'),
+            'is_subdir' => 1,
         ],
     ],
 

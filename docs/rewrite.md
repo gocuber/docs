@@ -1,4 +1,4 @@
-# URL重写
+# 优雅URL
 
 - [Apache Rewrite规则](#apache)
 - [Nginx Rewrite规则](#nginx)

@@ -34,20 +34,54 @@
 　　`config/app.php`
 
 ```php
+
 // session配置
 'session' => [
-    'driver'  => env('SESSION_DRIVER', 'file'),  // 默认使用文件存储 session 也可以设置为 redis 或 memcache
-    'connect' => 'session',                      // connent filecache key
-    'prefix'  => '',
-    'cookie'  => null,                           // session_id cookie key
-    'time'    => null,
+    'driver'     => env('SESSION_DRIVER', 'file'),  // 默认使用文件存储 session
+    'connect'    => 'session',      // 存储连接实例
+    'prefix'     => 'CUBERSESS_',   // 存储中的 session_id 前缀
+    'table_name' => 'app_session',  // 使用数据库存储时的表名
+    'cookie_key' => 'CUBERSESSID',  // Cookie中用来存储session_id的cookie_key
+    'expire'     => 86400 * 7,      // 到期失效的秒数 0为永久
 ],
 
 // FileCache配置
 'filecache' => [
     'session' => [
-        'dir'       => base_path() . 'storage/session/',  // session 文件目录
+        'dir'       => base_path('storage/sessions/'),  // session 文件目录
         'is_subdir' => 1,
+    ],
+],
+
+// 数据库配置
+'db' => [
+    'session' => [
+        'host'     => env('DB_SESSION_HOST', '127.0.0.1'),
+        'port'     => env('DB_SESSION_PORT', 3306),
+        'username' => env('DB_SESSION_USERNAME', ''),
+        'password' => env('DB_SESSION_PASSWORD', ''),
+        'database' => env('DB_SESSION_DATABASE', ''),
+        'charset'  => 'utf8mb4',
+        'driver'   => 'mysql',
+    ],
+],
+
+// Memcache配置
+'memcache' => [
+    'driver' => env('MEMCACHE_DRIVER', 'memcached'),
+    'session' => [
+        'host' => env('MEMCACHE_DEFAULT_HOST', '127.0.0.1'),
+        'port' => env('MEMCACHE_DEFAULT_PORT', 11211),
+    ],
+],
+
+// Redis配置
+'redis' => [
+    'session' => [
+        'host'  => env('REDIS_SESSION_HOST', '127.0.0.1'),
+        'port'  => env('REDIS_SESSION_PORT', 6379),
+        'auth'  => env('REDIS_SESSION_AUTH', ''),
+        'slave' => [],
     ],
 ],
 ```

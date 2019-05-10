@@ -48,7 +48,6 @@
 ```
 
 
-
 #### <a name="use">Memcache 缓存使用</a>
 
 `Cuber\Support\Facades\Memcache`
@@ -64,6 +63,10 @@ Memcache::connect('user')->set(...);  // 连接用户Memcache
 ##### <a name="set">set() 写缓存</a>
 ```php
 Memcache::set('key1', 'Cuber', 3600);  // 缓存一小时
+Memcache::set('key1', 'Cuber');        // 永久缓存
+Memcache::set('key1', 'Cuber', 0);     // 永久缓存
+Memcache::set('key1', 'Cuber', time() + 86400);                   // 指定过期时间戳
+Memcache::set('key1', 'Cuber', strtotime('2018-08-08 10:10:10');  // 指定过期时间戳
 ```
 
 ##### <a name="get">get() 获取</a>
@@ -73,7 +76,8 @@ Memcache::get('key1');  // Cuber
 
 ##### <a name="delete">delete() 删除缓存</a>
 ```php
-Memcache::delete('key1');
+Memcache::delete('key1');       // 立即删除
+Memcache::delete('key1', 3600); // 一小时后自动删除
 ```
 
 ##### <a name="setmulti">setMulti() 一次写多个</a>
@@ -130,7 +134,7 @@ echo $ret; // 10
 
 ```php
 $ret = $cache->add('key', 1, 3600);
-if(false == $ret){
+if (false == $ret) {
     $cache->inc('key');
 }
 ```
