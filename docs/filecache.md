@@ -48,6 +48,7 @@ FileCache::connect('user')->set(...);  // 连接user
 ##### <a name="set">set() 写缓存</a>
 ```php
 FileCache::set('key1', 'Cuber', 3600);  // 缓存一小时
+FileCache::set('key1', 'Cuber');        // 永久缓存
 ```
 
 ##### <a name="get">get() 获取</a>
