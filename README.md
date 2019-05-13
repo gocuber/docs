@@ -83,10 +83,6 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
 - 开始
     - [安装](https://github.com/gocuber/docs/blob/master/docs/install.md)
     - [快速开始](https://github.com/gocuber/docs/blob/master/docs/quickstart.md)
-- 核心
-    - [服务容器](https://github.com/gocuber/docs/blob/master/docs/container.md)
-    - [服务提供者](https://github.com/gocuber/docs/blob/master/docs/provider.md)
-    - [门面(Facades)](https://github.com/gocuber/docs/blob/master/docs/facade.md)
 - 基础
     - [目录结构](https://github.com/gocuber/docs/blob/master/docs/directory.md)
     - [配置文件](https://github.com/gocuber/docs/blob/master/docs/config.md)
@@ -119,3 +115,8 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [使用Elasticsearch](https://github.com/gocuber/docs/blob/master/docs/elasticsearch.md)
     - [使用Parsedown](https://github.com/gocuber/docs/blob/master/docs/parsedown.md)
     - [使用PHPMailer](https://github.com/gocuber/docs/blob/master/docs/phpmailer.md)
+- 核心
+    - [服务容器](https://github.com/gocuber/docs/blob/master/docs/container.md)
+    - [服务提供者](https://github.com/gocuber/docs/blob/master/docs/provider.md)
+    - [门面(Facades)](https://github.com/gocuber/docs/blob/master/docs/facade.md)
+

@@ -1,13 +1,20 @@
 # 服务容器
 
-- [bind() 绑定](#bind)
-- [make() 解析](#make)
-- [自动注入](#auto)
-- [app() 辅助函数](#helper)
+- [介绍](#container)
+- [绑定/解析](#use)
+    - [bind() 绑定](#bind)
+    - [make() 解析](#make)
+- [门面类和辅助函数](#app)
+    - [App 门面类](#facade)
+    - [app() 辅助函数](#helper)
+
+#### <a name="container">介绍</a>
 
 　　服务容器是一个用于管理类依赖和执行依赖注入的强大工具。
 
-#### <a name="bind">bind() 绑定</a>
+#### <a name="use">绑定/解析</a>
+
+##### <a name="bind">bind() 绑定</a>
 
 绑定基础
 
@@ -40,7 +47,7 @@ $this->bind('app.name', 'Cuber');
 $this->bind('app.dev', true);
 ```
 
-#### <a name="make">make() 解析</a>
+##### <a name="make">make() 解析</a>
 
 ```php
 $this->make('QueryList', $params);
@@ -51,10 +58,24 @@ $this->make('app.name');  // Cuber
 $this->make('app.dev');   // true
 ```
 
-#### <a name="auto">自动注入</a>
+#### <a name="app">门面类和辅助函数</a>
 
+　　可以使用门面类或直接使用辅助函数来进行服务容器的绑定与解析。
 
-#### <a name="helper">app() 辅助函数</a>
+##### <a name="facade">App 门面类</a>
+
+`Cuber\Support\Facades\App`
+
+```php
+// 绑定
+App::bind(...);
+App::singleton(...);
+
+// make 解析
+App::make(...);
+```
+
+##### <a name="helper">app() 辅助函数</a>
 
 ```php
 // 绑定
