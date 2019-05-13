@@ -16,7 +16,9 @@ cookie('name', 'value', 3600);
 
 Request::get('id');
 request('id');
-request()->get('id');
+
+View::display('welcome');
+view('welcome');
 ```
 
 #### <a name="list">门面类列表</a>

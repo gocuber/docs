@@ -40,13 +40,13 @@ class AppServiceProvider
     {
 
         // 注册单例服务
-        app()->singleton('elasticsearch', function () {
+        app()->singleton('elasticsearch.api', function () {
             return new \App\Extensions\Elasticsearch();
         });
 
         // 注册服务
-        app()->bind('ElasticsearchManager', function () {
-            return new \App\Extensions\ElasticsearchManager(app('elasticsearch'));
+        app()->bind('elasticsearch', function () {
+            return new \App\Extensions\ElasticsearchManager(app('elasticsearch.api'));
         });
 
     }
