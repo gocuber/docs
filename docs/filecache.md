@@ -16,22 +16,31 @@
 
 ```php
 'filecache' => [
-    // default
-    'default' => [
-        'dir'       => base_path('storage/filecache/default/'),  // 缓存目录
-        'is_subdir' => 1,                                        // 是否自动生成子级缓存目录 默认1是 0否
-    ],
-    // user
-    'user' => [
-        'dir'       => base_path('storage/filecache/user/'),
-        'is_subdir' => 0,
+    'default' => env('FILE_CONNECT', 'default'),          // 默认连接
+    'connects' => [
+        'default' => [
+            'dir'    => base_path('storage/filecache/'),  // 缓存目录
+            'subdir' => 1,                                // 是否自动生成子级缓存目录 默认1是 0否
+        ],
+        'user' => [
+            'dir'    => base_path('storage/users/'),
+            'subdir' => 1,
+        ],
+        'session' => [
+            'dir'    => base_path('storage/sessions/'),
+            'subdir' => 1,
+        ],
+        'cache' => [
+            'dir'    => base_path('storage/cache/'),
+            'subdir' => 1,
+        ],
     ],
 ],
 ```
 
-　　为了防止缓存目录下的文件数过多，`'is_subdir' => 1,` 为1时会自动生成三层子级目录，如下：<br />
+　　为了防止缓存目录下的文件数过多，`'subdir' => 1,` 为1时会自动生成三层子级目录，如下：<br />
 
-`storage/filecache/default/1c/59/3d/`
+`storage/filecache/1c/59/3d/`
 
 #### <a name="use">文件缓存使用</a>
 
@@ -53,7 +62,8 @@ FileCache::set('key1', 'Cuber');        // 永久缓存
 
 ##### <a name="get">get() 获取</a>
 ```php
-FileCache::get('key1');  // Cuber
+FileCache::get('key1');           // Cuber
+FileCache::get('key2', 'Cuber');  // 指定默认值
 ```
 
 ##### <a name="delete">delete() 删除缓存</a>

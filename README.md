@@ -103,6 +103,7 @@ vendor|目录包含了应用所有通过 Composer 加载的依赖
     - [数据库模型(model)的使用](https://github.com/gocuber/docs/blob/master/docs/dbmodel.md)
     - [数据库事务处理](https://github.com/gocuber/docs/blob/master/docs/dbtransaction.md)
 - 缓存
+    - [Cache 缓存](https://github.com/gocuber/docs/blob/master/docs/cache.md)
     - [Memcache](https://github.com/gocuber/docs/blob/master/docs/memcache.md)
     - [Redis](https://github.com/gocuber/docs/blob/master/docs/redis.md)
     - [文件缓存](https://github.com/gocuber/docs/blob/master/docs/filecache.md)

@@ -22,10 +22,21 @@
 
 ```php
 'memcache' => [
-    'driver' => env('MEMCACHE_DRIVER', 'memcached'),  // Memcache扩展 默认 memcached windows下一般为 memcache
-    'default' => [
-        'host' => env('MEM_DEFAULT_HOST', '127.0.0.1'),
-        'port' => env('MEM_DEFAULT_PORT', 11211),
+    'default' => env('MEMCACHE_CONNECT', 'default'),           // 默认连接
+    'driver' => env('MEMCACHE_DRIVER', 'memcached'),           // Memcache扩展 默认 memcached windows下一般为 memcache
+    'connects' => [
+        'default' => [
+            'host' => env('MEMCACHE_DEFAULT_HOST', '127.0.0.1'),
+            'port' => env('MEMCACHE_DEFAULT_PORT', 11211),
+        ],
+        'session' => [
+            'host' => 'host1',
+            'port' => 11211,
+        ],
+        'cache' => [
+            'host' => 'host1',
+            'port' => 11211,
+        ],
     ],
 ],
 ```
@@ -34,19 +45,29 @@
 
 ```php
 'memcache' => [
-    // default memcache
-    'default' => [
-        'host' => env('MEM_DEFAULT_HOST', '127.0.0.1'),
-        'port' => env('MEM_DEFAULT_PORT', 11211),
-    ],
-    // user memcache
-    'user' => [
-        ['host'=>'host1', 'port'=>11211, 'weight'=>30],
-        ['host'=>'host2', 'port'=>11211, 'weight'=>70],
+    'default' => env('MEMCACHE_CONNECT', 'default'),           // 默认连接
+    'driver' => env('MEMCACHE_DRIVER', 'memcached'),           // Memcache扩展 默认 memcached windows下一般为 memcache
+    'connects' => [
+        'default' => [
+            'host' => env('MEMCACHE_DEFAULT_HOST', '127.0.0.1'),
+            'port' => env('MEMCACHE_DEFAULT_PORT', 11211),
+        ],
+        'session' => [
+            'host' => 'host1',
+            'port' => 11211,
+        ],
+        'cache' => [
+            'host' => 'host1',
+            'port' => 11211,
+        ],
+        // user memcache 配置一组
+        'user' => [
+            ['host'=>'host1', 'port'=>11211, 'weight'=>30],
+            ['host'=>'host2', 'port'=>11211, 'weight'=>70],
+        ],
     ],
 ],
 ```
-
 
 #### <a name="use">Memcache 缓存使用</a>
 
@@ -71,7 +92,8 @@ Memcache::set('key1', 'Cuber', strtotime('2018-08-08 10:10:10');  // 指定过�
 
 ##### <a name="get">get() 获取</a>
 ```php
-Memcache::get('key1');  // Cuber
+Memcache::get('key1');           // Cuber
+Memcache::get('key2', 'Cuber');  // 指定默认值
 ```
 
 ##### <a name="delete">delete() 删除缓存</a>
@@ -113,19 +135,15 @@ $cache->delMulti(['key1', 'key2', 'key3']);
 ##### <a name="increment">increment() 增加元素的值</a>
 ```php
 $cache->set('key', 0, 3600);
-$cache->increment('key');     // 默认加 1
+$cache->increment('key');      // 默认加 1
 $cache->increment('key', 10);
-$ret = $cache->get('key');
-
-echo $ret; // 11
+$cache->get('key');            // 11
 ```
 
 ##### <a name="decrement">decrement() 减小元素的值</a>
 ```php
 $cache->decrement('key');
-$ret = $cache->get('key');
-
-echo $ret; // 10
+$cache->get('key');            // 10
 ```
 
 ##### <a name="add">add() 增加元素</a>
@@ -133,9 +151,8 @@ echo $ret; // 10
 　　`add()` 与 `set()` 类似，但是如果 `key` 已经在服务端存在，操作会失败。
 
 ```php
-$ret = $cache->add('key', 1, 3600);
-if (false == $ret) {
-    $cache->inc('key');
+if (false === $cache->add('key', 1, 3600)) {
+    $cache->increment('key');
 }
 ```
 
