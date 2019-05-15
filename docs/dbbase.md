@@ -19,14 +19,17 @@
 
 ```php
 'db' => [
-    'default' => [
-        'host'     => env('DB_DEFAULT_HOST', '127.0.0.1'),  // 主库
-        'port'     => env('DB_DEFAULT_PORT', 3306),         // 端口
-        'username' => env('DB_DEFAULT_USERNAME', ''),       // 用户名
-        'password' => env('DB_DEFAULT_PASSWORD', ''),       // 密码
-        'database' => env('DB_DEFAULT_DATABASE', ''),       // 数据库名
-        'charset'  => 'utf8mb4',                            // 编码
-        'driver'   => 'mysql',                              // 数据库类型
+    'default' => env('DB_CONNECT', 'default'),                  // 默认连接
+    'connects' => [
+        'default' => [
+            'host'     => env('DB_DEFAULT_HOST', '127.0.0.1'),  // 主库
+            'port'     => env('DB_DEFAULT_PORT', 3306),         // 端口
+            'username' => env('DB_DEFAULT_USERNAME', ''),       // 用户名
+            'password' => env('DB_DEFAULT_PASSWORD', ''),       // 密码
+            'database' => env('DB_DEFAULT_DATABASE', ''),       // 数据库名
+            'charset'  => 'utf8mb4',                            // 编码
+            'driver'   => 'mysql',                              // 数据库驱动
+        ],
     ],
 ],
 ```
@@ -35,26 +38,29 @@
 
 ```php
 'db' => [
-    'default' => [
-        'host'     => env('DB_DEFAULT_HOST', '127.0.0.1'),
-        'port'     => env('DB_DEFAULT_PORT', 3306),
-        'username' => env('DB_DEFAULT_USERNAME', ''),
-        'password' => env('DB_DEFAULT_PASSWORD', ''),
-        'database' => env('DB_DEFAULT_DATABASE', ''),
-        'charset'  => 'utf8mb4',
-        'driver'   => 'mysql',
-        'slave'    => [
-            [
-                'host' => 'slave1',    // 从库
-                'port' => 3307,        // 端口 其他字段值与主库一致可省略
-            ],
-            [
-                'host' => 'slave2',
-                'port' => 3307,
-            ],
-            [
-                'host' => 'slave3',
-                'port' => 3308,
+    'default' => env('DB_CONNECT', 'default'),                  // 默认连接
+    'connects' => [
+        'default' => [
+            'host'     => env('DB_DEFAULT_HOST', '127.0.0.1'),
+            'port'     => env('DB_DEFAULT_PORT', 3306),
+            'username' => env('DB_DEFAULT_USERNAME', ''),
+            'password' => env('DB_DEFAULT_PASSWORD', ''),
+            'database' => env('DB_DEFAULT_DATABASE', ''),
+            'charset'  => 'utf8mb4',
+            'driver'   => 'mysql',
+            'slave'    => [
+                [
+                    'host' => 'slave1',    // 从库
+                    'port' => 3307,        // 端口 其他字段值与主库一致可省略
+                ],
+                [
+                    'host' => 'slave2',
+                    'port' => 3307,
+                ],
+                [
+                    'host' => 'slave3',
+                    'port' => 3308,
+                ],
             ],
         ],
     ],
@@ -65,11 +71,14 @@
 
 ```php
 'db' => [
-    'default' => [
-        // ...
-    ],
-    'user' => [
-        // ...
+    'default' => env('DB_CONNECT', 'default'),                  // 默认连接
+    'connects' => [
+        'default' => [
+            // ...
+        ],
+        'user' => [
+            // ...
+        ],
     ],
 ],
 ```
@@ -120,7 +129,6 @@ array(
 ```
 
 　　`select()` 方法返回一个数组
-
 
 ```php
 // where id = 10
@@ -220,7 +228,7 @@ DB::transaction(function () {
 });
 ```
 
-　　其中任意一条执行失败或抛出任何异常，则自动回滚整个事务；有时你需要更加灵活的控制事务 `beginTransaction()` 开始一个事务 `commit()` 提交事务 `rollBack()` 回滚事务，参考后面的 [数据库事务处理](https://github.com/gocuber/guide/blob/master/md/dbtransaction.md) 章节；
+　　其中任意一条执行失败或抛出任何异常，则自动回滚整个事务；有时你需要更加灵活的控制事务 `beginTransaction()` 开始一个事务 `commit()` 提交事务 `rollBack()` 回滚事务，参考后面的 [数据库事务处理](https://github.com/gocuber/docs/blob/master/md/dbtransaction.md) 章节；
 
 
 #### <a name="pdo">使用原始底层PDO</a>

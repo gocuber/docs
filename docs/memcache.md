@@ -22,8 +22,8 @@
 
 ```php
 'memcache' => [
-    'default' => env('MEMCACHE_CONNECT', 'default'),           // 默认连接
-    'driver' => env('MEMCACHE_DRIVER', 'memcached'),           // Memcache扩展 默认 memcached windows下一般为 memcache
+    'default' => env('MEMCACHE_CONNECT', 'default'),      // 默认连接
+    'driver' => env('MEMCACHE_DRIVER', 'memcached'),      // Memcache扩展 默认 memcached windows下一般为 memcache
     'connects' => [
         'default' => [
             'host' => env('MEMCACHE_DEFAULT_HOST', '127.0.0.1'),
@@ -45,21 +45,10 @@
 
 ```php
 'memcache' => [
-    'default' => env('MEMCACHE_CONNECT', 'default'),           // 默认连接
-    'driver' => env('MEMCACHE_DRIVER', 'memcached'),           // Memcache扩展 默认 memcached windows下一般为 memcache
+    'default' => env('MEMCACHE_CONNECT', 'default'),      // 默认连接
+    'driver' => env('MEMCACHE_DRIVER', 'memcached'),      // Memcache扩展 默认 memcached windows下一般为 memcache
     'connects' => [
-        'default' => [
-            'host' => env('MEMCACHE_DEFAULT_HOST', '127.0.0.1'),
-            'port' => env('MEMCACHE_DEFAULT_PORT', 11211),
-        ],
-        'session' => [
-            'host' => 'host1',
-            'port' => 11211,
-        ],
-        'cache' => [
-            'host' => 'host1',
-            'port' => 11211,
-        ],
+        // ...
         // user memcache 配置一组
         'user' => [
             ['host'=>'host1', 'port'=>11211, 'weight'=>30],

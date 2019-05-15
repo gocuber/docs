@@ -15,11 +15,24 @@
 `config/app.php`
 ```php
 'redis' => [
-    'default' => [
-        'host' => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
-        'port' => env('REDIS_DEFAULT_PORT', 6379),
-        'auth' => '123456',    // 如果需要认证 配置 auth
-        'database' => 0,       // 数据库 默认 0
+    'default' => env('REDIS_CONNECT', 'default'),                   // 默认连接
+    'driver' => env('REDIS_DRIVER', 'redis'),
+    'connects' => [
+        'default' => [
+            'host'     => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
+            'port'     => env('REDIS_DEFAULT_PORT', 6379),
+            'auth'     => env('REDIS_DEFAULT_AUTH', ''),            // 如果需要认证 配置 auth
+            'database' => 0,                                        // 数据库 默认 0
+            'slave'    => [],
+        ],
+        'session' => [
+            'host'     => 'host1',
+            'port'     => 6379,
+        ],
+        'cache' => [
+            'host'     => 'host2',
+            'port'     => 6379,
+        ],
     ],
 ],
 ```
@@ -28,18 +41,22 @@
 
 ```php
 'redis' => [
-    // default redis
-    'default' => [
-        'host' => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
-        'port' => env('REDIS_DEFAULT_PORT', 6379),
-        'auth' => '123456',
-        'slave' => [                           // 配置 slave 从库省略的字段自动继承主库配置
-            ['host'=>'slave1', 'port'=>6379],
-            ['host'=>'slave2', 'port'=>6379],
+    'default' => env('REDIS_CONNECT', 'default'),
+    'driver' => env('REDIS_DRIVER', 'redis'),
+    'connects' => [
+        'default' => [
+            'host'     => env('REDIS_DEFAULT_HOST', '127.0.0.1'),
+            'port'     => env('REDIS_DEFAULT_PORT', 6379),
+            'auth'     => env('REDIS_DEFAULT_AUTH', ''),
+            'database' => 0,
+            'slave'    => [                             // 配置 slave 从库省略的字段自动继承主库配置
+                ['host'=>'slave1', 'port'=>6379],
+                ['host'=>'slave2', 'port'=>6379],
+            ],
         ],
-    ],
-    // user redis
-    'user' => [
+        'user' => [
+            // ...
+        ],
         // ...
     ],
 ],
@@ -49,34 +66,27 @@
 
 　　使用 `Cuber\Support\Facades\Redis` 来操作 `Redis`。
 
-　　`connect()` `master()` `slave()` 三个方法的使用是非常灵活的。
-
 ##### <a name="connect">connect()</a>
 
 ```php
 Redis::connect()->get(...);        // 连接默认Redis
 Redis::get(...);                   // 连接默认Redis
 Redis::connect('user')->get(...);  // 连接用户Redis
-
-Redis::connect('default', 'slave')->get(...);  // 连接默认从库 slave Redis
-Redis::connect('user', 'slave')->get(...);     // 连接用户从库 slave Redis
 ```
 
-> `connect()` 第一个参数指定 `Redis` 实例，默认 `default`，第二个参数指定使用 `master` 或 `slave` 默认 `master`。还可以使用 `master()` 或 `slave()` 方法来分别连接主或从 `Redis`。
+> `connect()` 默认连接 `Redis` 主库实例，使用 `master()` 与 `slave()` 来切换主从实例。
 
 ##### <a name="master">master()</a>
 ```php
 Redis::master();                  // 连接默认 主Redis
-Redis::master('user');            // 连接用户 主Redis
+Redis::connect()->master();       // 连接默认 主Redis
 Redis::connect('user')->master(); // 连接用户 主Redis
 ```
-
-> `master()` 与 `slave()` 只有一个参数用来指定 `Redis` 实例，默认为 `connect()` 指定的 `Redis` 实例。
 
 ##### <a name="slave">slave()</a>
 ```php
 Redis::slave();                   // 连接默认 从Redis
-Redis::slave('user');             // 连接用户 从Redis
+Redis::connect()->slave();        // 连接默认 从Redis
 Redis::connect('user')->slave();  // 连接用户 从Redis
 ```
 
@@ -145,7 +155,7 @@ Redis::subscribe(['chan-1', 'chan-2', 'chan-3'], 'f');
 ##### <a name="multi">MULTI 与 PIPELINE</a>
 
 ```php
-$ret = Redis::multi()
+$result = Redis::multi()
     ->set('key1', 'val1')
     ->get('key1')
     ->set('key2', 'val2')
