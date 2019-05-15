@@ -26,6 +26,7 @@ view('welcome');
 门面|类|服务容器绑定
 :--------|:--------|:--------
 App|Cuber\Foundation\Application|app
+Cache|Cuber\Cache\CacheManager|cache
 Config|Cuber\Config\Config|config
 Cookie|Cuber\Cookie\Cookie|cookie
 DB|Cuber\Database\DatabaseManager|db
