@@ -50,7 +50,7 @@ $this->bind('app.dev', true);
 ##### <a name="make">make() 解析</a>
 
 ```php
-$this->make('querylist', $params);
+$this->make('querylist', [$params]);
 $this->make('elasticsearch.api');
 $this->make('nethttp');
 
@@ -84,7 +84,7 @@ app()->bind('querylist.api', function ($params) {
 });
 
 // make 解析
-$ql = app('querylist.api', 'https://baidu.com/');
+$ql = app('querylist.api', ['https://baidu.com/']);
 $ql->find('title')->text();
 
 app()->bind('app.name', 'Cuber');
