@@ -193,7 +193,7 @@ $db->query("truncate table user");
 ```php
 $list = [];
 $query = $db->query("select id,name from user limit 10");
-for(;$value = $db->fetch($query);){
+for (;$value = $db->fetch($query);) {
     $list[] = $value;
 }
 
@@ -228,7 +228,7 @@ DB::transaction(function () {
 });
 ```
 
-　　其中任意一条执行失败或抛出任何异常，则自动回滚整个事务；有时你需要更加灵活的控制事务 `beginTransaction()` 开始一个事务 `commit()` 提交事务 `rollBack()` 回滚事务，参考后面的 [数据库事务处理](https://github.com/gocuber/docs/blob/master/md/dbtransaction.md) 章节；
+　　其中任意一条执行失败或抛出任何异常，则自动回滚整个事务；有时你需要更加灵活的控制事务 `beginTransaction()` 开始一个事务 `commit()` 提交事务 `rollBack()` 回滚事务，参考后面的 [数据库事务处理](https://github.com/gocuber/docs/blob/master/docs/dbtransaction.md) 章节；
 
 
 #### <a name="pdo">使用原始底层PDO</a>
@@ -236,6 +236,7 @@ DB::transaction(function () {
 　　可以使用原始底层 `PDO` 来操作数据库；
 
 ```php
-DB::getMaster(); // 返回原始底层PDO主库实例
-DB::getSlave();  // 返回原始底层PDO从库实例
+DB::pdo();          // 返回原始底层PDO主库实例
+DB::pdo('master');  // 返回原始底层PDO主库实例
+DB::pdo('slave');   // 返回原始底层PDO从库实例
 ```
