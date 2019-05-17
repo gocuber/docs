@@ -75,8 +75,6 @@ Memcache::connect('user')->set(...);  // 连接用户Memcache
 Memcache::set('key1', 'Cuber', 3600);  // 缓存一小时
 Memcache::set('key1', 'Cuber');        // 永久缓存
 Memcache::set('key1', 'Cuber', 0);     // 永久缓存
-Memcache::set('key1', 'Cuber', time() + 86400);                   // 指定过期时间戳
-Memcache::set('key1', 'Cuber', strtotime('2018-08-08 10:10:10');  // 指定过期时间戳
 ```
 
 ##### <a name="get">get() 获取</a>
