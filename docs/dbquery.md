@@ -377,6 +377,23 @@ $db->name('user')->insert(['name'=>'abc', 'status'=>1]);
 $lastid = $db->name('user')->insert([]);
 ```
 
+#### <a name="duplicate">复写</a>
+
+　　`duplicate()` 复写，重复再写数据。以下 `key` 字段需要设置为唯一或主键，也可以设置多字段唯一。
+
+```php
+$db->name('table')
+    ->duplicate(['value'=>'value', 'updatetime'=>'createtime'])
+    ->insert(['key'=>$key, 'value'=>$value 'createtime'=>$time]);
+
+$db->name('table')
+    ->duplicate('`value`=`value`+values(`value`),`updatetime`=values(`createtime`)')
+    ->insert(['key'=>$key, 'value'=>10, 'createtime'=>$time]);
+
+$db->name('table')
+    ->duplicate('`value`=`value`+1')
+    ->insert(['key'=>$key, 'value'=>1]);
+```
 
 #### <a name="delete">删除</a>
 

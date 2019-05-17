@@ -203,19 +203,6 @@ print_r($list);
 　　上面写法等同于 `$list = $db->select("select id,name from user limit 10");`
 
 
-##### <a name="exec">exec() 执行一条SQL返回影响行数</a>
-
-　　如果你能确保 `sql` 是安全的可以直接调用 `exec()` 方法
-
-```php
-DB::exec("delete from user where id=1001");
-DB::exec("truncate table user");
-DB::exec("create table ...");
-```
-
-　　`exec()` 只会返回影响行数，实际上就是调用了 PDO 底层的 `exec()` 方法；如果你想执行查询，并需要后续 `fetch()` 操作的话，请使用 `query()` 方法；或直接使用 `select()` 方法；
-
-
 #### <a name="transaction">数据库事务 transaction()</a>
 
 　　`transaction()` 执行一组事务；
