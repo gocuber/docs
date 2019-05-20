@@ -6,9 +6,9 @@
     - [set() 写缓存](#set)
     - [get() 获取](#get)
     - [delete() 删除缓存](#delete)
-    - [setMulti() 一次写多个](#setmulti)
-    - [getMulti() 获取多个](#getmulti)
-    - [deleteMulti() 删除多个](#deletemulti)
+    - [mSet() 一次写多个](#mset)
+    - [mGet() 获取多个](#mget)
+    - [mDelete() 删除多个](#mdelete)
     - [increment() 增加元素的值](#increment)
     - [decrement() 减小元素的值](#decrement)
     - [add() 增加元素](#add)
@@ -89,7 +89,7 @@ Memcache::delete('key1');       // 立即删除
 Memcache::delete('key1', 3600); // 一小时后自动删除
 ```
 
-##### <a name="setmulti">setMulti() 一次写多个</a>
+##### <a name="mset">mSet() 一次写多个</a>
 ```php
 $cache = Memcache::connect();
 
@@ -99,12 +99,12 @@ $items = [
     'key3' => 'Cuber3',
 ];
 
-$cache->setMulti($items, 3600);  // 缓存一小时
+$cache->mSet($items, 3600);  // 缓存一小时
 ```
 
-##### <a name="getmulti">getMulti() 获取多个</a>
+##### <a name="mget">mGet() 获取多个</a>
 ```php
-$data = $cache->getMulti(['key1', 'key2', 'key3']);
+$data = $cache->mGet(['key1', 'key2', 'key3']);
 
 print_r($data);
 array(
@@ -114,9 +114,9 @@ array(
 );
 ```
 
-##### <a name="delmulti">delMulti() 删除多个</a>
+##### <a name="mdelete">mDelete() 删除多个</a>
 ```php
-$cache->delMulti(['key1', 'key2', 'key3']);
+$cache->mDelete(['key1', 'key2', 'key3']);
 ```
 
 ##### <a name="increment">increment() 增加元素的值</a>
