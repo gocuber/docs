@@ -19,6 +19,7 @@
     - [leftJoin() 联表查询](#leftjoin)
     - [rightJoin() 联表查询](#rightjoin)
     - [field() 查询字段](#field)
+    - [addField() 追加查询字段](#addfield)
     - [query() 执行查询](#query)
 - [增加](#insert)
 - [删除](#delete)
@@ -339,10 +340,16 @@ DB::name('user')->rightJoin('group', 'user.gid = group.gid')->get();
 
 ##### <a name="field">field() 查询字段</a>
 ```php
-// select id,name from user
-DB::name('user')->field('id,name')->get();
+$db = DB::connect();
+
+$db->field('id,name');      // id,name
+$db->field(['id', 'name']); // id,name
 ```
 
+##### <a name="addfield">addField() 追加查询字段</a>
+```php
+$db->field('id,name')->addField('status'); // id,name,status
+```
 
 ##### <a name="query">query() 执行sql查询</a>
 
